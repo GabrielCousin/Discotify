@@ -1,84 +1,36 @@
-import React, { Component } from 'react';
-import './App.css';
-import OAuth from 'oauth-1.0a';
+import React, { Component } from 'react'
+import './App.css'
 
-import { DISCOGS_REQUEST_TOKEN_ENDPOINT, DISCOGS_ACCESS_TOKEN_ENDPOINT, generateDiscogsRequestTokenUrl } from './dicts/endpoints'
-import { DISCOGS_CONSUMER_KEY, DISCOGS_CONSUMER_SECRET } from './config/settings'
+import {
+  requestToken,
+  generateDiscogsRequestTokenUrl,
+  confirmConnect,
+  getUserInfo,
+  getUserCollection
+} from './discogs/api.js'
 
 class App extends Component {
 
   handleDiscogsConnect() {
-    const params = {
-      oauth_consumer_key: DISCOGS_CONSUMER_KEY,
-      oauth_signature: DISCOGS_CONSUMER_SECRET,
-      oauth_nonce: Math.random().toString(),
-      oauth_signature_method: 'PLAINTEXT',
-      oauth_callback: encodeURIComponent('http://localhost:3000'),
-      oauth_timestamp: Date.now(),
-    }
-
-    const paramsKeys = Object.keys(params);
-    let paramStr = '';
-
-    for (let i = 0; i < paramsKeys.length; i++) {
-      const key = paramsKeys[i]
-      const param = params[key]
-      paramStr = `${paramStr}${key}=${param}&`
-    }
-
-    fetch(
-      `${DISCOGS_REQUEST_TOKEN_ENDPOINT}?${paramStr}`, {
-        headers: {
-          'Content-Type': 'application/x-www-form-urlencoded'
-        }
-      }
-    ).then((response) => {
-      return response.text();
-    }).then((data) => {
+    requestToken().then((data) => {
       const fetchedParams = new URLSearchParams(data);
       const secret = fetchedParams.get('oauth_token_secret')
       const token = fetchedParams.get('oauth_token')
 
       localStorage.setItem('discogs_token', token)
       localStorage.setItem('discogs_token_secret', secret)
-      const newUrl = generateDiscogsRequestTokenUrl(token);
-      window.location.assign(newUrl);
+      const newUrl = generateDiscogsRequestTokenUrl(token)
+      window.location.assign(newUrl)
     })
   }
 
   handleReset () {
     localStorage.clear()
-    window.location.assign('/');
+    window.location.assign('/')
   }
 
   handleConfirmDiscogsConnect () {
-    const params = {
-      oauth_consumer_key: DISCOGS_CONSUMER_KEY,
-      oauth_signature: `${DISCOGS_CONSUMER_SECRET}${localStorage.getItem('discogs_token_secret')}`,
-      oauth_nonce: Math.random().toString(),
-      oauth_signature_method: 'PLAINTEXT',
-      oauth_timestamp: Date.now(),
-    }
-
-    const paramsKeys = Object.keys(params);
-    let paramStr = `${window.location.search}&`;
-
-    for (let i = 0; i < paramsKeys.length; i++) {
-      const key = paramsKeys[i]
-      const param = params[key]
-      paramStr = `${paramStr}${key}=${param}&`
-    }
-
-    fetch(
-      `${DISCOGS_ACCESS_TOKEN_ENDPOINT}${paramStr}`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/x-www-form-urlencoded'
-        }
-      }
-    ).then((response) => {
-      return response.text();
-    }).then((data) => {
+    confirmConnect().then((data) => {
       const fetchedParams = new URLSearchParams(data);
       const secret = fetchedParams.get('oauth_token_secret')
       const token = fetchedParams.get('oauth_token')
@@ -88,35 +40,27 @@ class App extends Component {
     })
   }
 
-  test () {
+  handleGetUserInfo () {
     const token = {
-      key: 'ocKeqGVqZbuPgiqaJbWFERSWKUfMLLjmsyLdOQWT',
-      secret: 'uHGDUsZXiGKBcYAjfpvDXeNeCEUlUxEXoGgClxXw'
+      key: localStorage.getItem('discogs_token'),
+      secret: localStorage.getItem('discogs_token_secret')
     };
 
-    var oauth = OAuth({
-        consumer: {
-          key: 'oBngGVxvHzYIMfwKlWdh',
-          secret: 'OQsUbkPNSxdhvOLfLvHcGgQdezCyFDgZ'
-        },
-        signature_method: 'PLAINTEXT'
-    });
-
-    const request_data = {
-          url: 'https://api.discogs.com/oauth/identity',
-          method: 'GET'
-      }
-
-
-    fetch(
-      `https://api.discogs.com/oauth/identity`, {
-        headers: {...oauth.toHeader(oauth.authorize(request_data, token))}
-      }
-    ).then((response) => {
-      return response.text();
-    }).then((d) => {
-      console.log(d)
+    getUserInfo(token).then((userInfo) => {
+      localStorage.setItem('discogs_username', userInfo.username)
+      console.log(userInfo)
     })
+  }
+
+  handleGetCollectionItems () {
+    const token = {
+      key: localStorage.getItem('discogs_token'),
+      secret: localStorage.getItem('discogs_token_secret')
+    }
+
+    const username = localStorage.getItem('discogs_username')
+
+    getUserCollection(username, token).then((userCollection) => { console.log(userCollection) })
   }
 
   render() {
@@ -134,10 +78,14 @@ class App extends Component {
           <button type="button" onClick={this.handleReset}>
             Reset
           </button>
-          <button type="button" onClick={this.test}>
-            TEST
+          <button type="button" onClick={this.handleGetUserInfo}>
+            User info
+          </button>
+          <button type="button" onClick={this.handleGetCollectionItems}>
+            Collection Items
           </button>
         </div>
+        <a target="_black" href="https://www.discogs.com/settings/applications">Manage Discogs Access</a>
       </div>
     );
   }
