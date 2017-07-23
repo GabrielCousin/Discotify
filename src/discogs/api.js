@@ -128,7 +128,9 @@ export function getUserCollection (username, token) {
     ).then((response) => {
       return response.text()
     }).then((data) => {
-      resolve(JSON.parse(data))
+      return JSON.parse(data)
+    }).then((data) => {
+      resolve(data.releases);
     })
     // .catch((error) => console.log(error))
   });
