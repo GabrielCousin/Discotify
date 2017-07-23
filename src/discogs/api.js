@@ -128,7 +128,6 @@ export function getUserCollection (username, token) {
     ).then((response) => {
       return response.text()
     }).then((data) => {
-      debugger
       resolve(JSON.parse(data))
     })
     // .catch((error) => console.log(error))
