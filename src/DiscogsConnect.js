@@ -7,7 +7,22 @@ import {
   getUserCollection
 } from './discogs/api.js'
 
+import ReleasesList from './ReleasesList';
+
 class DiscogsConnect extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      releases: []
+    };
+
+    this.handleGetCollectionItems = this.handleGetCollectionItems.bind(this);
+  }
+
+  componentWillMount () {
+    this.handleGetUserInfo()
+  }
+
   handleDiscogsConnect() {
     requestToken().then((data) => {
       const fetchedParams = new URLSearchParams(data);
@@ -41,7 +56,12 @@ class DiscogsConnect extends Component {
 
     const username = localStorage.getItem('discogs_username')
 
-    getUserCollection(username, token).then((userCollection) => { console.log(userCollection) })
+    getUserCollection(username, token).then((userCollection) => {
+      console.log(userCollection)
+      this.setState({
+        releases: userCollection
+      })
+    })
   }
 
   render () {
@@ -59,12 +79,10 @@ class DiscogsConnect extends Component {
           </button>
         }
 
-        <button type="button" onClick={this.handleGetUserInfo}>
-          Log user info
-        </button>
         <button type="button" onClick={this.handleGetCollectionItems}>
           Log collection Items
         </button>
+        <ReleasesList releases={this.state.releases} />
       </div>
     );
   }
