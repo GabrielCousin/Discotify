@@ -5,7 +5,7 @@ import {
   generateDiscogsRequestTokenUrl,
   getUserInfo,
   getUserCollection
-} from './discogs/api.js'
+} from './discogs/api'
 
 import ReleasesList from './ReleasesList';
 
@@ -66,7 +66,7 @@ class DiscogsConnect extends Component {
 
   render () {
     return (
-      <div className="">
+      <div>
         <h3>First, connect to Discogs</h3>
         <p>We will grab your collection and add some Perlinpinpin powder</p>
         {this.props.isAuthenticated ?
