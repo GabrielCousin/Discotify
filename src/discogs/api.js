@@ -84,7 +84,6 @@ export function confirmConnect() {
     ).then((data) => {
       resolve(data)
     })
-    // .catch((error) => console.log(error))
   });
 }
 
@@ -107,7 +106,6 @@ export function getUserInfo (token) {
     }).then((data) => {
       resolve(JSON.parse(data))
     })
-    // .catch((error) => console.log(error))
   });
 }
 
@@ -132,6 +130,5 @@ export function getUserCollection (username, token) {
     }).then((data) => {
       resolve(data.releases);
     })
-    // .catch((error) => console.log(error))
   });
 }

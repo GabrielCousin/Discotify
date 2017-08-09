@@ -3,6 +3,8 @@ import './App.css'
 
 import DiscogsConnect from './DiscogsConnect'
 import DiscogsCallback from './DiscogsCallback'
+import SpotifyConnect from './SpotifyConnect'
+import SpotifyCallback from './SpotifyCallback'
 import Logout from './Logout'
 
 import {
@@ -12,31 +14,28 @@ import {
 } from 'react-router-dom'
 
 class App extends Component {
-  discogsConnectWrapper = () => (
-    <DiscogsConnect isAuthenticated={this.state.isAuthenticated}/>
-  )
+  discogsConnectWrapper = () => {
+    const isAuthenticatedOnDiscogs = Boolean(localStorage.getItem('discogs_token') && localStorage.getItem('discogs_token_secret'))
+    const isAuthenticatedOnSpotify = Boolean(localStorage.getItem('spotify_access_token'))
+    return (
+      <div>
+        <DiscogsConnect isAuthenticated={isAuthenticatedOnDiscogs} />
+        <SpotifyConnect isAuthenticated={isAuthenticatedOnSpotify} />
+      </div>
+    )
+  }
 
   discogsRedirect = () => (
     <DiscogsCallback />
   )
 
+  spotifyRedirect = () => (
+    <SpotifyCallback />
+  )
+
   logoutWrapper = () => (
     <Logout />
   )
-
-  handleAuthCheck () {
-    this.setState({
-      isAuthenticated: Boolean(localStorage.getItem('discogs_token') && localStorage.getItem('discogs_token_secret'))
-    })
-  }
-
-  componentWillMount () {
-    this.handleAuthCheck()
-  }
-
-  componentWillUpdate () {
-    this.handleAuthCheck()
-  }
 
   render() {
     return (
@@ -46,7 +45,8 @@ class App extends Component {
           <p>Export your Discogs collection to your Spotify library</p>
             <div>
               <Route exact path="/logout" component={this.logoutWrapper} />
-              <Route exact path="/callback" component={this.discogsRedirect} />
+              <Route exact path="/discogs_callback" component={this.discogsRedirect} />
+              <Route exact path="/spotify_callback" component={this.spotifyRedirect} />
               <Route exact path="/" component={this.discogsConnectWrapper} />
             </div>
             <a target="_black" href="https://www.discogs.com/settings/applications">Manage Discogs Access</a>
