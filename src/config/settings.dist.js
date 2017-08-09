@@ -5,3 +5,4 @@ export const DISCOGS_OAUTH_CALLBACK = encodeURIComponent('http://localhost:3000/
 
 export const SPOTIFY_CLIENT_ID = 'SPOTIFY_CLIENT_ID'
 export const SPOTIFY_CLIENT_SECRET = 'SPOTIFY_CLIENT_SECRET'
+export const SPOTIFY_OAUTH_CALLBACK = encodeURIComponent('http://localhost:3000/spotify_callback')
