@@ -4,10 +4,6 @@ import {
   Redirect
 } from 'react-router-dom'
 
-import {
-  requestToken
-} from './spotify/api'
-
 const queryString = require('query-string');
 
 class SpotifyCallback extends Component {
@@ -23,16 +19,14 @@ class SpotifyCallback extends Component {
   }
 
   handleRequestSpotifyToken () {
-    const { code } = queryString.parse(window.location.search);
-    requestToken(code).then(({access_token, expires_in, refresh_token}) => {
-      localStorage.setItem('spotify_access_token', access_token)
-      localStorage.setItem('spotify_expires_in', expires_in)
-      localStorage.setItem('spotify_refresh_token', refresh_token)
+    const { access_token, expires_in } = queryString.parse(window.location.hash);
 
-      this.setState({
-        hasConfirmedAuthentication: true
-      });
-    })
+    localStorage.setItem('spotify_access_token', access_token)
+    localStorage.setItem('spotify_expires_in', expires_in)
+
+    this.setState({
+      hasConfirmedAuthentication: true
+    });
   }
 
   render () {
