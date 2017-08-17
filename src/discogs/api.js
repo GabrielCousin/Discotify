@@ -1,4 +1,3 @@
-import OAuth from 'oauth-1.0a';
 import {
   DISCOGS_REQUEST_TOKEN_ENDPOINT,
   DISCOGS_ACCESS_TOKEN_ENDPOINT,
@@ -13,37 +12,27 @@ import {
   DISCOGS_OAUTH_CALLBACK
 } from '../config/settings'
 
+import request from 'request'
+const queryString = require('query-string');
+
 export function requestToken() {
-  const params = {
-    oauth_consumer_key: DISCOGS_CONSUMER_KEY,
-    oauth_signature: `${DISCOGS_CONSUMER_SECRET}%26`,
-    oauth_nonce: Math.random().toString(),
-    oauth_signature_method: 'PLAINTEXT',
-    oauth_callback: DISCOGS_OAUTH_CALLBACK,
-    oauth_timestamp: Date.now(),
-  }
-
-  const paramsKeys = Object.keys(params);
-  let paramStr = '';
-
-  for (let i = 0; i < paramsKeys.length; i++) {
-    const key = paramsKeys[i]
-    const param = params[key]
-    paramStr = `${paramStr}${key}=${param}&`
-  }
-
   return new Promise(function (resolve, reject) {
-    fetch(
-      `${DISCOGS_REQUEST_TOKEN_ENDPOINT}?${paramStr}`, {
-        headers: {
-          'Content-Type': 'application/x-www-form-urlencoded'
-        }
+    request.get({
+      url: DISCOGS_REQUEST_TOKEN_ENDPOINT,
+      qs: {
+        oauth_consumer_key: DISCOGS_CONSUMER_KEY,
+        oauth_signature: `${DISCOGS_CONSUMER_SECRET}%26`,
+        oauth_nonce: Math.random().toString(),
+        oauth_signature_method: 'PLAINTEXT',
+        oauth_callback: DISCOGS_OAUTH_CALLBACK,
+        oauth_timestamp: Date.now()
       }
-    ).then((response) => (response.text())
-    ).then((data) => {
-      resolve(data)
-    })
-    // .catch((error) => console.log(error))
+    }, function (e, r, body) {
+      if (body && body.error) {
+        reject(body.error)
+      }
+      resolve(queryString.parse(body))
+    });
   });
 }
 
@@ -55,80 +44,62 @@ export function generateDiscogsRequestTokenUrl (requestToken) {
 }
 
 export function confirmConnect() {
-  const params = {
-    oauth_consumer_key: DISCOGS_CONSUMER_KEY,
-    oauth_signature: `${DISCOGS_CONSUMER_SECRET}%26${localStorage.getItem('discogs_token_secret')}`,
-    oauth_nonce: Math.random().toString(),
-    oauth_signature_method: 'PLAINTEXT',
-    oauth_timestamp: Date.now(),
-  }
-
-  const paramsKeys = Object.keys(params);
-  let paramStr = `${window.location.search}&`;
-
-  for (let i = 0; i < paramsKeys.length; i++) {
-    const key = paramsKeys[i]
-    const param = params[key]
-    paramStr = `${paramStr}${key}=${param}&`
-  }
-
+  const qs = queryString.parse(window.location.search)
   return new Promise(function (resolve, reject) {
-    fetch(
-      `${DISCOGS_ACCESS_TOKEN_ENDPOINT}${paramStr}`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/x-www-form-urlencoded'
-        }
+    request.post({
+      url: DISCOGS_ACCESS_TOKEN_ENDPOINT,
+      qs: Object.assign(qs, {
+        oauth_consumer_key: DISCOGS_CONSUMER_KEY,
+        oauth_signature: `${DISCOGS_CONSUMER_SECRET}%26${localStorage.getItem('discogs_token_secret')}`,
+        oauth_nonce: Math.random().toString(),
+        oauth_signature_method: 'PLAINTEXT',
+        oauth_timestamp: Date.now(),
+      })
+    }, function (e, r, body) {
+      if (body && body.error) {
+        reject(body.error)
       }
-    ).then((response) => (response.text())
-    ).then((data) => {
-      resolve(data)
+      resolve(queryString.parse(body))
+    });
+  });
+}
+
+export function getUserInfo ({token, token_secret}) {
+  return new Promise(function (resolve, reject) {
+    request.get({
+      url: DISCOGS_IDENTITY_ENDPOINT,
+      oauth: {
+        consumer_key: DISCOGS_CONSUMER_KEY,
+        consumer_secret: DISCOGS_CONSUMER_SECRET,
+        token,
+        token_secret,
+        signature_method : 'PLAINTEXT'
+      }
+    }, function (e, r, body) {
+      if (body && body.error) {
+        reject(body.error)
+      }
+      resolve(JSON.parse(body))
     })
   });
 }
 
-export function getUserInfo (token) {
+export function getUserCollection (username, {token, token_secret}) {
   return new Promise(function (resolve, reject) {
-    const oauth = OAuth({
-      consumer: {
-        key: DISCOGS_CONSUMER_KEY,
-        secret: DISCOGS_CONSUMER_SECRET
-      },
-      signature_method: 'PLAINTEXT'
-    });
-
-    fetch(
-      DISCOGS_IDENTITY_ENDPOINT.url, {
-        headers: {...oauth.toHeader(oauth.authorize(DISCOGS_IDENTITY_ENDPOINT, token))}
+    request.get({
+      url: DISCOGS_COLLECTION_ENDPOINT(username),
+      oauth: {
+        consumer_key: DISCOGS_CONSUMER_KEY,
+        consumer_secret: DISCOGS_CONSUMER_SECRET,
+        token,
+        token_secret,
+        signature_method : 'PLAINTEXT'
       }
-    ).then((response) => {
-      return response.text()
-    }).then((data) => {
-      resolve(JSON.parse(data))
-    })
-  });
-}
-
-export function getUserCollection (username, token) {
-  return new Promise(function (resolve, reject) {
-    const oauth = OAuth({
-      consumer: {
-        key: DISCOGS_CONSUMER_KEY,
-        secret: DISCOGS_CONSUMER_SECRET
-      },
-      signature_method: 'PLAINTEXT'
-    });
-
-    fetch(
-      DISCOGS_COLLECTION_ENDPOINT(username).url, {
-        headers: {...oauth.toHeader(oauth.authorize(DISCOGS_COLLECTION_ENDPOINT(username), token))}
+    }, function (e, r, body) {
+      if (body && body.error) {
+        reject(body.error)
       }
-    ).then((response) => {
-      return response.text()
-    }).then((data) => {
-      return JSON.parse(data)
-    }).then((data) => {
-      resolve(data.releases);
+      resolve(JSON.parse(body).releases)
     })
   });
 }

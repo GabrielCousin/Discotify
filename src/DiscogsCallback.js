@@ -21,13 +21,9 @@ class DiscogsCallback extends Component {
   }
 
   handleConfirmDiscogsConnect () {
-    confirmConnect().then((data) => {
-      const fetchedParams = new URLSearchParams(data);
-      const secret = fetchedParams.get('oauth_token_secret')
-      const token = fetchedParams.get('oauth_token')
-
-      localStorage.setItem('discogs_token', token)
-      localStorage.setItem('discogs_token_secret', secret)
+    confirmConnect().then(({oauth_token_secret, oauth_token}) => {
+      localStorage.setItem('discogs_token', oauth_token)
+      localStorage.setItem('discogs_token_secret', oauth_token_secret)
 
       this.setState({
         hasConfirmedAuthentication: true

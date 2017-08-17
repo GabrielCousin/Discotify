@@ -24,22 +24,17 @@ class DiscogsConnect extends Component {
   }
 
   handleDiscogsConnect() {
-    requestToken().then((data) => {
-      const fetchedParams = new URLSearchParams(data);
-      const secret = fetchedParams.get('oauth_token_secret')
-      const token = fetchedParams.get('oauth_token')
-
-      localStorage.setItem('discogs_token', token)
-      localStorage.setItem('discogs_token_secret', secret)
-      const newUrl = generateDiscogsRequestTokenUrl(token)
-      window.location.assign(newUrl)
+    requestToken().then(({oauth_token, oauth_token_secret}) => {
+      localStorage.setItem('discogs_token', oauth_token)
+      localStorage.setItem('discogs_token_secret', oauth_token_secret)
+      window.location.assign(generateDiscogsRequestTokenUrl(oauth_token))
     })
   }
 
   handleGetUserInfo () {
     const token = {
-      key: localStorage.getItem('discogs_token'),
-      secret: localStorage.getItem('discogs_token_secret')
+      token: localStorage.getItem('discogs_token'),
+      token_secret: localStorage.getItem('discogs_token_secret')
     };
 
     getUserInfo(token).then((userInfo) => {
