@@ -1,6 +1,8 @@
 import {
   SPOTIFY_REQUEST_AUTHORIZATION_ENDPOINT,
-  SPOTIFY_CURRENT_PROFILE_ENDPOINT
+  SPOTIFY_CURRENT_PROFILE_ENDPOINT,
+  SPOTIFY_SEARCH_ENDPOINT,
+  SPOTIFY_SAVE_ALBUMS_ENDPOINT
 } from './endpoints'
 
 import {
@@ -8,44 +10,68 @@ import {
   SPOTIFY_OAUTH_CALLBACK
 } from '../config/settings'
 
+import request from 'request'
+const queryString = require('query-string');
+
 export function generateRequestAuthorizationUrl() {
   const params = {
     client_id: SPOTIFY_CLIENT_ID,
     response_type: 'token',
-    redirect_uri: encodeURIComponent(SPOTIFY_OAUTH_CALLBACK),
+    redirect_uri: SPOTIFY_OAUTH_CALLBACK,
     state: Math.random().toString(),
     scope: 'user-library-modify',
     show_dialog: true
   }
 
-  const paramsKeys = Object.keys(params);
-  let paramStr = '';
-
-  for (let i = 0; i < paramsKeys.length; i++) {
-    const key = paramsKeys[i]
-    const param = params[key]
-    paramStr = `${paramStr}${key}=${param}&`
-  }
-
-  return `${SPOTIFY_REQUEST_AUTHORIZATION_ENDPOINT}?${paramStr}`
+  return `${SPOTIFY_REQUEST_AUTHORIZATION_ENDPOINT}?${queryString.stringify(params)}`
 }
 
 export function getUserInfo (token) {
-  let headers = new Headers();
-  headers.append('Accept', 'application/json');
-  headers.append('Authorization', `Bearer ${token}`);
-
   return new Promise(function (resolve, reject) {
-    fetch(
-      SPOTIFY_CURRENT_PROFILE_ENDPOINT, {
-        mode: 'cors',
-        redirect: 'follow',
-        headers
+    request.get({
+      url: SPOTIFY_CURRENT_PROFILE_ENDPOINT,
+    }, function (e, r, body) {
+      if (body && body.error) {
+        reject(body.error)
       }
-    ).then((response) => {
-      return response.text()
-    }).then((data) => {
-      resolve(JSON.parse(data))
-    })
+
+      resolve(JSON.parse(body))
+    }).auth(null, null, true, token);
+  });
+}
+
+export function searchAlbum (token, query) {
+  return new Promise(function (resolve, reject) {
+    request.get({
+      url: SPOTIFY_SEARCH_ENDPOINT,
+      qs: {
+        q: encodeURIComponent(query),
+        type: 'album',
+        limit: 1
+      },
+    }, function (e, r, body) {
+      if (body && body.error) {
+        reject(body.error)
+      }
+
+      resolve(JSON.parse(body))
+    }).auth(null, null, true, token);
+  });
+}
+
+export function saveAlbums (token, ids) {
+  return new Promise(function (resolve, reject) {
+    request.put({
+      url: SPOTIFY_SAVE_ALBUMS_ENDPOINT,
+      json: {
+        ids
+      },
+    }, function (e, r, body) {
+      if (body && body.error) {
+        reject(body.error)
+      }
+
+      resolve()
+    }).auth(null, null, true, token);
   });
 }

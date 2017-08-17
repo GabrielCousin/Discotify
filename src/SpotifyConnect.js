@@ -2,15 +2,17 @@ import React, { Component } from 'react'
 
 import {
   generateRequestAuthorizationUrl,
-  // generateDiscogsRequestTokenUrl,
-  getUserInfo,
-  // getUserCollection
+  getUserInfo
+  // searchAlbum,
+  // saveAlbums
 } from './spotify/api'
 
 class SpotifyConnect extends Component {
   constructor(props) {
     super(props);
     this.state = {};
+    this.handleInputChange = this.handleInputChange.bind(this);
+    this.handleSpotifySearch = this.handleSpotifySearch.bind(this);
   }
 
   componentWillMount () {
@@ -31,6 +33,20 @@ class SpotifyConnect extends Component {
     window.location.assign(newUrl)
   }
 
+  handleInputChange(event) {
+    this.setState({
+      query: event.currentTarget.value
+    })
+  }
+
+  handleSpotifySearch () {
+    // const token = localStorage.getItem('spotify_access_token');
+    // searchAlbum(token, this.state.query).then((data) => {
+    //   const ids = [data.albums.items[0].id]
+    //   saveAlbums(token, ids).then((data) => {})
+    // })
+  }
+
   render () {
     return (
       <div>
@@ -45,6 +61,10 @@ class SpotifyConnect extends Component {
             Connect
           </button>
         }
+        <input type="text" onChange={this.handleInputChange} />
+        <button type="button" onClick={this.handleSpotifySearch}>
+          Search
+        </button>
       </div>
     );
   }
