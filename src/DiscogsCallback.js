@@ -1,38 +1,23 @@
 import React, { Component } from 'react'
+import { Redirect } from 'react-router-dom'
+import { connect } from 'react-redux'
 
-import {
-  Redirect
-} from 'react-router-dom'
+import { confirmConnect } from './actions/discogs'
 
-import {
-  confirmConnect
-} from './discogs/api.js'
+const mapStateToProps = (state) => {
+  return {
+    user: state.user
+  }
+}
 
 class DiscogsCallback extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      hasConfirmedAuthentication: false
-    };
-  }
 
   componentWillMount () {
-    this.handleConfirmDiscogsConnect()
-  }
-
-  handleConfirmDiscogsConnect () {
-    confirmConnect().then(({oauth_token_secret, oauth_token}) => {
-      localStorage.setItem('discogs_token', oauth_token)
-      localStorage.setItem('discogs_token_secret', oauth_token_secret)
-
-      this.setState({
-        hasConfirmedAuthentication: true
-      });
-    })
+    this.props.dispatch(confirmConnect())
   }
 
   render () {
-    if (this.state.hasConfirmedAuthentication) {
+    if (this.props.user.discogs_auth_date) {
       return (
         <Redirect to='/' />
       )
@@ -45,4 +30,4 @@ class DiscogsCallback extends Component {
 
 }
 
-export default DiscogsCallback;
+export default connect(mapStateToProps)(DiscogsCallback);
