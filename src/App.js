@@ -5,6 +5,7 @@ import DiscogsConnect from './DiscogsConnect'
 import DiscogsCallback from './DiscogsCallback'
 import SpotifyConnect from './SpotifyConnect'
 import SpotifyCallback from './SpotifyCallback'
+import ReleasesList from './ReleasesList';
 import Logout from './Logout'
 
 import {
@@ -14,16 +15,19 @@ import {
 } from 'react-router-dom'
 
 class App extends Component {
-  discogsConnectWrapper = () => {
-    const isAuthenticatedOnDiscogs = Boolean(localStorage.getItem('discogs_token') && localStorage.getItem('discogs_token_secret'))
+  connectWrapper = () => {
     const isAuthenticatedOnSpotify = Boolean(localStorage.getItem('spotify_access_token'))
     return (
       <div>
-        <DiscogsConnect isAuthenticated={isAuthenticatedOnDiscogs} />
+        <DiscogsConnect />
         <SpotifyConnect isAuthenticated={isAuthenticatedOnSpotify} />
       </div>
     )
   }
+
+  releasesListWrapper = () => (
+    <ReleasesList />
+  )
 
   discogsRedirect = () => (
     <DiscogsCallback />
@@ -47,7 +51,8 @@ class App extends Component {
               <Route exact path="/logout" component={this.logoutWrapper} />
               <Route exact path="/discogs_callback" component={this.discogsRedirect} />
               <Route exact path="/spotify_callback" component={this.spotifyRedirect} />
-              <Route exact path="/" component={this.discogsConnectWrapper} />
+              <Route exact path="/" component={this.connectWrapper} />
+              <Route exact path="/" component={this.releasesListWrapper} />
             </div>
             <a target="_black" href="https://www.discogs.com/settings/applications">Manage Discogs Access</a>
             <span> - </span>

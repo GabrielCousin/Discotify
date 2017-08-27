@@ -1,62 +1,27 @@
 import React, { Component } from 'react'
+import { connect } from 'react-redux'
 
-import {
-  requestToken,
-  generateDiscogsRequestTokenUrl,
-  getUserInfo,
-  getUserCollection
-} from './discogs/api'
+import { fetchUserInfo, requestToken } from './actions/discogs'
 
-import ReleasesList from './ReleasesList';
+const mapStateToProps = (state) => {
+  return {
+    user: state.user
+  }
+}
 
 class DiscogsConnect extends Component {
+
   constructor(props) {
     super(props);
-    this.state = {
-      releases: []
-    };
-
-    this.handleGetCollectionItems = this.handleGetCollectionItems.bind(this);
+    this.handleDiscogsConnect = this.handleDiscogsConnect.bind(this);
   }
 
   componentWillMount () {
-    this.handleGetUserInfo()
+    this.props.dispatch(fetchUserInfo())
   }
 
   handleDiscogsConnect() {
-    requestToken().then(({oauth_token, oauth_token_secret}) => {
-      localStorage.setItem('discogs_token', oauth_token)
-      localStorage.setItem('discogs_token_secret', oauth_token_secret)
-      window.location.assign(generateDiscogsRequestTokenUrl(oauth_token))
-    })
-  }
-
-  handleGetUserInfo () {
-    const token = {
-      token: localStorage.getItem('discogs_token'),
-      token_secret: localStorage.getItem('discogs_token_secret')
-    };
-
-    getUserInfo(token).then((userInfo) => {
-      localStorage.setItem('discogs_username', userInfo.username)
-      console.log(userInfo)
-    })
-  }
-
-  handleGetCollectionItems () {
-    const token = {
-      key: localStorage.getItem('discogs_token'),
-      secret: localStorage.getItem('discogs_token_secret')
-    }
-
-    const username = localStorage.getItem('discogs_username')
-
-    getUserCollection(username, token).then((userCollection) => {
-      console.log(userCollection)
-      this.setState({
-        releases: userCollection
-      })
-    })
+    this.props.dispatch(requestToken())
   }
 
   render () {
@@ -64,7 +29,7 @@ class DiscogsConnect extends Component {
       <div>
         <h3>First, connect to Discogs</h3>
         <p>We will grab your collection and add some Perlinpinpin powder</p>
-        {this.props.isAuthenticated ?
+        {this.props.user.discogs_id ?
           <button type="button" disabled>
             Connected
           </button>
@@ -73,15 +38,10 @@ class DiscogsConnect extends Component {
             Connect
           </button>
         }
-
-        <button type="button" onClick={this.handleGetCollectionItems}>
-          Log collection Items
-        </button>
-        <ReleasesList releases={this.state.releases} />
       </div>
     );
   }
 
 }
 
-export default DiscogsConnect;
+export default connect(mapStateToProps)(DiscogsConnect);
