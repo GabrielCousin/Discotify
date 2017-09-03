@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { fetchDiscogsAlbums } from './actions/discogs'
+import { fetchDiscogsAlbums } from '../actions/discogs'
 
 const mapStateToProps = (state) => {
   return {
@@ -10,7 +10,6 @@ const mapStateToProps = (state) => {
 }
 
 class ReleasesList extends Component {
-
   componentWillReceiveProps (nextProps) {
     if (nextProps.user.discogs_username && !nextProps.releases.length)
       nextProps.dispatch(fetchDiscogsAlbums(nextProps.user.discogs_username))
@@ -30,7 +29,6 @@ class ReleasesList extends Component {
       </ul>
     );
   }
-
 }
 
-export default connect(mapStateToProps)(ReleasesList);
+export default connect(mapStateToProps)(ReleasesList)

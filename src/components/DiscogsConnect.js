@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 
-import { fetchUserInfo, requestToken } from './actions/discogs'
+import { fetchUserInfo, requestToken } from '../actions/discogs'
 
 const mapStateToProps = (state) => {
   return {
@@ -10,7 +10,6 @@ const mapStateToProps = (state) => {
 }
 
 class DiscogsConnect extends Component {
-
   constructor(props) {
     super(props);
     this.handleDiscogsConnect = this.handleDiscogsConnect.bind(this);
@@ -41,7 +40,6 @@ class DiscogsConnect extends Component {
       </div>
     );
   }
-
 }
 
-export default connect(mapStateToProps)(DiscogsConnect);
+export default connect(mapStateToProps)(DiscogsConnect)

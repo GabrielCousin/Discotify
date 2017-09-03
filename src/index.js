@@ -6,7 +6,7 @@ import thunkMiddleware from 'redux-thunk'
 import { composeWithDevTools } from 'redux-devtools-extension';
 
 import reducers from './reducers'
-import App from './App';
+import App from './components/App';
 import registerServiceWorker from './registerServiceWorker';
 import './index.css';
 
