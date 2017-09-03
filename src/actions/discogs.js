@@ -89,7 +89,7 @@ export function confirmConnect () {
   };
 }
 
-export function fetchDiscogsAlbums (username) {
+export function fetchDiscogsAlbums (username, url) {
   const token = localStorage.getItem('discogs_token')
   const token_secret = localStorage.getItem('discogs_token_secret')
 
@@ -99,7 +99,10 @@ export function fetchDiscogsAlbums (username) {
     })
 
     request.get({
-      url: DISCOGS_COLLECTION_ENDPOINT(username),
+      url: url ? url : DISCOGS_COLLECTION_ENDPOINT(username),
+      qs: {
+        per_page: 100
+      },
       oauth: {
         consumer_key: DISCOGS_CONSUMER_KEY,
         consumer_secret: DISCOGS_CONSUMER_SECRET,
@@ -114,9 +117,17 @@ export function fetchDiscogsAlbums (username) {
           error: body.error
         })
       }
+
+      const data = JSON.parse(body);
+      const nextUrl = data.pagination.urls.next;
+
+      if (nextUrl) {
+        dispatch(fetchDiscogsAlbums(null, nextUrl))
+      }
+
       return dispatch({
         type: DISCOGS_FETCH_ALBUMS_SUCCESS,
-        data: JSON.parse(body).releases
+        data: data.releases
       })
     })
 
