@@ -1,6 +1,9 @@
 import React, { Component } from 'react'
 import { Redirect } from 'react-router-dom'
 import { connect } from 'react-redux'
+
+import { confirmConnect } from '../actions/spotify'
+
 const queryString = require('query-string')
 
 const mapStateToProps = (state) => {
