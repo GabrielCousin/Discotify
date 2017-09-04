@@ -6,7 +6,10 @@ import {
   SPOTIFY_OAUTH_CONFIRM_SUCCESS,
   SPOTIFY_FETCH_USER_INFO,
   SPOTIFY_FETCH_USER_INFO_FAIL,
-  SPOTIFY_FETCH_USER_INFO_SUCCESS
+  SPOTIFY_FETCH_USER_INFO_SUCCESS,
+  SPOTIFY_SEARCH_ALBUM,
+  SPOTIFY_SEARCH_ALBUM_FAIL,
+  SPOTIFY_SEARCH_ALBUM_SUCCESS
 } from '../dicts/spotify'
 
 import {
@@ -64,24 +67,40 @@ export function fetchUserInfo () {
   }
 }
 
-// export function searchAlbum (token, query) {
-//   return new Promise(function (resolve, reject) {
-//     request.get({
-//       url: SPOTIFY_SEARCH_ENDPOINT,
-//       qs: {
-//         q: encodeURIComponent(query),
-//         type: 'album',
-//         limit: 1
-//       },
-//     }, function (e, r, body) {
-//       if (body && body.error) {
-//         reject(body.error)
-//       }
-//
-//       resolve(JSON.parse(body))
-//     }).auth(null, null, true, token);
-//   });
-// }
+export function searchAlbum (index, { query }) {
+  const token = localStorage.getItem('spotify_access_token');
+
+  return dispatch => {
+    dispatch({
+      type: SPOTIFY_SEARCH_ALBUM,
+      data: { index }
+    })
+
+    request.get({
+      url: SPOTIFY_SEARCH_ENDPOINT,
+      qs: {
+        q: query,
+        type: 'album',
+        limit: 1
+      },
+      qsStringifyOptions: {
+        encode: false
+      }
+    }, function (e, r, body) {
+      if (body && body.error) {
+        dispatch({
+          type: SPOTIFY_SEARCH_ALBUM_FAIL,
+          data: { index }
+        })
+      }
+
+      dispatch({
+        type: SPOTIFY_SEARCH_ALBUM_SUCCESS,
+        data: { index, results: JSON.parse(body).albums.items }
+      })
+    }).auth(null, null, true, token);
+  }
+}
 
 // export function saveAlbums (token, ids) {
 //   return new Promise(function (resolve, reject) {
