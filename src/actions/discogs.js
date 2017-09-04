@@ -16,6 +16,8 @@ import {
   DISCOGS_FETCH_USER_INFO_FAIL
 } from '../dicts/discogs'
 
+import { APP_STATUS_ALBUMS_FETCHED } from '../dicts/app'
+
 import {
   DISCOGS_CONSUMER_KEY,
   DISCOGS_CONSUMER_SECRET,
@@ -121,14 +123,12 @@ export function fetchDiscogsAlbums (username, url) {
       const data = JSON.parse(body);
       const nextUrl = data.pagination.urls.next;
 
-      if (nextUrl) {
-        dispatch(fetchDiscogsAlbums(null, nextUrl))
-      }
-
-      return dispatch({
+      dispatch({
         type: DISCOGS_FETCH_ALBUMS_SUCCESS,
         data: data.releases
       })
+
+      return dispatch(nextUrl ? fetchDiscogsAlbums(null, nextUrl) : { type: APP_STATUS_ALBUMS_FETCHED })
     })
 
   }
