@@ -7,6 +7,7 @@ import SpotifyConnect from './SpotifyConnect'
 import SpotifyCallback from './SpotifyCallback'
 import ReleasesList from './ReleasesList';
 import Logout from './Logout'
+import Splash from './Splash'
 
 import {
   BrowserRouter as Router,
@@ -21,14 +22,15 @@ class App extends Component {
         <div className="App">
           <h1>Discotify</h1>
           <div>
+            <Route exact path="/" component={Splash} />
             <Route exact path="/logout" component={Logout} />
             <Route exact path="/discogs_callback" component={DiscogsCallback} />
             <Route exact path="/spotify_callback" component={SpotifyCallback} />
-            <Route exact path="/" component={DiscogsConnect} />
-            <Route exact path="/" component={SpotifyConnect} />
-            <Route exact path="/" component={ReleasesList} />
+            <Route exact path="/match" component={DiscogsConnect} />
+            <Route exact path="/match" component={SpotifyConnect} />
+            <Route exact path="/match" component={ReleasesList} />
           </div>
-          <a target="_black" href="https://www.discogs.com/settings/applications">Manage Discogs Access</a>
+          <a rel="noopener noreferrer" target="_blank" href="https://www.discogs.com/settings/applications">Manage Discogs Access</a>
           <span> - </span>
           <Link to="/logout">Log out</Link>
         </div>

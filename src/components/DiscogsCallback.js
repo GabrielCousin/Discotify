@@ -18,7 +18,7 @@ class DiscogsCallback extends Component {
   render () {
     if (this.props.user.discogs_auth_date) {
       return (
-        <Redirect to='/' />
+        <Redirect to='/match' />
       )
     }
 

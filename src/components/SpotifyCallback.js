@@ -24,7 +24,7 @@ class SpotifyCallback extends Component {
   render () {
     if (this.props.user.spotify_auth_date) {
       return (
-        <Redirect to='/' />
+        <Redirect to='/match' />
       )
     }
 
