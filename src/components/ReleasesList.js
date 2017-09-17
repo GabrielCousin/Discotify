@@ -3,6 +3,8 @@ import { connect } from 'react-redux'
 import { fetchDiscogsAlbums } from '../actions/discogs'
 import { searchAlbum } from '../actions/spotify'
 
+import './ReleasesList.css'
+
 const mapStateToProps = (state) => {
   return {
     app: state.app,
@@ -33,7 +35,7 @@ class ReleasesList extends Component {
 
   render () {
     return (
-      <ul>
+      <ul className='releasesList'>
         {this.props.releases.length > 0 && this.props.releases.map((release, i) => (
           <li key={i}>
             {release.spotify_id}

@@ -79,7 +79,7 @@ export function searchAlbum (index, { query }) {
     request.get({
       url: SPOTIFY_SEARCH_ENDPOINT,
       qs: {
-        q: query,
+        q: encodeURIComponent(query),
         type: 'album',
         limit: 1
       },

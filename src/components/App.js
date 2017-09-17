@@ -1,25 +1,26 @@
 import React, { Component } from 'react'
 import './App.css'
 
-import DiscogsConnect from './DiscogsConnect'
 import DiscogsCallback from './DiscogsCallback'
-import SpotifyConnect from './SpotifyConnect'
-import SpotifyCallback from './SpotifyCallback'
-import ReleasesList from './ReleasesList';
+import DiscogsConnect from './DiscogsConnect'
+import Footer from './Footer'
 import Logout from './Logout'
+import ReleasesList from './ReleasesList';
 import Splash from './Splash'
+import SpotifyCallback from './SpotifyCallback'
+import SpotifyConnect from './SpotifyConnect'
+import StatusBar from './StatusBar'
 
 import {
   BrowserRouter as Router,
-  Route,
-  Link
+  Route
 } from 'react-router-dom'
 
 class App extends Component {
   render() {
     return (
       <Router>
-        <div className="App">
+        <div className="app">
           <h1>Discotify</h1>
           <div>
             <Route exact path="/" component={Splash} />
@@ -29,10 +30,9 @@ class App extends Component {
             <Route exact path="/match" component={DiscogsConnect} />
             <Route exact path="/match" component={SpotifyConnect} />
             <Route exact path="/match" component={ReleasesList} />
+            <Route exact path="/match" component={StatusBar} />
           </div>
-          <a rel="noopener noreferrer" target="_blank" href="https://www.discogs.com/settings/applications">Manage Discogs Access</a>
-          <span> - </span>
-          <Link to="/logout">Log out</Link>
+          <Footer />
         </div>
       </Router>
     );
