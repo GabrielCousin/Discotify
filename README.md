@@ -8,7 +8,7 @@ Export your Discogs library to Spotify
 ```bash
 $ yarn
 $ # npm install
-$ cp src/config/settings.js.dist src/config/settings.js
+$ cp src/config/settings.dist.js src/config/settings.js
 $ # edit with your own tokens
 ```
 
