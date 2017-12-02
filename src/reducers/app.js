@@ -5,7 +5,9 @@ import {
 import {
   SPOTIFY_SEARCH_ALBUM,
   SPOTIFY_SEARCH_ALBUM_SUCCESS,
-  SPOTIFY_MATCHING_SUCCESS
+  SPOTIFY_MATCHING_SUCCESS,
+  SPOTIFY_EXPORT_STARTED,
+  SPOTIFY_EXPORT_SUCCESS
 } from '../dicts/spotify'
 
 const app = (state = {}, action) => {
@@ -24,6 +26,16 @@ const app = (state = {}, action) => {
     case SPOTIFY_MATCHING_SUCCESS:
       return Object.assign({}, state, {
         release_matching_done: true
+      })
+
+    case SPOTIFY_EXPORT_STARTED:
+      return Object.assign({}, state, {
+        release_export_ready: true
+      })
+
+    case SPOTIFY_EXPORT_SUCCESS:
+      return Object.assign({}, state, {
+        release_export_done: true
       })
 
     default:

@@ -10,7 +10,10 @@ import {
   SPOTIFY_SEARCH_ALBUM,
   SPOTIFY_SEARCH_ALBUM_FAIL,
   SPOTIFY_SEARCH_ALBUM_SUCCESS,
-  SPOTIFY_MATCHING_SUCCESS
+  SPOTIFY_MATCHING_SUCCESS,
+  SPOTIFY_EXPORT_STARTED,
+  SPOTIFY_EXPORT_FAIL,
+  SPOTIFY_EXPORT_SUCCESS
 } from '../dicts/spotify'
 
 import {
@@ -111,8 +114,18 @@ export function completeMatch() {
   }
 }
 
-export function saveAlbums (token, ids) {
-  return new Promise(function (resolve, reject) {
+export function startExport() {
+  return dispatch => {
+    dispatch({
+      type: SPOTIFY_EXPORT_STARTED
+    })
+  }
+}
+
+export function saveAlbums (ids) {
+  const token = localStorage.getItem('spotify_access_token');
+
+  return dispatch => {
     request.put({
       url: SPOTIFY_SAVE_ALBUMS_ENDPOINT,
       json: {
@@ -120,10 +133,14 @@ export function saveAlbums (token, ids) {
       },
     }, function (e, r, body) {
       if (body && body.error) {
-        reject(body.error)
+        dispatch({
+          type: SPOTIFY_EXPORT_FAIL
+        })
       }
 
-      resolve()
+      dispatch({
+        type: SPOTIFY_EXPORT_SUCCESS
+      })
     }).auth(null, null, true, token);
-  });
+  }
 }
