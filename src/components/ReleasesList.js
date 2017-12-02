@@ -22,19 +22,24 @@ class ReleasesList extends Component {
   }
 
   componentWillReceiveProps (nextProps) {
-    if (nextProps.user.discogs_username && !nextProps.releases.length)
+    if (!nextProps.user.discogs_username)
+      return
+
+    if (!nextProps.releases.length)
       nextProps.dispatch(fetchDiscogsAlbums(nextProps.user.discogs_username))
 
-    if (nextProps.user.spotify_display_name && nextProps.app.release_matching_ready && this.state.currentReleaseIndex < nextProps.releases.length) {
+    if (!nextProps.user.spotify_display_name || !nextProps.releases.length)
+      return
+
+    if (nextProps.app.release_matching_ready && this.state.currentReleaseIndex < nextProps.releases.length) {
       nextProps.dispatch(searchAlbum(this.state.currentReleaseIndex, this.props.releases[this.state.currentReleaseIndex]))
       this.setState({
         currentReleaseIndex: this.state.currentReleaseIndex + 1
       })
     }
 
-    if (nextProps.releases.length && this.state.currentReleaseIndex === nextProps.releases.length && !nextProps.app.release_matching_done) {
+    if (!nextProps.app.release_matching_done && this.state.currentReleaseIndex === nextProps.releases.length)
       nextProps.dispatch(completeMatch())
-    }
   }
 
   render () {
