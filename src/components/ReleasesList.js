@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { fetchDiscogsAlbums } from '../actions/discogs'
-import { searchAlbum } from '../actions/spotify'
+import { searchAlbum, completeMatch } from '../actions/spotify'
 
 import './ReleasesList.css'
 
@@ -31,21 +31,32 @@ class ReleasesList extends Component {
         currentReleaseIndex: this.state.currentReleaseIndex + 1
       })
     }
+
+    if (nextProps.releases.length && this.state.currentReleaseIndex === nextProps.releases.length && !nextProps.app.release_matching_done) {
+      nextProps.dispatch(completeMatch())
+    }
   }
 
   render () {
     return (
-      <ul className='releasesList'>
-        {this.props.releases.length > 0 && this.props.releases.map((release, i) => (
-          <li key={i}>
-            {release.spotify_id}
-            <p>{release.status}</p>
-            <h4>{release.artists}</h4>
-            <h5>{release.title}</h5>
-            <img alt={release.title} src={release.cover} width="50" height="50" />
-          </li>
-        ))}
-      </ul>
+      <div>
+        {this.props.releases.length > 0 &&
+          <div>
+            <p>You have <strong>{this.props.releases.length}</strong> releases in your library, we will check if the albums exist in Spotify’s database.</p>
+            <ul className='releasesList'>
+              {this.props.releases.map((release, i) => (
+                <li key={i}>
+                  {release.spotify_id}
+                  <p>{release.status}</p>
+                  <h4>{release.artists}</h4>
+                  <h5>{release.title}</h5>
+                  <img alt={release.title} src={release.cover} width="50" height="50" />
+                </li>
+              ))}
+            </ul>
+          </div>
+        }
+      </div>
     );
   }
 }

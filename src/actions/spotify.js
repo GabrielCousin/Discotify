@@ -9,7 +9,8 @@ import {
   SPOTIFY_FETCH_USER_INFO_SUCCESS,
   SPOTIFY_SEARCH_ALBUM,
   SPOTIFY_SEARCH_ALBUM_FAIL,
-  SPOTIFY_SEARCH_ALBUM_SUCCESS
+  SPOTIFY_SEARCH_ALBUM_SUCCESS,
+  SPOTIFY_MATCHING_SUCCESS
 } from '../dicts/spotify'
 
 import {
@@ -102,19 +103,27 @@ export function searchAlbum (index, { query }) {
   }
 }
 
-// export function saveAlbums (token, ids) {
-//   return new Promise(function (resolve, reject) {
-//     request.put({
-//       url: SPOTIFY_SAVE_ALBUMS_ENDPOINT,
-//       json: {
-//         ids
-//       },
-//     }, function (e, r, body) {
-//       if (body && body.error) {
-//         reject(body.error)
-//       }
-//
-//       resolve()
-//     }).auth(null, null, true, token);
-//   });
-// }
+export function completeMatch() {
+  return dispatch => {
+    dispatch({
+      type: SPOTIFY_MATCHING_SUCCESS
+    })
+  }
+}
+
+export function saveAlbums (token, ids) {
+  return new Promise(function (resolve, reject) {
+    request.put({
+      url: SPOTIFY_SAVE_ALBUMS_ENDPOINT,
+      json: {
+        ids
+      },
+    }, function (e, r, body) {
+      if (body && body.error) {
+        reject(body.error)
+      }
+
+      resolve()
+    }).auth(null, null, true, token);
+  });
+}

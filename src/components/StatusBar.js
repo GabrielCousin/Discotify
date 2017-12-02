@@ -19,6 +19,9 @@ class StatusBar extends Component {
         <progress value={processedReleases} max={this.props.releases.length} />
         <p><strong>{processedReleases}</strong> on <strong>{this.props.releases.length}</strong> releases processed.</p>
         <p><strong>{ignoredReleases} items</strong> will be ignored.</p>
+        <button type="button" disabled={!this.props.app.release_matching_done}>Export to Spotify</button>
+        <span> - </span>
+        <a href="https://open.spotify.com/collection/albums" target="_blank" rel="noopener noreferrer">All done! Go to Spotify</a>
       </div>
     );
   }
