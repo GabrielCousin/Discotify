@@ -6,7 +6,7 @@ import {
 
 const albums = (state = [], {type, data}) => {
   switch (type) {
-    case DISCOGS_FETCH_ALBUMS_SUCCESS:
+    case DISCOGS_FETCH_ALBUMS_SUCCESS: {
       const albums = data.map(album => {
         const artists = album.basic_information.artists.map(artist => (artist.name)).join(' ')
         return {
@@ -20,6 +20,7 @@ const albums = (state = [], {type, data}) => {
         }
       })
       return state.concat(albums)
+    }
 
     case SPOTIFY_SEARCH_ALBUM: {
       return [
