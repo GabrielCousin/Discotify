@@ -16,13 +16,15 @@ import {
   Route
 } from 'react-router-dom'
 
+const Fragment = React.Fragment;
+
 class App extends Component {
   render() {
     return (
       <Router>
         <div className="app">
           <h1>Discotify</h1>
-          <div>
+          <Fragment>
             <Route exact path="/" component={Splash} />
             <Route exact path="/logout" component={Logout} />
             <Route exact path="/discogs_callback" component={DiscogsCallback} />
@@ -31,7 +33,7 @@ class App extends Component {
             <Route exact path="/match" component={SpotifyConnect} />
             <Route exact path="/match" component={ReleasesList} />
             <Route exact path="/match" component={StatusBar} />
-          </div>
+          </Fragment>
           <Footer />
         </div>
       </Router>

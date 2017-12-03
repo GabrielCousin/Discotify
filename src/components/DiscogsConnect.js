@@ -9,6 +9,8 @@ const mapStateToProps = (state) => {
   }
 }
 
+const Fragment = React.Fragment;
+
 class DiscogsConnect extends Component {
   constructor(props) {
     super(props);
@@ -25,7 +27,7 @@ class DiscogsConnect extends Component {
 
   render () {
     return (
-      <div>
+      <Fragment>
         <h3>First, connect to Discogs</h3>
         <p>We will grab your collection and add some Perlinpinpin powder</p>
         {this.props.user.discogs_id ?
@@ -37,7 +39,7 @@ class DiscogsConnect extends Component {
             Connect
           </button>
         }
-      </div>
+      </Fragment>
     );
   }
 }

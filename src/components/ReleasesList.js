@@ -13,6 +13,8 @@ const mapStateToProps = (state) => {
   }
 }
 
+const Fragment = React.Fragment;
+
 class ReleasesList extends Component {
   constructor(props) {
     super(props);
@@ -54,9 +56,9 @@ class ReleasesList extends Component {
 
   render () {
     return (
-      <div>
+      <section>
         {this.props.releases.length > 0 &&
-          <div>
+          <Fragment>
             <p>You have <strong>{this.props.releases.length}</strong> releases in your library, we will check if the albums exist in Spotify’s database.</p>
             <ul className='releasesList'>
               {this.props.releases.map((release, i) => (
@@ -69,9 +71,9 @@ class ReleasesList extends Component {
                 </li>
               ))}
             </ul>
-          </div>
+          </Fragment>
         }
-      </div>
+      </section>
     );
   }
 }
