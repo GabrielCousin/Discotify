@@ -3,12 +3,11 @@ import { render } from 'react-dom';
 import { Provider } from 'react-redux'
 import { createStore, applyMiddleware } from 'redux'
 import thunkMiddleware from 'redux-thunk'
-import { composeWithDevTools } from 'redux-devtools-extension';
+import { composeWithDevTools } from 'redux-devtools-extension'
 
 import reducers from './reducers'
-import App from './components/App';
-import registerServiceWorker from './registerServiceWorker';
-import './index.css';
+import App from './components/App'
+import './index.css'
 
 const store = createStore(
   reducers,
@@ -21,5 +20,3 @@ render(
   </Provider>,
   document.getElementById('root')
 );
-
-registerServiceWorker();

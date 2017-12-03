@@ -1,0 +1,17 @@
+{
+  parserOptions: {
+    ecmaVersion: 2017,
+    sourceType: 'module'
+  },
+  env: {
+    node: true,
+    browser: true
+  },
+  extends: [
+    "eslint:recommended",
+    "plugin:react/recommended"
+  ],
+  rules: {
+    'react/prop-types': 1
+  }
+}
