@@ -28,18 +28,22 @@ class SpotifyConnect extends Component {
 
   render () {
     return (
-      <div>
-        <h3>Now, connect to Spotify</h3>
-        <p>We need some rights on your Spotify account to create your Discogs library</p>
-        {this.props.user.spotify_id ?
-          <button type="button" disabled>
-            Connected
-          </button>
-        :
-          <button type="button" onClick={this.handleSpotifyConnect}>
-            Connect
-          </button>
-        }
+      <div className={this.props.user.spotify_id ? 'Box Box--connected' : 'Box Box--disconnected' }>
+        <div className="Box-Content">
+          <h3 className="Box-Title">Now, connect to Spotify</h3>
+          <p className="Box-Description">We need some rights on your Spotify account to create your Discogs library</p>
+        </div>
+        <div className="Box-AddOn">
+          {this.props.user.spotify_id ?
+            <button className="Button" type="button" disabled>
+              Connected
+            </button>
+          :
+            <button className="Button" type="button" onClick={this.handleSpotifyConnect}>
+              Connect
+            </button>
+          }
+        </div>
       </div>
     );
   }

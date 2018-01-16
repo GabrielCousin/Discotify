@@ -28,17 +28,23 @@ class DiscogsConnect extends Component {
   render () {
     return (
       <Fragment>
-        <h3>First, connect to Discogs</h3>
-        <p>We will grab your collection and add some Perlinpinpin powder</p>
-        {this.props.user.discogs_id ?
-          <button type="button" disabled>
-            Connected
-          </button>
-        :
-          <button type="button" onClick={this.handleDiscogsConnect}>
-            Connect
-          </button>
-        }
+        <div className={this.props.user.discogs_id ? 'Box Box--connected' : 'Box Box--disconnected' }>
+          <div className="Box-Content">
+            <h3 className="Box-Title">First, connect to Discogs</h3>
+            <p className="Box-Description">We will grab your collection and add some Perlinpinpin powder</p>
+          </div>
+          <div className="Box-AddOn">
+            {this.props.user.discogs_id ?
+              <button className="Button" type="button" disabled>
+                Connected
+              </button>
+            :
+              <button className="Button" type="button" onClick={this.handleDiscogsConnect}>
+                Connect
+              </button>
+            }
+          </div>
+        </div>
       </Fragment>
     );
   }

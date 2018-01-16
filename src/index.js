@@ -1,5 +1,5 @@
-import React from 'react';
-import { render } from 'react-dom';
+import React from 'react'
+import { render } from 'react-dom'
 import { Provider } from 'react-redux'
 import { createStore, applyMiddleware } from 'redux'
 import thunkMiddleware from 'redux-thunk'
@@ -7,6 +7,7 @@ import { composeWithDevTools } from 'redux-devtools-extension'
 
 import reducers from './reducers'
 import App from './components/App'
+
 import './index.css'
 
 const store = createStore(

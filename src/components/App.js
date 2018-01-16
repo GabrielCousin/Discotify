@@ -1,4 +1,6 @@
 import React, { Component } from 'react'
+
+import 'normalize.css'
 import './App.css'
 
 import DiscogsCallback from './DiscogsCallback'
@@ -22,8 +24,10 @@ class App extends Component {
   render() {
     return (
       <Router>
-        <div className="app">
-          <h1>Discotify</h1>
+        <div className="App">
+          <h1 className="Logo Hero-Logo">
+            <img src="public/svg/logo.svg" />
+          </h1>
           <Fragment>
             <Route exact path="/" component={Splash} />
             <Route exact path="/logout" component={Logout} />
