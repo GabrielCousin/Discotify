@@ -56,24 +56,24 @@ class ReleasesList extends Component {
 
   render () {
     return (
-      <section>
+      <div className="Box Box--ReleaseList">
         {this.props.releases.length > 0 &&
           <Fragment>
-            <p>You have <strong>{this.props.releases.length}</strong> releases in your library, we will check if the albums exist in Spotify’s database.</p>
-            <ul className='releasesList'>
+            <h3 className="Box-Title">Matching your Discogs library with Spotify</h3>
+            <p className="Box-Description">You have <strong>{this.props.releases.length}</strong> releases in your library, we will check if the albums exist in Spotify’s database.</p>
+            <ul className='List Box-List--releases'>
               {this.props.releases.map((release, i) => (
-                <li key={i}>
-                  {release.spotify_id}
-                  <p>{release.status}</p>
-                  <h4>{release.artists}</h4>
-                  <h5>{release.title}</h5>
-                  <img alt={release.title} src={release.cover} width="50" height="50" />
+                <li className="Item List-Item" key={i}>
+                  {/* {release.spotify_id} */}
+                  <img className="Item-Image" alt={release.title} src={release.cover} />
+                  <h4 className="Item-Title">{release.artists} - {release.title}</h4>
+                  <span className={'Item-Status Item-Status--' + release.status}></span>
                 </li>
               ))}
             </ul>
           </Fragment>
         }
-      </section>
+      </div>
     );
   }
 }
