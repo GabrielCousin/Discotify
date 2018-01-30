@@ -64,6 +64,9 @@ export function confirmConnect () {
 
     request.post({
       url: DISCOGS_ACCESS_TOKEN_ENDPOINT,
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded'
+      },
       qs: Object.assign(qs, {
         oauth_consumer_key: DISCOGS_CONSUMER_KEY,
         oauth_signature: `${DISCOGS_CONSUMER_SECRET}%26${localStorage.getItem('discogs_token_secret')}`,
