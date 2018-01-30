@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, { Fragment, Component } from 'react'
 import { connect } from 'react-redux'
 
 import { fetchUserInfo, requestToken } from '../actions/discogs'
@@ -8,8 +8,6 @@ const mapStateToProps = (state) => {
     user: state.user
   }
 }
-
-const Fragment = React.Fragment;
 
 class DiscogsConnect extends Component {
   constructor(props) {

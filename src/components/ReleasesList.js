@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, { Fragment, Component } from 'react'
 import { connect } from 'react-redux'
 import { fetchDiscogsAlbums } from '../actions/discogs'
 import { searchAlbum, completeMatch, saveAlbums } from '../actions/spotify'
@@ -12,8 +12,6 @@ const mapStateToProps = (state) => {
     releases: state.albums
   }
 }
-
-const Fragment = React.Fragment;
 
 class ReleasesList extends Component {
   constructor(props) {

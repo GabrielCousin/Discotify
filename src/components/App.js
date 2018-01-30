@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, { Fragment, Component } from 'react'
 
 import 'normalize.css'
 import './App.css'
@@ -18,8 +18,6 @@ import {
   Route
 } from 'react-router-dom'
 
-const Fragment = React.Fragment;
-
 class App extends Component {
   render() {
     return (
@@ -33,9 +31,11 @@ class App extends Component {
             <Route exact path="/logout" component={Logout} />
             <Route exact path="/discogs_callback" component={DiscogsCallback} />
             <Route exact path="/spotify_callback" component={SpotifyCallback} />
-            <Route exact path="/match" component={DiscogsConnect} />
-            <Route exact path="/match" component={SpotifyConnect} />
-            <Route exact path="/match" component={ReleasesList} />
+            <div className='BoxesContainer'>
+              <Route exact path="/match" component={DiscogsConnect} />
+              <Route exact path="/match" component={SpotifyConnect} />
+              <Route exact path="/match" component={ReleasesList} />
+            </div>
             <Route exact path="/match" component={StatusBar} />
           </Fragment>
           <Footer />
