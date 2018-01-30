@@ -1,7 +1,5 @@
-import React from 'react'
+import React, { Fragment } from 'react'
 import { Link } from 'react-router-dom'
-
-const Fragment = React.Fragment;
 
 function Splash () {
   return (
