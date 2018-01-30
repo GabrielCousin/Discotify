@@ -96,11 +96,11 @@ a {
 .Hero-Logo {
   margin-bottom: var(--bigMargin);
   margin-top: var(--bigMargin);
-}
 
-.Hero-Logo img {
-  height: calc(var(--squareSize) * 24);
-  vertical-align: top;
+  img {
+    height: calc(var(--squareSize) * 24);
+    vertical-align: top;
+  }
 }
 
 .Hero-Paragraph {
@@ -110,7 +110,6 @@ a {
   margin: 0 auto var(--bigMargin);
   line-height: calc( var(--squareSize) * 11 );
 }
-
 
 .Button {
   display: inline-block;
@@ -134,37 +133,49 @@ a {
   appearance: none;
   font-family: var(--sansSerif);
   box-shadow: 0 1px 3px rgba(var(--black), .2);
-}
 
-.Button + .Button {
-  margin-left: var(--defaultMargin);
-}
+  &:hover {
+    background: #1AA64B;
+    transform: translateY(-1px);
+    box-shadow: 0 2px 5px rgba(var(--black), .2);
+  }
 
-.Button:hover {
-  background: #1AA64B;
-  transform: translateY(-1px);
-  box-shadow: 0 2px 5px rgba(var(--black), .2);
-}
+  &.Button--disabled,
+  &:disabled {
+    transform: translateY(0);
+    opacity: .2;
+    cursor: default;
+  }
 
-.Button[disabled] {
-  transform: translateY(0);
-  opacity: .2;
-  cursor: default;
+  & + .Button {
+    margin-left: var(--defaultMargin);
+  }
 }
 
 .Box {
   background: rgba( var(--black), .8);
+  width: calc(180 * var(--squareSize));
   padding: var(--defaultPadding);
   border-radius: 0;
-  width: calc(180 * var(--squareSize));
-  margin: 0 auto;
   text-align: left;
   display: flex;
   flex-direction: row;
+  flex-shrink: 0;
+  margin: 0 auto;
+
+  &:last-child {
+    border-radius: 5px;
+  }
+
+  &:empty {
+    display: none;
+  }
 }
 
-.Box:last-child {
-  border-radius: 5px;
+.BoxesContainer {
+  width: calc(180 * var(--squareSize));
+  margin: 0 auto;
+  overflow-y: auto;
 }
 
 .Box--hidden {
@@ -293,16 +304,12 @@ a {
 
 @keyframes loader {
   0% {
-    -webkit-transform: rotate(0deg);
     transform: rotate(0deg);
   }
   100% {
-    -webkit-transform: rotate(360deg);
     transform: rotate(360deg);
   }
 }
-
-
 
 .Item-Status--success {
   background: var(--spotify);
@@ -313,4 +320,20 @@ a {
   position: absolute;
   bottom: var(--defaultMargin);
   left: var(--defaultMargin);
+}
+
+.ProgressBar {
+  appearance: none;
+  height: 12px;
+
+  &::-webkit-progress-value {
+    border-radius: 6px;
+    background-color: var(--codGray);
+    opacity: .7;
+  }
+
+  &::-webkit-progress-bar {
+    border-radius: 6px;
+    background-color: var(--spotify);
+  }
 }
