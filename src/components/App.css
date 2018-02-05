@@ -133,7 +133,7 @@ a {
   transition: background-color .2s ease-out, box-shadow .05s ease-out, color .1s ease-out, transform .1s ease-out;
   appearance: none;
   font-family: var(--sansSerif);
-  box-shadow: 0 1px 3px rgba(var(--black), .2);
+  box-shadow: none;
 
   &:hover {
     background: #1AA64B;
@@ -372,11 +372,15 @@ a {
   }
 }
 
-@media only screen  and (min-device-width: 375px)  and (max-device-width: 568px) and (orientation: portrait) {
+@media only screen  and (min-device-width: 320px)  and (max-device-width: 568px) and (orientation: portrait) {
 
   .App {
     padding-bottom: 0;
     font-weight: 300;
+  }
+
+  .Hero-Paragraph {
+    width: 100%;
   }
 
   .Hero-Logo {
@@ -450,5 +454,24 @@ a {
 
   .FooterAdmin {
     display: none;
+  }
+}
+
+@media only screen  and (min-device-width: 320px)  and (max-device-width: 375px) and (orientation: portrait) {
+
+  .Box-Title {
+    font-size: var(--fontSizeL);
+  }
+
+  .Box-Footer {
+    padding: var(--smallPadding) var(--defaultPadding);
+
+    .Button {
+      margin-top: var(--smallMargin);
+    }
+  }
+
+  .ProgressBar {
+    margin-top: var(--smallMargin);
   }
 }
