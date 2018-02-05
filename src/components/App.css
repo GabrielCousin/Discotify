@@ -275,13 +275,17 @@ a {
   margin: 0;
   padding: 0;
   list-style: none;
-  scroll-snap-type: y mandatory;
-  scroll-padding: 48px 0 0;
+  display: flex;
+  flex-direction: column-reverse;
 }
 
 .Item {
   padding: var(--smallPadding) var(--defaultPadding) var(--smallPadding) 0;
   position: relative;
+}
+
+.Item--pending {
+  display: none;
 }
 
 .Item-Image {
@@ -350,6 +354,14 @@ a {
   border: none;
 }
 
+.ItemCount-NOK {
+  color: #E55934;
+}
+
+.ItemCount-OK {
+  color: var(--spotify);
+}
+
 .FooterAdmin {
   position: absolute;
   bottom: var(--defaultMargin);
@@ -376,7 +388,6 @@ a {
 
   .App {
     padding-bottom: 0;
-    font-weight: 300;
   }
 
   .Hero-Paragraph {
@@ -457,7 +468,7 @@ a {
   }
 }
 
-@media only screen  and (min-device-width: 320px)  and (max-device-width: 375px) and (orientation: portrait) {
+@media only screen  and (min-device-width: 320px)  and (max-device-width: 374px) and (orientation: portrait) {
 
   .Box-Title {
     font-size: var(--fontSizeL);
