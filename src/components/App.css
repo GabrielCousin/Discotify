@@ -366,6 +366,7 @@ a {
   position: absolute;
   bottom: var(--defaultMargin);
   left: var(--defaultMargin);
+  display: none;
 }
 
 .ProgressBar {
@@ -461,10 +462,6 @@ a {
   .ProgressBar {
     width: 100%;
     margin-top: var(--defaultMargin);
-  }
-
-  .FooterAdmin {
-    display: none;
   }
 }
 
