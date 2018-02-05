@@ -1,6 +1,8 @@
 {
   "short_name": "Discotify",
   "name": "Discotify",
+  "description": "Export your Discogs collection to Spotify",
+  "default_locale": "en",
   "icons": [
     {
       "src": "favicon.ico",
@@ -10,6 +12,6 @@
   ],
   "start_url": "./index.html",
   "display": "standalone",
-  "theme_color": "#000000",
-  "background_color": "#ffffff"
+  "theme_color": "#191414",
+  "background_color": "#191414"
 }
