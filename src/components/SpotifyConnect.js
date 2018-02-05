@@ -31,7 +31,7 @@ class SpotifyConnect extends Component {
       <div className={this.props.user.spotify_id ? 'Box Box--connected' : 'Box Box--disconnected' }>
         <div className="Box-Content">
           <h3 className={this.props.user.spotify_id ? 'Box-Title Box-Title--connected' : 'Box-Title' }>Now, connect to Spotify</h3>
-          <p className="Box-Description">We need some rights on your Spotify account to create your Discogs library</p>
+          <p className="Box-Description">Releases will be exported in your albums</p>
         </div>
         <div className="Box-AddOn">
           {this.props.user.spotify_id ?
