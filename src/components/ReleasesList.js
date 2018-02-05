@@ -61,7 +61,7 @@ class ReleasesList extends Component {
             <p className="Box-Description">You have <strong>{this.props.releases.length}</strong> releases in your library, we will check if the albums exist in Spotify’s database.</p>
             <ul className='List Box-List--releases'>
               {this.props.releases.map((release, i) => (
-                <li className="Item List-Item" key={i}>
+                <li className={'Item List-Item Item--' + release.status} key={i}>
                   {/* {release.spotify_id} */}
                   <img className="Item-Image" alt={release.title} src={release.thumb} />
                   <h4 className="Item-Title">{release.artists} - {release.title}</h4>

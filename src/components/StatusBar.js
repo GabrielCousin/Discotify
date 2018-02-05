@@ -23,12 +23,13 @@ class StatusBar extends Component {
   render () {
     let processedReleases = this.props.releases.filter((rlz) => (rlz.status === 'fail' || rlz.status === 'success')).length
     let ignoredReleases = this.props.releases.filter((rlz) => (rlz.status === 'fail')).length
+    let succeedReleases = this.props.releases.filter((rlz) => (rlz.status === 'success')).length
 
     return (
       <div className={`Box Box-Footer ${processedReleases ? '' : 'Box--hidden'}`}>
         <div className="Box-Content">
-          <div><strong>{processedReleases}</strong> on <strong>{this.props.releases.length}</strong> releases processed.</div>
-          <div><strong>{ignoredReleases} items</strong> will be ignored.</div>
+          <div>{processedReleases}/{this.props.releases.length} releases processed.</div>
+          <div><span className="ItemCount-NOK">{ignoredReleases} items</span> ignored. <span className="ItemCount-OK">{succeedReleases} items</span> OK.</div>
         </div>
         {!this.props.app.release_matching_done &&
           <progress className='ProgressBar' value={processedReleases} max={this.props.releases.length} />

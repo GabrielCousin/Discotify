@@ -124,14 +124,15 @@ export function fetchDiscogsAlbums (username, url) {
       }
 
       const data = JSON.parse(body);
-      const nextUrl = data.pagination.urls.next;
+      //const nextUrl = data.pagination.urls.next;
 
       dispatch({
         type: DISCOGS_FETCH_ALBUMS_SUCCESS,
         data: data.releases
       })
 
-      return dispatch(nextUrl ? fetchDiscogsAlbums(null, nextUrl) : { type: APP_STATUS_ALBUMS_FETCHED })
+      //return dispatch(nextUrl ? fetchDiscogsAlbums(null, nextUrl) : { type: APP_STATUS_ALBUMS_FETCHED })
+      return dispatch({ type: APP_STATUS_ALBUMS_FETCHED })
     })
 
   }
