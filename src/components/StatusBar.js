@@ -25,7 +25,7 @@ class StatusBar extends Component {
     let ignoredReleases = this.props.releases.filter((rlz) => (rlz.status === 'fail')).length
 
     return (
-      <div className={processedReleases ? 'Box' : 'Box Box--hidden'}>
+      <div className={`Box Box-Footer ${processedReleases ? '' : 'Box--hidden'}`}>
         <div className="Box-Content">
           <div><strong>{processedReleases}</strong> on <strong>{this.props.releases.length}</strong> releases processed.</div>
           <div><strong>{ignoredReleases} items</strong> will be ignored.</div>
@@ -36,13 +36,13 @@ class StatusBar extends Component {
         {this.props.app.release_matching_done &&
           <div className="Box-AddOn">
             <button
-              className="Button"
+              className={`Button ${this.props.app.release_export_done ? 'Button--hidden' : ''}`}
               type="button"
               onClick={this.handleSpotifyExport}
               disabled={this.props.app.release_export_done}
             >Export to Spotify</button>
             <a
-              className={`Button ${this.props.app.release_export_done ? '' : 'Button--disabled'}`}
+              className={`Button ${this.props.app.release_export_done ? '' : 'Button--hidden'}`}
               href="https://open.spotify.com/collection/albums"
               target="_blank"
               rel="noopener noreferrer"

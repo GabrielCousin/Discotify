@@ -46,7 +46,8 @@
   --defaultFontSize: 14px;
   --semiBold: 600;
   --scaleRatio: 1.125;
-  --fontSizeXL: calc( var(--defaultFontSize) * var(--scaleRatio) );
+  --fontSizeL: calc( var(--defaultFontSize) * var(--scaleRatio) * var(--scaleRatio) * var(--scaleRatio) * var(--scaleRatio) );
+  --fontSizeXL: calc( var(--defaultFontSize) * var(--scaleRatio) * var(--scaleRatio) * var(--scaleRatio) * var(--scaleRatio) * var(--scaleRatio) * var(--scaleRatio) );
   --heroParagraphFontSize: calc( var(--defaultFontSize) * var(--scaleRatio) * var(--scaleRatio)  * var(--scaleRatio) * var(--scaleRatio) * var(--scaleRatio) * var(--scaleRatio) );
 
 
@@ -145,11 +146,28 @@ a {
     transform: translateY(0);
     opacity: .2;
     cursor: default;
+    &:hover {
+      background: var(--spotify);
+    }
   }
 
   & + .Button {
     margin-left: var(--defaultMargin);
   }
+
+}
+.Button--hidden {
+  display: none;
+}
+
+.Button--block {
+  display: block;
+}
+
+.BoxesContainer {
+  width: calc(180 * var(--squareSize));
+  margin: 0 auto;
+  overflow-y: auto;
 }
 
 .Box {
@@ -172,10 +190,9 @@ a {
   }
 }
 
-.BoxesContainer {
-  width: calc(180 * var(--squareSize));
-  margin: 0 auto;
-  overflow-y: auto;
+.Box-AddOn {
+  align-items: center;
+  display: flex;
 }
 
 .Box--hidden {
@@ -187,7 +204,8 @@ a {
   border-radius: 0 0 var(--defaultRadius);;
 }
 
-.Box--connected + .Box--connected {
+.Box--connected {
+  padding: var(--smallPadding) var(--defaultPadding) ;
 }
 
 .Box--disconnected + .Box--disconnected {
@@ -198,13 +216,17 @@ a {
   display: none;
 }
 
-.Box:only-child {
-  border-radius: var(--defaultRadius);
+.BoxesContainer {
+
+  .Box:only-child {
+    border-radius: var(--defaultRadius);
+  }
+
+  .Box:last-child {
+    border-radius: 0 0 var(--defaultRadius) var(--defaultRadius);
+  }
 }
 
-.Box:last-child {
-  border-radius: 0 0 var(--defaultRadius);
-}
 
 .Box-Title {
   font-size: var(--heroParagraphFontSize);
@@ -214,6 +236,13 @@ a {
   color: var(--blackHaze);
   font-weight: normal;
 }
+
+.Box-Title--connected {
+  transition: font-size .2s ease-out;
+  font-size: var(--fontSizeL);
+}
+
+
 
 .Box-Content {
   flex: 1;
@@ -235,6 +264,11 @@ a {
   flex: 1;
   flex-direction: column;
   overflow: auto;
+}
+
+.Box-Footer {
+  border-radius: 0 0 var(--defaultRadius) var(--defaultRadius);
+  margin-top: 1px;
 }
 
 .List {
@@ -261,7 +295,7 @@ a {
 .Item-Title {
   display: inline-block;
   vertical-align: top;
-  font-weight: normal;
+  font-weight: 300;
   margin: 0;
 }
 
@@ -271,7 +305,7 @@ a {
   height: calc(3 * var(--squareSize));
   width: calc(3 * var(--squareSize));
   border-radius: 50%;
-  right: calc(6 * var(--squareSize));
+  right: 0;
   top: calc( var(--smallPadding) + var(--smallPadding)/2 );
 }
 
@@ -324,7 +358,7 @@ a {
 
 .ProgressBar {
   appearance: none;
-  height: 12px;
+  height: calc(3 * var(--squareSize));
 
   &::-webkit-progress-value {
     border-radius: 6px;
@@ -335,5 +369,86 @@ a {
   &::-webkit-progress-bar {
     border-radius: 6px;
     background-color: var(--spotify);
+  }
+}
+
+@media only screen  and (min-device-width: 320px)  and (max-device-width: 568px) and (orientation: portrait) {
+
+  .App {
+    padding-bottom: 0;
+    font-weight: 300;
+  }
+
+  .Hero-Logo {
+    margin-top: var(--defaultMargin);
+  }
+
+  .Hero-Logo img {
+    height:  calc(var(--squareSize) * 12);
+  }
+
+  .BoxesContainer {
+    width: 100%;
+    overflow: auto;
+    height: 100vh;
+    padding: 0 var(--defaultPadding);
+  }
+
+  .Box {
+    flex-direction: column;
+    width: 100%;
+    background: none;
+    text-align: center;
+    padding: 0;
+  }
+
+  .Box--connected {
+    opacity: 0;
+    height: 0;
+  }
+
+  .Box-Title {
+    font-size: var(--fontSizeXL);
+  }
+
+  .Box-AddOn {
+    display: block;
+  }
+
+  .Box-List--releases {
+    text-align: left;
+  }
+
+  .Item-Title {
+    width: calc(100% - var(--squareSize) * 9)
+  }
+
+  .Box-Footer {
+    background: rgba( var(--black), .8);
+    text-align: left;
+    padding: var(--defaultPadding);
+
+    .Button {
+      display: block;
+      margin-top: var(--defaultMargin);
+      width: 100%;
+
+      + .Button {
+        margin-left: 0;
+      }
+    }
+
+    .Button--hidden {
+      display: none;
+    }
+  }
+
+  .ProgressBar {
+    width: 100%;
+    margin-top: var(--defaultMargin);
+  }
+
+  .FooterAdmin {
+    display: none;
   }
 }

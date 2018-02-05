@@ -28,7 +28,7 @@ class DiscogsConnect extends Component {
       <Fragment>
         <div className={this.props.user.discogs_id ? 'Box Box--connected' : 'Box Box--disconnected' }>
           <div className="Box-Content">
-            <h3 className="Box-Title">First, connect to Discogs</h3>
+            <h3 className={this.props.user.discogs_id ? 'Box-Title Box-Title--connected' : 'Box-Title' }>First, connect to Discogs</h3>
             <p className="Box-Description">We will grab your collection and add some Perlinpinpin powder</p>
           </div>
           <div className="Box-AddOn">

@@ -63,7 +63,7 @@ class ReleasesList extends Component {
               {this.props.releases.map((release, i) => (
                 <li className="Item List-Item" key={i}>
                   {/* {release.spotify_id} */}
-                  <img className="Item-Image" alt={release.title} src={release.cover} />
+                  <img className="Item-Image" alt={release.title} src={release.thumb} />
                   <h4 className="Item-Title">{release.artists} - {release.title}</h4>
                   <span className={'Item-Status Item-Status--' + release.status}></span>
                 </li>
