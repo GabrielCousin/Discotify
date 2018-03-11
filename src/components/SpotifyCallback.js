@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { Redirect } from 'react-router-dom'
 import { connect } from 'react-redux'
+import PropTypes from 'prop-types';
 
 import { confirmConnect } from '../actions/spotify'
 
@@ -32,6 +33,13 @@ class SpotifyCallback extends Component {
       <p>Redirecting to your application…</p>
     );
   }
+}
+
+SpotifyCallback.propTypes = {
+  user: PropTypes.shape({
+    spotify_auth_date: PropTypes.string,
+  }),
+  dispatch: PropTypes.func
 }
 
 export default connect(mapStateToProps)(SpotifyCallback)

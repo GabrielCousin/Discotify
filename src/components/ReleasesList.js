@@ -1,5 +1,7 @@
 import React, { Fragment, Component } from 'react'
 import { connect } from 'react-redux'
+import PropTypes from 'prop-types';
+
 import { fetchDiscogsAlbums } from '../actions/discogs'
 import { searchAlbum, completeMatch, saveAlbums } from '../actions/spotify'
 
@@ -62,7 +64,6 @@ class ReleasesList extends Component {
             <ul className='List Box-List--releases'>
               {this.props.releases.map((release, i) => (
                 <li className={'Item List-Item Item--' + release.status} key={i}>
-                  {/* {release.spotify_id} */}
                   <img className="Item-Image" alt={release.title} src={release.thumb} />
                   <h4 className="Item-Title">{release.artists} - {release.title}</h4>
                   <span className={'Item-Status Item-Status--' + release.status}></span>
@@ -74,6 +75,20 @@ class ReleasesList extends Component {
       </div>
     );
   }
+}
+
+ReleasesList.propTypes = {
+  app: PropTypes.shape({
+    release_matching_done: PropTypes.bool,
+    release_export_done: PropTypes.bool,
+    release_matching_ready: PropTypes.bool
+  }),
+  user: PropTypes.shape({
+    discogs_username: PropTypes.string,
+    spotify_display_name: PropTypes.string
+  }),
+  releases: PropTypes.array,
+  dispatch: PropTypes.func
 }
 
 export default connect(mapStateToProps)(ReleasesList)

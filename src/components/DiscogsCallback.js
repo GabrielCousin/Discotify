@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { Redirect } from 'react-router-dom'
 import { connect } from 'react-redux'
+import PropTypes from 'prop-types';
 
 import { confirmConnect } from '../actions/discogs'
 
@@ -26,6 +27,13 @@ class DiscogsCallback extends Component {
       <p>Redirecting to your application…</p>
     );
   }
+}
+
+DiscogsCallback.propTypes = {
+  user: PropTypes.shape({
+    discogs_auth_date: PropTypes.string
+  }),
+  dispatch: PropTypes.func
 }
 
 export default connect(mapStateToProps)(DiscogsCallback)
