@@ -8,7 +8,7 @@ module.exports = merge(common, {
     historyApiFallback: true,
     hot: true,
     quiet: true,
-    overlay: true,
+    // overlay: true,
     port: 3000,
     watchOptions: {
       ignored: /node_modules/,
@@ -18,6 +18,7 @@ module.exports = merge(common, {
     hints: false,
   },
   plugins: [
+    new webpack.NamedModulesPlugin(),
     new webpack.HotModuleReplacementPlugin()
   ]
 })

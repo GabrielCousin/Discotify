@@ -1,5 +1,6 @@
 import React, { Fragment, Component } from 'react'
 import { connect } from 'react-redux'
+import PropTypes from 'prop-types';
 
 import { fetchUserInfo, requestToken } from '../actions/discogs'
 
@@ -46,6 +47,13 @@ class DiscogsConnect extends Component {
       </Fragment>
     );
   }
+}
+
+DiscogsConnect.propTypes = {
+  user: PropTypes.shape({
+    discogs_id: PropTypes.number
+  }),
+  dispatch: PropTypes.func
 }
 
 export default connect(mapStateToProps)(DiscogsConnect)

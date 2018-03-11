@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
+import PropTypes from 'prop-types';
 
 import {
   fetchUserInfo,
@@ -47,6 +48,13 @@ class SpotifyConnect extends Component {
       </div>
     );
   }
+}
+
+SpotifyConnect.propTypes = {
+  user: PropTypes.shape({
+    spotify_id: PropTypes.string
+  }),
+  dispatch: PropTypes.func
 }
 
 export default connect(mapStateToProps)(SpotifyConnect)
