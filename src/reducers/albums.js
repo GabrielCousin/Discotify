@@ -1,7 +1,8 @@
 import { DISCOGS_FETCH_ALBUMS_SUCCESS } from '../dicts/discogs'
 import {
   SPOTIFY_SEARCH_ALBUM,
-  SPOTIFY_SEARCH_ALBUM_SUCCESS
+  SPOTIFY_SEARCH_ALBUM_SUCCESS,
+  SPOTIFY_SEARCH_ALBUM_FAIL
 } from '../dicts/spotify'
 
 const albums = (state = [], {type, data}) => {
@@ -52,6 +53,16 @@ const albums = (state = [], {type, data}) => {
           ...state.slice(data.index + 1)
         ]
       }
+    }
+
+    case SPOTIFY_SEARCH_ALBUM_FAIL: {
+      return [
+        ...state.slice(0, data.index),
+        Object.assign({}, state[data.index], {
+          status: 'fail'
+        }),
+        ...state.slice(data.index + 1)
+      ]
     }
 
     default:

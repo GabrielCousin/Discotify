@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 import PropTypes from 'prop-types';
 
 import { fetchDiscogsAlbums } from '../actions/discogs'
-import { searchAlbum, completeMatch, saveAlbums } from '../actions/spotify'
+import { searchAlbum, completeMatch } from '../actions/spotify'
 
 import './ReleasesList.css'
 
@@ -42,16 +42,6 @@ class ReleasesList extends Component {
 
     if (!nextProps.app.release_matching_done && this.state.currentReleaseIndex === nextProps.releases.length)
       nextProps.dispatch(completeMatch())
-
-    if (nextProps.app.release_export_ready) {
-      const spotifyIds = [];
-      nextProps.releases.forEach(function (release) {
-        if (release.status === 'success' && release.spotify_id) {
-          spotifyIds.push(release.spotify_id)
-        }
-      })
-      nextProps.dispatch(saveAlbums(spotifyIds))
-    }
   }
 
   render () {

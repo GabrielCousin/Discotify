@@ -116,23 +116,23 @@ export function fetchDiscogsAlbums (username, url) {
         signature_method : 'PLAINTEXT'
       }
     }, function (e, r, body) {
-      if (body && body.error) {
+      const data = JSON.parse(body);
+
+      if (data && data.error) {
         return dispatch({
           type: DISCOGS_FETCH_ALBUMS_FAIL,
-          error: body.error
+          error: data.error
         })
       }
 
-      const data = JSON.parse(body);
-      //const nextUrl = data.pagination.urls.next;
+      const nextUrl = data.pagination.urls.next;
 
       dispatch({
         type: DISCOGS_FETCH_ALBUMS_SUCCESS,
         data: data.releases
       })
 
-      //return dispatch(nextUrl ? fetchDiscogsAlbums(null, nextUrl) : { type: APP_STATUS_ALBUMS_FETCHED })
-      return dispatch({ type: APP_STATUS_ALBUMS_FETCHED })
+      return dispatch(nextUrl ? fetchDiscogsAlbums(null, nextUrl) : { type: APP_STATUS_ALBUMS_FETCHED })
     })
 
   }
