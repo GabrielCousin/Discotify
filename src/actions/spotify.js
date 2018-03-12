@@ -12,8 +12,10 @@ import {
   SPOTIFY_SEARCH_ALBUM_SUCCESS,
   SPOTIFY_MATCHING_SUCCESS,
   SPOTIFY_EXPORT_STARTED,
-  SPOTIFY_EXPORT_FAIL,
-  SPOTIFY_EXPORT_SUCCESS
+  SPOTIFY_EXPORT_SUCCESS,
+  SPOTIFY_EXPORT_ITEM,
+  // SPOTIFY_EXPORT_ITEM_FAIL,
+  SPOTIFY_EXPORT_ITEM_SUCCESS
 } from '../dicts/spotify'
 
 import {
@@ -56,16 +58,18 @@ export function fetchUserInfo () {
     request.get({
       url: SPOTIFY_CURRENT_PROFILE_ENDPOINT,
     }, function (e, r, body) {
-      if (body && body.error) {
+      const data = JSON.parse(body);
+
+      if (data && data.error) {
         return dispatch({
           type: SPOTIFY_FETCH_USER_INFO_FAIL,
-          data: body.console.error
+          data: data.error
         })
       }
 
       dispatch({
         type: SPOTIFY_FETCH_USER_INFO_SUCCESS,
-        data: JSON.parse(body)
+        data
       })
     }).auth(null, null, true, token);
   }
@@ -91,8 +95,11 @@ export function searchAlbum (index, { query }) {
         encode: false
       }
     }, function (e, r, body) {
-      if (body && body.error) {
-        dispatch({
+      const data = JSON.parse(body)
+      const res = r.toJSON()
+
+      if (res.statusCode !== 200) {
+        return dispatch({
           type: SPOTIFY_SEARCH_ALBUM_FAIL,
           data: { index }
         })
@@ -100,7 +107,7 @@ export function searchAlbum (index, { query }) {
 
       dispatch({
         type: SPOTIFY_SEARCH_ALBUM_SUCCESS,
-        data: { index, results: JSON.parse(body).albums.items }
+        data: { index, results: data.albums.items }
       })
     }).auth(null, null, true, token);
   }
@@ -122,25 +129,56 @@ export function startExport() {
   }
 }
 
+export function completeExport() {
+  return dispatch => {
+    dispatch({
+      type: SPOTIFY_EXPORT_SUCCESS
+    })
+  }
+}
+
 export function saveAlbums (ids) {
   const token = localStorage.getItem('spotify_access_token');
 
   return dispatch => {
+    dispatch({
+      type: SPOTIFY_EXPORT_ITEM,
+    })
+
     request.put({
       url: SPOTIFY_SAVE_ALBUMS_ENDPOINT,
       json: {
         ids
       },
-    }, function (e, r, body) {
-      if (body && body.error) {
-        dispatch({
-          type: SPOTIFY_EXPORT_FAIL
-        })
-      }
+    }, function (/* e, r, body */) {
+      // const res = r.toJSON()
+      //
+      // if (data && data.error) {
+      //   return dispatch({
+      //     type: SPOTIFY_EXPORT_ITEM_FAIL
+      //   })
+      // }
 
       dispatch({
-        type: SPOTIFY_EXPORT_SUCCESS
+        type: SPOTIFY_EXPORT_ITEM_SUCCESS
       })
     }).auth(null, null, true, token);
+  }
+}
+
+export function splitIdsInSteps (ids) {
+  const total = Math.ceil(ids.length / 50);
+  let steps = new Array(total);
+
+  for (let i = 0; i < total; i++) {
+    const end = i + 1 === total ? ids.length : (i + 1) * 50;
+    steps[i] = ids.slice(i * 50, end);
+  }
+
+  return dispatch => {
+    dispatch({
+      type: SPOTIFY_EXPORT_STARTED,
+      steps
+    })
   }
 }
