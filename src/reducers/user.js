@@ -11,6 +11,10 @@ import {
 const user = (state = {}, action) => {
   switch (action.type) {
     case DISCOGS_FETCH_USER_INFO_SUCCESS:
+      analytics.identify(action.data.id, {
+        discogs_username: action.data.username
+      });
+
       return Object.assign({}, state, {
         discogs_username: action.data.username,
         discogs_id: action.data.id

@@ -45,6 +45,9 @@ const albums = (state = [], {type, data}) => {
           ...state.slice(data.index + 1)
         ]
       } else {
+        analytics.track('spotify:no_match', {
+          query: data.query
+        })
         return [
           ...state.slice(0, data.index),
           Object.assign({}, state[data.index], {
@@ -56,6 +59,9 @@ const albums = (state = [], {type, data}) => {
     }
 
     case SPOTIFY_SEARCH_ALBUM_FAIL: {
+      analytics.track('spotify:no_match', {
+        query: data.query
+      })
       return [
         ...state.slice(0, data.index),
         Object.assign({}, state[data.index], {

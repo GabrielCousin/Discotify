@@ -101,13 +101,13 @@ export function searchAlbum (index, { query }) {
       if (res.statusCode !== 200) {
         return dispatch({
           type: SPOTIFY_SEARCH_ALBUM_FAIL,
-          data: { index }
+          data: { index, query }
         })
       }
 
       dispatch({
         type: SPOTIFY_SEARCH_ALBUM_SUCCESS,
-        data: { index, results: data.albums.items }
+        data: { index, query, results: data.albums.items }
       })
     }).auth(null, null, true, token);
   }

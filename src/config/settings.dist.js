@@ -7,3 +7,6 @@ export const DISCOGS_OAUTH_CALLBACK = 'http://localhost:3000/discogs_callback'
 export const SPOTIFY_CLIENT_ID = 'SPOTIFY_CLIENT_ID'
 export const SPOTIFY_CLIENT_SECRET = 'SPOTIFY_CLIENT_SECRET'
 export const SPOTIFY_OAUTH_CALLBACK = 'http://localhost:3000/spotify_callback'
+
+// Create yours on https://app.segment.com/signup
+export const SEGMENT_ID = 'SEGMENT_ID'
