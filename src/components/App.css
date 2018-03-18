@@ -96,7 +96,7 @@ a {
 }
 
 .App {
-  padding-bottom: var(--veryBigMargin);
+  padding-bottom: var(--bigMargin);
 }
 
 .Hero-Logo {
@@ -154,6 +154,8 @@ a {
     &:hover {
       background: var(--spotify);
     }
+
+
   }
 
   & + .Button {
@@ -161,6 +163,16 @@ a {
   }
 
 }
+
+.Button--outline {
+  background: none;
+  border: 1px solid var(--spotify);
+
+  &:disabled:focus {
+    background: none;
+  }
+}
+
 .Button--hidden {
   display: none;
 }
@@ -187,7 +199,7 @@ a {
   margin: 0 auto;
 
   &:last-child {
-    border-radius: 5px;
+    border-radius: var(--defaultRadius);
   }
 
   &:empty {
@@ -206,11 +218,11 @@ a {
 
 .Box + .Box {
   margin-top: 1px;
-  border-radius: 0 0 var(--defaultRadius);;
+  border-radius: 0 0 var(--defaultRadius);
 }
 
 .Box--connected {
-  padding: var(--smallPadding) var(--defaultPadding) ;
+  padding: var(--smallPadding) var(--defaultPadding);
 }
 
 .Box--disconnected + .Box--disconnected {
@@ -414,6 +426,7 @@ a {
     overflow: auto;
     height: 100vh;
     padding: 0 var(--defaultPadding);
+    border-radius: var(--defaultRadius);
   }
 
   .Box {

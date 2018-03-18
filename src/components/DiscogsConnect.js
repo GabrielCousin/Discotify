@@ -34,7 +34,7 @@ class DiscogsConnect extends Component {
           </div>
           <div className="Box-AddOn">
             {this.props.user.discogs_id ?
-              <button className="Button" type="button" disabled>
+              <button className="Button Button--outline" type="button" disabled>
                 Connected
               </button>
             :
