@@ -9,7 +9,12 @@ const albums = (state = [], {type, data}) => {
   switch (type) {
     case DISCOGS_FETCH_ALBUMS_SUCCESS: {
       const albums = data.map(album => {
-        const artists = album.basic_information.artists.map(artist => (artist.name)).join(' ')
+        let artists = album.basic_information.artists.map(artist => (artist.name)).join(' ')
+        const dirtyArtistName = artists.match(/\s\([0-9]+\)$/)
+
+        if (dirtyArtistName)
+          artists = artists.slice(0, dirtyArtistName.index)
+
         return {
           artists,
           cover: album.basic_information.cover_image,
