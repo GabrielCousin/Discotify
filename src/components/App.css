@@ -77,7 +77,7 @@ body {
   padding: 0;
   font-family: var(--sansSerif);
   color: var(--athensGray);
-  background: var(--codGray) url("~/public/svg/abstract-background.svg") center 0 no-repeat;
+  background: var(--codGray) url("~public/svg/abstract-background.svg") center 0 no-repeat;
   background-size: cover;
   line-height: var(--defaultLineHeight);
   font-size: var(--defaultFontSize);

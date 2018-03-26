@@ -12,6 +12,7 @@ import Splash from './Splash'
 import SpotifyCallback from './SpotifyCallback'
 import SpotifyConnect from './SpotifyConnect'
 import StatusBar from './StatusBar'
+import logoSvg from 'public/svg/logo.svg';
 
 import {
   BrowserRouter as Router,
@@ -25,7 +26,7 @@ class App extends Component {
       <Router>
         <div className="App">
           <h1 className="Logo Hero-Logo">
-            <img src="public/svg/logo.svg" />
+            <img src={logoSvg} />
           </h1>
           <Fragment>
             <Route exact path="/" component={Splash} />
