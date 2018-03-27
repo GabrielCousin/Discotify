@@ -30,7 +30,7 @@ class DiscogsConnect extends Component {
         <div className={this.props.user.discogs_id ? 'Box Box--connected' : 'Box Box--disconnected' }>
           <div className="Box-Content">
             <h3 className={this.props.user.discogs_id ? 'Box-Title Box-Title--connected' : 'Box-Title' }>First, connect to Discogs</h3>
-            <p className="Box-Description">Collections folders are not supported</p>
+            <p className="Box-Description">Collection folders are not supported</p>
           </div>
           <div className="Box-AddOn">
             {this.props.user.discogs_id ?
