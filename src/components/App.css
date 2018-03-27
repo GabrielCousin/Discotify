@@ -99,6 +99,18 @@ a {
   padding-bottom: var(--bigMargin);
 }
 
+.Link:hover {
+  text-decoration: none;
+}
+
+.Hero {
+  flex: 1;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  display: flex;
+}
+
 .Hero-Logo {
   margin-bottom: var(--bigMargin);
   margin-top: var(--bigMargin);
@@ -185,6 +197,7 @@ a {
   width: calc(180 * var(--squareSize));
   margin: 0 auto;
   overflow-y: auto;
+  flex: 1;
 }
 
 .Box {
@@ -380,11 +393,19 @@ a {
   color: var(--spotify);
 }
 
-.FooterAdmin {
-  position: absolute;
-  bottom: var(--defaultMargin);
-  left: var(--defaultMargin);
-  display: none;
+.Footer {
+  margin-top: var(--defaultMargin);
+  color: var(--blackHaze);
+  opacity: .5;
+  transition: opacity .25s ease-in-out;
+}
+
+.Footer:hover {
+  opacity: 1;
+}
+
+.Footer a {
+  color: var(--blackHaze);
 }
 
 .ProgressBar {
@@ -414,7 +435,7 @@ a {
   }
 
   .Hero-Logo {
-    margin-top: var(--defaultMargin);
+    margin: var(--defaultMargin) 0;
   }
 
   .Hero-Logo img {
@@ -461,11 +482,11 @@ a {
   .Box-Footer {
     background: rgba( var(--black), .8);
     text-align: left;
-    padding: var(--defaultPadding);
+    padding: var(--smallPadding) var(--defaultPadding);
 
     .Button {
       display: block;
-      margin-top: var(--defaultMargin);
+      margin-top: var(--smallMargin);
       width: 100%;
 
       + .Button {
@@ -481,6 +502,10 @@ a {
   .ProgressBar {
     width: 100%;
     margin-top: var(--defaultMargin);
+  }
+
+  .Footer {
+    display: none;
   }
 }
 
