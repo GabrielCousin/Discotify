@@ -51,6 +51,7 @@
   --defaultFontSize: 14px;
   --semiBold: 600;
   --scaleRatio: 1.125;
+  --fontSizeS: calc( var(--defaultFontSize) / var(--scaleRatio) );
   --fontSizeL: calc( var(--defaultFontSize) * var(--scaleRatio) * var(--scaleRatio) * var(--scaleRatio) * var(--scaleRatio) );
   --fontSizeXL: calc( var(--defaultFontSize) * var(--scaleRatio) * var(--scaleRatio) * var(--scaleRatio) * var(--scaleRatio) * var(--scaleRatio) * var(--scaleRatio) );
   --heroParagraphFontSize: calc( var(--defaultFontSize) * var(--scaleRatio) * var(--scaleRatio)  * var(--scaleRatio) * var(--scaleRatio) * var(--scaleRatio) * var(--scaleRatio) );
@@ -150,12 +151,10 @@ a {
   transition: background-color .2s ease-out, box-shadow .05s ease-out, color .1s ease-out, transform .1s ease-out;
   appearance: none;
   font-family: var(--sansSerif);
-  box-shadow: none;
 
   &:hover {
     background: #1AA64B;
     transform: translateY(-1px);
-    box-shadow: 0 2px 5px rgba(var(--black), .2);
   }
 
   &.Button--disabled,
@@ -197,6 +196,7 @@ a {
   width: calc(180 * var(--squareSize));
   margin: 0 auto;
   overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
   flex: 1;
 }
 
@@ -340,7 +340,7 @@ a {
   height: calc(3 * var(--squareSize));
   width: calc(3 * var(--squareSize));
   border-radius: 50%;
-  right: 0;
+  right: calc(2 * var(--squareSize) - (var(--squareSize) / 2));
   top: calc( var(--smallPadding) + var(--smallPadding)/2 );
 }
 
@@ -355,8 +355,7 @@ a {
   left: calc(-2 * var(--squareSize) + 1px);
   height: calc(6 * var(--squareSize));
   width: calc(6 * var(--squareSize));
-  transition: border .1s ease-out;
-  animation: loader 1.1s infinite linear;
+  opacity: 0;
 }
 
 .Item-Status--fail {
@@ -369,6 +368,9 @@ a {
   border-right: 1px solid rgba(var(--spotifyRGB), 1);
   border-bottom: 1px solid rgba(var(--spotifyRGB), 1);
   border-left: 1px solid rgba(var(--spotifyRGB), 0);
+  transition: opacity .1s ease-out;
+  animation: loader 1.1s infinite linear;
+  opacity: 1;
 }
 
 @keyframes loader {
@@ -398,6 +400,7 @@ a {
   color: var(--blackHaze);
   opacity: .5;
   transition: opacity .25s ease-in-out;
+  font-size: var(--fontSizeS);
 }
 
 .Footer:hover {
@@ -477,6 +480,11 @@ a {
 
   .Item-Title {
     width: calc(100% - var(--squareSize) * 9)
+  }
+
+  .Box--ReleaseList {
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
   }
 
   .Box-Footer {
