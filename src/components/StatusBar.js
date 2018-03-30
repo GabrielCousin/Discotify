@@ -80,8 +80,7 @@ class StatusBar extends Component {
                 {this.props.app.release_export_done &&
                   <a
                     className="Button"
-                    href="https://open.spotify.com/collection/albums"
-                    target="_blank"
+                    href="spotify://open.spotify.com/collection/albums"
                     rel="noopener noreferrer"
                   >All done! Go to Spotify</a>
                 }
