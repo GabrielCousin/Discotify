@@ -442,7 +442,8 @@ a {
     padding-bottom: 0;
   }
 
-  .Hero-Paragraph {
+  .Hero-Title,
+  .Hero-Subtitle {
     width: 100%;
   }
 
