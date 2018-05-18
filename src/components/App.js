@@ -1,4 +1,5 @@
 import React, { Fragment, Component } from 'react'
+import { Link } from 'react-router-dom'
 
 import 'normalize.css'
 import './App.css'
@@ -25,9 +26,9 @@ class App extends Component {
     return (
       <Router>
         <div className="App">
-          <h1 className="Logo Hero-Logo">
-            <img src={logoSvg} />
-          </h1>
+          <Link alt="Return to homepage" className="Logo Hero-Logo" to='/'>
+            <img alt="Discotify logo" src={logoSvg} />
+          </Link>
           <Fragment>
             <Route exact path="/" component={Splash} />
             <Route exact path="/logout" component={Logout} />

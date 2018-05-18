@@ -54,7 +54,7 @@ class ReleasesList extends Component {
             <ul className='List Box-List--releases'>
               {this.props.releases.map((release, i) => (
                 <li className={'Item List-Item Item--' + release.status} key={i}>
-                  <img className="Item-Image" alt={release.title} src={release.thumb} />
+                  <img className="Item-Image" alt={release.title} src={release.thumb ? release.thumb : '/public/no-cover.png'} />
                   <h4 className="Item-Title">{release.artists} - {release.title}</h4>
                   <span className={'Item-Status Item-Status--' + release.status}></span>
                 </li>

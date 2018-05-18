@@ -23,6 +23,7 @@
 
     --spotify: #1db954;
     --spotifyRGB: 27, 185, 84;
+    --bottleGreen: #05210F;
 
     /* Reds */
 
@@ -78,7 +79,7 @@ body {
   padding: 0;
   font-family: var(--sansSerif);
   color: var(--athensGray);
-  background: var(--codGray) url("~public/svg/abstract-background.svg") center 0 no-repeat;
+  background: url("~public/svg/abstract-background.svg") center 0 no-repeat, linear-gradient(var(--codGray), var(--bottleGreen));
   background-size: cover;
   line-height: var(--defaultLineHeight);
   font-size: var(--defaultFontSize);
@@ -122,19 +123,25 @@ a {
   }
 }
 
-.Hero-Paragraph {
+.Hero-Title {
   font-size: var(--heroParagraphFontSize);
   font-family: 'Montserrat', sans-serif;
   width: calc( var(--squareSize) * 110);
-  margin: 0 auto var(--bigMargin);
+  margin: 0 auto var(--defaultMargin);
   line-height: calc( var(--squareSize) * 11 );
+}
+
+.Hero-Subtitle {
+  font-weight: 300;
+  width: calc( var(--squareSize) * 110);
+  margin: 0 auto var(--bigMargin);
+  line-height: calc( var(--squareSize) * 8 );
 }
 
 .Button {
   display: inline-block;
   position: relative;
-  padding: var(--extraSmallPadding) var(--defaultPadding);
-  font-family: SFProText-Semibold;
+  padding: var(--extraSmallPadding) var(--bigPadding);
   font-size: var(--defaultFontSize);
   text-align: center;
   text-decoration: none;
@@ -144,13 +151,15 @@ a {
   line-height: var(--defaultLineHeight);
   color: var(--white);
   border: 0;
-  border-radius: var(--defaultRadius);
+  border-radius: 24px;
   cursor: pointer;
   user-select: none;
   outline: 0;
   transition: background-color .2s ease-out, box-shadow .05s ease-out, color .1s ease-out, transform .1s ease-out;
   appearance: none;
   font-family: var(--sansSerif);
+  font-weight: var(--semiBold);
+  letter-spacing: 1px;
 
   &:hover {
     background: #1AA64B;
