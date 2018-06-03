@@ -16,7 +16,7 @@ class DiscogsConnect extends Component {
     this.handleDiscogsConnect = this.handleDiscogsConnect.bind(this);
   }
 
-  componentWillMount () {
+  UNSAFE_componentWillMount () {
     this.props.dispatch(fetchUserInfo())
   }
 

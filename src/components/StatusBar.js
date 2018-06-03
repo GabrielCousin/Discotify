@@ -30,7 +30,7 @@ class StatusBar extends Component {
     this.props.dispatch(splitIdsInSteps(spotifyIds))
   }
 
-  componentWillReceiveProps (nextProps) {
+  UNSAFE_componentWillReceiveProps (nextProps) {
     if (nextProps.app.release_export_done)
       return
 

@@ -19,7 +19,7 @@ class SpotifyConnect extends Component {
     this.handleSpotifyConnect = this.handleSpotifyConnect.bind(this);
   }
 
-  componentWillMount () {
+  UNSAFE_componentWillMount () {
     this.props.dispatch(fetchUserInfo())
   }
 

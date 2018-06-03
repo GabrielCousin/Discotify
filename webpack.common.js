@@ -37,7 +37,7 @@ module.exports = {
     filename: '[name].[hash].js',
   },
   module: {
-    loaders: [
+    rules: [
       {
         test: /\.js$/,
         loader: 'babel-loader',
