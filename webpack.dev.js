@@ -3,6 +3,7 @@ const common = require('./webpack.common.js')
 const webpack = require('webpack')
 
 module.exports = merge(common, {
+  mode: 'development',
   devtool: 'cheap-module-source-map',
   devServer: {
     historyApiFallback: true,
@@ -18,7 +19,9 @@ module.exports = merge(common, {
     hints: false,
   },
   plugins: [
-    new webpack.NamedModulesPlugin(),
     new webpack.HotModuleReplacementPlugin()
-  ]
+  ],
+  optimization: {
+    namedModules: true
+  }
 })

@@ -14,7 +14,7 @@ const mapStateToProps = (state) => {
 }
 
 class SpotifyCallback extends Component {
-  componentWillMount () {
+  UNSAFE_componentWillMount () {
     this.props.dispatch(confirmConnect())
 
     const { access_token, expires_in } = queryString.parse(window.location.hash)

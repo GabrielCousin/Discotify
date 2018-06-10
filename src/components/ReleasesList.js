@@ -23,7 +23,7 @@ class ReleasesList extends Component {
     }
   }
 
-  componentWillReceiveProps (nextProps) {
+  UNSAFE_componentWillReceiveProps (nextProps) {
     if (!nextProps.user.discogs_username || nextProps.app.release_export_done)
       return
 

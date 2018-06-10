@@ -12,7 +12,7 @@ const mapStateToProps = (state) => {
 }
 
 class DiscogsCallback extends Component {
-  componentWillMount () {
+  UNSAFE_componentWillMount () {
     this.props.dispatch(confirmConnect())
   }
 
