@@ -17,7 +17,6 @@ const ManifestPluginConfig = new WebpackPwaManifest({
   lang: 'en',
   start_url: '/',
   display: 'standalone',
-  start_url: './index.html',
   theme_color: '#ffffff',
   background_color: '#ffffff',
   // icons: [
