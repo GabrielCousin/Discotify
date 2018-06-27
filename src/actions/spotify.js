@@ -15,7 +15,8 @@ import {
   SPOTIFY_EXPORT_SUCCESS,
   SPOTIFY_EXPORT_ITEM,
   // SPOTIFY_EXPORT_ITEM_FAIL,
-  SPOTIFY_EXPORT_ITEM_SUCCESS
+  SPOTIFY_EXPORT_ITEM_SUCCESS,
+  SPOTIFY_MAX_ALBUMS_PER_SAVE_CHUNK
 } from '../dicts/spotify'
 
 import {
@@ -167,12 +168,12 @@ export function saveAlbums (ids) {
 }
 
 export function splitIdsInSteps (ids) {
-  const total = Math.ceil(ids.length / 50);
+  const total = Math.ceil(ids.length / SPOTIFY_MAX_ALBUMS_PER_SAVE_CHUNK);
   let steps = new Array(total);
 
   for (let i = 0; i < total; i++) {
-    const end = i + 1 === total ? ids.length : (i + 1) * 50;
-    steps[i] = ids.slice(i * 50, end);
+    const end = i + 1 === total ? ids.length : (i + 1) * SPOTIFY_MAX_ALBUMS_PER_SAVE_CHUNK;
+    steps[i] = ids.slice(i * SPOTIFY_MAX_ALBUMS_PER_SAVE_CHUNK, end);
   }
 
   return dispatch => {
