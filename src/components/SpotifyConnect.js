@@ -24,7 +24,7 @@ class SpotifyConnect extends Component {
   }
 
   handleSpotifyConnect() {
-    this.props.dispatch(requestToken())
+    requestToken()
   }
 
   render () {
