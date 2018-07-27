@@ -8,7 +8,9 @@
     browser: true
   },
   globals: {
-    analytics: true
+    analytics: true,
+    PRODUCTION_ENV: true,
+    Raven: true
   },
   extends: [
     "eslint:recommended",

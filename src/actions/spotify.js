@@ -1,3 +1,5 @@
+import logger from 'services/logger'
+
 import {
   SPOTIFY_REQUEST_AUTHORIZATION_ENDPOINT,
   SPOTIFY_CURRENT_PROFILE_ENDPOINT,
@@ -95,11 +97,20 @@ export function searchAlbum (index, { query }) {
       qsStringifyOptions: {
         encode: false
       }
-    }, function (e, r, body) {
+    }, function (error, res, body) {
       const data = JSON.parse(body)
-      const res = r.toJSON()
 
       if (res.statusCode !== 200) {
+        logger('Spotify >> search album failed', {
+          extra: {
+            message: data.error.message
+          }
+        })
+
+        analytics.track('spotify:match_error', {
+          query: query
+        })
+
         return dispatch({
           type: SPOTIFY_SEARCH_ALBUM_FAIL,
           data: { index, query }
@@ -151,14 +162,20 @@ export function saveAlbums (ids) {
       json: {
         ids
       },
-    }, function (/* e, r, body */) {
-      // const res = r.toJSON()
-      //
-      // if (data && data.error) {
-      //   return dispatch({
-      //     type: SPOTIFY_EXPORT_ITEM_FAIL
-      //   })
-      // }
+    }, function (error, res, body) {
+      if (res.statusCode !== 200) {
+        logger('Spotify >> save albums failed', {
+          extra: {
+            message: body.error.message
+          }
+        })
+
+        analytics.track('spotify:export_error')
+
+        // return dispatch({
+        //   type: SPOTIFY_EXPORT_ITEM_FAIL
+        // })
+      }
 
       dispatch({
         type: SPOTIFY_EXPORT_ITEM_SUCCESS

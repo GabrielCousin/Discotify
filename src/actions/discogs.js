@@ -1,3 +1,5 @@
+import logger from 'services/logger'
+
 import {
   DISCOGS_REQUEST_TOKEN_ENDPOINT,
   DISCOGS_ACCESS_TOKEN_ENDPOINT,
@@ -39,8 +41,14 @@ export function requestToken () {
         oauth_callback: DISCOGS_OAUTH_CALLBACK,
         oauth_timestamp: Date.now()
       }
-    }, function (e, r, body) {
+    }, function (error, res, body) {
       if (body && body.match(/Invalid/)) {
+        logger('Discogs >> request token failed', {
+          extra: {
+            message: body
+          }
+        })
+
         return dispatch({
           type: DISCOGS_REQUEST_TOKEN_FAIL,
           error: body.error
@@ -74,8 +82,14 @@ export function confirmConnect () {
         oauth_signature_method: 'PLAINTEXT',
         oauth_timestamp: Date.now(),
       })
-    }, function (e, r, body) {
+    }, function (error, res, body) {
       if (body && body.match(/Invalid/)) {
+        logger('Discogs >> oauth confirm failed', {
+          extra: {
+            message: body
+          }
+        })
+
         return dispatch({
           type: DISCOGS_OAUTH_CONFIRM_FAIL,
           data: body.error
@@ -115,13 +129,18 @@ export function fetchDiscogsAlbums (username, url) {
         token_secret,
         signature_method : 'PLAINTEXT'
       }
-    }, function (e, r, body) {
+    }, function (error, res, body) {
       const data = JSON.parse(body);
+      if (data && data.message) {
+        logger('Discogs album fetch failed', {
+          extra: {
+            message: data.message
+          }
+        })
 
-      if (data && data.error) {
         return dispatch({
           type: DISCOGS_FETCH_ALBUMS_FAIL,
-          error: data.error
+          error: data.message
         })
       }
 
@@ -156,7 +175,7 @@ export function fetchUserInfo () {
         token_secret,
         signature_method : 'PLAINTEXT'
       }
-    }, function (e, r, body) {
+    }, function (e, res, body) {
       if (body && body.error) {
         return dispatch({
           type: DISCOGS_FETCH_USER_INFO_FAIL,
