@@ -53,8 +53,22 @@ module.exports = {
         test: /\.css$/,
         use: [
           'style-loader',
-          { loader: 'css-loader', options: { importLoaders: 1 } },
-          'postcss-loader'
+          {
+            loader: 'css-loader',
+            options: {
+              importLoaders: 1
+            }
+          },
+          {
+            loader: 'postcss-loader',
+            options: {
+              ident: 'postcss',
+              plugins: () => [
+                require('postcss-nested')(),
+                require('autoprefixer')()
+              ]
+            }
+          }
         ]
       }, {
         test: /\.(woff|woff2|svg|png|jpg)$/,
