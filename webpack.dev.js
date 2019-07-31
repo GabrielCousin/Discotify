@@ -1,6 +1,17 @@
 const merge = require('webpack-merge')
-const common = require('./webpack.common.js')
+const common = require('./webpack.common')
 const webpack = require('webpack')
+const config = require('./src/config/settings')
+
+const {
+  DISCOGS_CONSUMER_KEY,
+  DISCOGS_CONSUMER_SECRET,
+  DISCOGS_OAUTH_CALLBACK,
+  SPOTIFY_CLIENT_ID,
+  SPOTIFY_CLIENT_SECRET,
+  SPOTIFY_OAUTH_CALLBACK,
+  SEGMENT_ID
+} = config;
 
 module.exports = merge(common, {
   mode: 'development',
@@ -21,7 +32,14 @@ module.exports = merge(common, {
   plugins: [
     new webpack.HotModuleReplacementPlugin(),
     new webpack.DefinePlugin({
-      'PRODUCTION_ENV': false
+      PRODUCTION_ENV: false,
+      DISCOGS_CONSUMER_KEY: `"${DISCOGS_CONSUMER_KEY}"`,
+      DISCOGS_CONSUMER_SECRET: `"${DISCOGS_CONSUMER_SECRET}"`,
+      DISCOGS_OAUTH_CALLBACK: `"${DISCOGS_OAUTH_CALLBACK}"`,
+      SPOTIFY_CLIENT_ID: `"${SPOTIFY_CLIENT_ID}"`,
+      SPOTIFY_CLIENT_SECRET: `"${SPOTIFY_CLIENT_SECRET}"`,
+      SPOTIFY_OAUTH_CALLBACK: `"${SPOTIFY_OAUTH_CALLBACK}"`,
+      SEGMENT_ID: `"${SEGMENT_ID}"`
     })
   ],
   optimization: {

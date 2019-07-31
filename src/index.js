@@ -9,7 +9,6 @@ import { composeWithDevTools } from 'redux-devtools-extension'
 
 import reducers from './reducers'
 import App from './components/App'
-import { SEGMENT_ID } from './config/settings'
 
 import './index.css'
 

@@ -21,11 +21,6 @@ import {
   SPOTIFY_MAX_ALBUMS_PER_SAVE_CHUNK
 } from '../dicts/spotify'
 
-import {
-  SPOTIFY_CLIENT_ID,
-  SPOTIFY_OAUTH_CALLBACK
-} from '../config/settings'
-
 import request from 'request'
 const queryString = require('query-string');
 

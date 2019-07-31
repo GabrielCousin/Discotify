@@ -1,12 +1,14 @@
-// Create yours on https://www.discogs.com/fr/applications/edit
-export const DISCOGS_CONSUMER_KEY = 'DISCOGS_CONSUMER_KEY'
-export const DISCOGS_CONSUMER_SECRET = 'DISCOGS_CONSUMER_SECRET'
-export const DISCOGS_OAUTH_CALLBACK = 'http://localhost:3000/discogs_callback'
+module.exports = {
+  // Create yours on https://www.discogs.com/fr/applications/edit
+  DISCOGS_CONSUMER_KEY: 'DISCOGS_CONSUMER_KEY',
+  DISCOGS_CONSUMER_SECRET: 'DISCOGS_CONSUMER_SECRET',
+  DISCOGS_OAUTH_CALLBACK: 'DISCOGS_OAUTH_CALLBACK',
 
-// Create yours on https://developer.spotify.com/my-applications
-export const SPOTIFY_CLIENT_ID = 'SPOTIFY_CLIENT_ID'
-export const SPOTIFY_CLIENT_SECRET = 'SPOTIFY_CLIENT_SECRET'
-export const SPOTIFY_OAUTH_CALLBACK = 'http://localhost:3000/spotify_callback'
+  // Create yours on https://developer.spotify.com/my-applications
+  SPOTIFY_CLIENT_ID: 'SPOTIFY_CLIENT_ID',
+  SPOTIFY_CLIENT_SECRET: 'SPOTIFY_CLIENT_SECRET',
+  SPOTIFY_OAUTH_CALLBACK: 'SPOTIFY_OAUTH_CALLBACK',
 
-// Create yours on https://app.segment.com/signup
-export const SEGMENT_ID = 'SEGMENT_ID'
+  // Create yours on https://app.segment.com/signup
+  SEGMENT_ID: 'SEGMENT_ID'
+};

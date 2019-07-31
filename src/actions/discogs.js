@@ -20,12 +20,6 @@ import {
 
 import { APP_STATUS_ALBUMS_FETCHED } from '../dicts/app'
 
-import {
-  DISCOGS_CONSUMER_KEY,
-  DISCOGS_CONSUMER_SECRET,
-  DISCOGS_OAUTH_CALLBACK
-} from '../config/settings'
-
 import request from 'request'
 const queryString = require('query-string');
 
