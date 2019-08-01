@@ -12,7 +12,7 @@ const HtmlWebpackPluginConfig = new HtmlWebpackPlugin({
 const ManifestPluginConfig = new WebpackPwaManifest({
   name: 'Discotify',
   short_name: 'Discotify',
-  description: 'Export your Discogs library to Spotify',
+  description: 'Discotify is a tool that helps you export your Discogs record collection to Spotify.',
   lang: 'en',
   start_url: '/',
   display: 'standalone',
