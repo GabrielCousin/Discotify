@@ -13,7 +13,7 @@ module.exports = merge(common, {
       SPOTIFY_CLIENT_ID: `"${process.env.SPOTIFY_CLIENT_ID}"`,
       SPOTIFY_CLIENT_SECRET: `"${process.env.SPOTIFY_CLIENT_SECRET}"`,
       SEGMENT_ID: `"${process.env.SEGMENT_ID}"`
-    }),
+    })
   ],
   optimization: {
     minimize: true

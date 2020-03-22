@@ -1,7 +1,7 @@
-import React, { Component, Fragment } from 'react'
+import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { splitIdsInSteps, saveAlbums, completeExport } from '../actions/spotify'
-import PropTypes from 'prop-types';
+import PropTypes from 'prop-types'
 
 const mapStateToProps = (state) => {
   return {
@@ -12,8 +12,8 @@ const mapStateToProps = (state) => {
 }
 
 class StatusBar extends Component {
-  constructor(props) {
-    super(props);
+  constructor (props) {
+    super(props)
     this.handleSpotifyExport = this.handleSpotifyExport.bind(this)
     this.state = {
       currentExportStepIndex: 0
@@ -21,7 +21,7 @@ class StatusBar extends Component {
   }
 
   handleSpotifyExport () {
-    const spotifyIds = [];
+    const spotifyIds = []
     this.props.releases.forEach(function (release) {
       if (release.status === 'success' && release.spotify_id) {
         spotifyIds.push(release.spotify_id)
@@ -31,11 +31,9 @@ class StatusBar extends Component {
   }
 
   UNSAFE_componentWillReceiveProps (nextProps) {
-    if (nextProps.app.release_export_done)
-      return
+    if (nextProps.app.release_export_done) { return }
 
-    if (this.state.currentExportStepIndex && nextProps.app.export_steps && (nextProps.app.export_steps.length === this.state.currentExportStepIndex))
-      return nextProps.dispatch(completeExport())
+    if (this.state.currentExportStepIndex && nextProps.app.export_steps && (nextProps.app.export_steps.length === this.state.currentExportStepIndex)) { return nextProps.dispatch(completeExport()) }
 
     if (nextProps.app.release_export_ready && nextProps.app.export_steps && nextProps.app.export_steps.length) {
       const step = nextProps.app.export_steps[this.state.currentExportStepIndex]
@@ -47,17 +45,17 @@ class StatusBar extends Component {
   }
 
   render () {
-    let processedReleases = this.props.releases.filter((rlz) => (rlz.status === 'fail' || rlz.status === 'success')).length
-    let ignoredReleases = this.props.releases.filter((rlz) => (rlz.status === 'fail')).length
-    let succeedReleases = this.props.releases.filter((rlz) => (rlz.status === 'success')).length
+    const processedReleases = this.props.releases.filter((rlz) => (rlz.status === 'fail' || rlz.status === 'success')).length
+    const ignoredReleases = this.props.releases.filter((rlz) => (rlz.status === 'fail')).length
+    const succeedReleases = this.props.releases.filter((rlz) => (rlz.status === 'success')).length
 
-    let progressValue = this.props.app.release_matching_done ? this.state.currentExportStepIndex : processedReleases
-    let progressMax = this.props.app.release_matching_done ?
-      (this.props.app.export_steps && this.props.app.export_steps.length || 0) :
-      this.props.releases.length
+    const progressValue = this.props.app.release_matching_done ? this.state.currentExportStepIndex : processedReleases
+    const progressMax = this.props.app.release_matching_done
+      ? (this.props.app.export_steps && this.props.app.export_steps.length || 0)
+      : this.props.releases.length
 
     return (
-      <Fragment>
+      <>
         {processedReleases > 0 &&
           <div className="Box Box-Footer">
             <div className="Box-Content">
@@ -75,7 +73,7 @@ class StatusBar extends Component {
                     type="button"
                     onClick={this.handleSpotifyExport}
                     disabled={this.props.app.release_export_done}
-                    >Export to Spotify</button>
+                  >Export to Spotify</button>
                 }
                 {this.props.app.release_export_done &&
                   <a
@@ -88,8 +86,8 @@ class StatusBar extends Component {
             }
           </div>
         }
-      </Fragment>
-    );
+      </>
+    )
   }
 }
 

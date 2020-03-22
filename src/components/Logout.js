@@ -1,23 +1,15 @@
-import React, { Component } from 'react'
+import React from 'react'
 import { Redirect } from 'react-router-dom'
 
-class Logout extends Component {
-  UNSAFE_componentWillMount () {
-    this.handleLogout()
-  }
+function Logout () {
+  localStorage.clear()
 
-  handleLogout () {
-    localStorage.clear()
-  }
-
-  render () {
-    return (
-      <div>
-        <p>Logging out…</p>
-        <Redirect to='/' />
-      </div>
-    );
-  }
+  return (
+    <>
+      <p>Logging out…</p>
+      <Redirect to='/' />
+    </>
+  )
 }
 
 export default Logout

@@ -22,9 +22,9 @@ import {
 } from '../dicts/spotify'
 
 import request from 'request'
-const queryString = require('query-string');
+const queryString = require('query-string')
 
-export function requestToken() {
+export function requestToken () {
   const params = {
     client_id: SPOTIFY_CLIENT_ID,
     response_type: 'token',
@@ -37,7 +37,7 @@ export function requestToken() {
   window.location.assign(`${SPOTIFY_REQUEST_AUTHORIZATION_ENDPOINT}?${queryString.stringify(params)}`)
 }
 
-export function confirmConnect() {
+export function confirmConnect () {
   return dispatch => {
     dispatch({
       type: SPOTIFY_OAUTH_CONFIRM_SUCCESS
@@ -46,7 +46,7 @@ export function confirmConnect() {
 }
 
 export function fetchUserInfo () {
-  const token = localStorage.getItem('spotify_access_token');
+  const token = localStorage.getItem('spotify_access_token')
 
   return dispatch => {
     dispatch({
@@ -54,9 +54,9 @@ export function fetchUserInfo () {
     })
 
     request.get({
-      url: SPOTIFY_CURRENT_PROFILE_ENDPOINT,
+      url: SPOTIFY_CURRENT_PROFILE_ENDPOINT
     }, function (e, r, body) {
-      const data = JSON.parse(body);
+      const data = JSON.parse(body)
 
       if (data && data.error) {
         return dispatch({
@@ -69,12 +69,12 @@ export function fetchUserInfo () {
         type: SPOTIFY_FETCH_USER_INFO_SUCCESS,
         data
       })
-    }).auth(null, null, true, token);
+    }).auth(null, null, true, token)
   }
 }
 
 export function searchAlbum (index, { query }) {
-  const token = localStorage.getItem('spotify_access_token');
+  const token = localStorage.getItem('spotify_access_token')
 
   return dispatch => {
     dispatch({
@@ -92,7 +92,7 @@ export function searchAlbum (index, { query }) {
       qsStringifyOptions: {
         encode: false
       }
-    }, function (error, res, body) {
+    }, function (_error, res, body) {
       const data = JSON.parse(body)
 
       if (res.statusCode !== 200) {
@@ -112,11 +112,11 @@ export function searchAlbum (index, { query }) {
         type: SPOTIFY_SEARCH_ALBUM_SUCCESS,
         data: { index, query, results: data.albums.items }
       })
-    }).auth(null, null, true, token);
+    }).auth(null, null, true, token)
   }
 }
 
-export function completeMatch() {
+export function completeMatch () {
   return dispatch => {
     dispatch({
       type: SPOTIFY_MATCHING_SUCCESS
@@ -124,7 +124,7 @@ export function completeMatch() {
   }
 }
 
-export function startExport() {
+export function startExport () {
   return dispatch => {
     dispatch({
       type: SPOTIFY_EXPORT_STARTED
@@ -132,7 +132,7 @@ export function startExport() {
   }
 }
 
-export function completeExport() {
+export function completeExport () {
   return dispatch => {
     dispatch({
       type: SPOTIFY_EXPORT_SUCCESS
@@ -141,19 +141,19 @@ export function completeExport() {
 }
 
 export function saveAlbums (ids) {
-  const token = localStorage.getItem('spotify_access_token');
+  const token = localStorage.getItem('spotify_access_token')
 
   return dispatch => {
     dispatch({
-      type: SPOTIFY_EXPORT_ITEM,
+      type: SPOTIFY_EXPORT_ITEM
     })
 
     request.put({
       url: SPOTIFY_SAVE_ALBUMS_ENDPOINT,
       json: {
         ids
-      },
-    }, function (error, res, body) {
+      }
+    }, function (_error, res, body) {
       if (res.statusCode !== 200) {
         logger('Spotify >> save albums failed', body.error.message)
 
@@ -167,17 +167,17 @@ export function saveAlbums (ids) {
       dispatch({
         type: SPOTIFY_EXPORT_ITEM_SUCCESS
       })
-    }).auth(null, null, true, token);
+    }).auth(null, null, true, token)
   }
 }
 
 export function splitIdsInSteps (ids) {
-  const total = Math.ceil(ids.length / SPOTIFY_MAX_ALBUMS_PER_SAVE_CHUNK);
-  let steps = new Array(total);
+  const total = Math.ceil(ids.length / SPOTIFY_MAX_ALBUMS_PER_SAVE_CHUNK)
+  const steps = new Array(total)
 
   for (let i = 0; i < total; i++) {
-    const end = i + 1 === total ? ids.length : (i + 1) * SPOTIFY_MAX_ALBUMS_PER_SAVE_CHUNK;
-    steps[i] = ids.slice(i * SPOTIFY_MAX_ALBUMS_PER_SAVE_CHUNK, end);
+    const end = i + 1 === total ? ids.length : (i + 1) * SPOTIFY_MAX_ALBUMS_PER_SAVE_CHUNK
+    steps[i] = ids.slice(i * SPOTIFY_MAX_ALBUMS_PER_SAVE_CHUNK, end)
   }
 
   return dispatch => {

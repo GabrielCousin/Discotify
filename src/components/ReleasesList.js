@@ -1,6 +1,6 @@
 import React, { Fragment, Component } from 'react'
 import { connect } from 'react-redux'
-import PropTypes from 'prop-types';
+import PropTypes from 'prop-types'
 
 import { fetchDiscogsAlbums } from '../actions/discogs'
 import { searchAlbum, completeMatch } from '../actions/spotify'
@@ -16,22 +16,19 @@ const mapStateToProps = (state) => {
 }
 
 class ReleasesList extends Component {
-  constructor(props) {
-    super(props);
+  constructor (props) {
+    super(props)
     this.state = {
       currentReleaseIndex: 0
     }
   }
 
   UNSAFE_componentWillReceiveProps (nextProps) {
-    if (!nextProps.user.discogs_username || nextProps.app.release_export_done)
-      return
+    if (!nextProps.user.discogs_username || nextProps.app.release_export_done) { return }
 
-    if (!nextProps.releases.length)
-      nextProps.dispatch(fetchDiscogsAlbums(nextProps.user.discogs_username))
+    if (!nextProps.releases.length) { nextProps.dispatch(fetchDiscogsAlbums(nextProps.user.discogs_username)) }
 
-    if (!nextProps.user.spotify_display_name || !nextProps.releases.length)
-      return
+    if (!nextProps.user.spotify_display_name || !nextProps.releases.length) { return }
 
     if (nextProps.app.release_matching_ready && this.state.currentReleaseIndex < nextProps.releases.length) {
       nextProps.dispatch(searchAlbum(this.state.currentReleaseIndex, this.props.releases[this.state.currentReleaseIndex]))
@@ -40,8 +37,7 @@ class ReleasesList extends Component {
       })
     }
 
-    if (!nextProps.app.release_matching_done && this.state.currentReleaseIndex === nextProps.releases.length)
-      nextProps.dispatch(completeMatch())
+    if (!nextProps.app.release_matching_done && this.state.currentReleaseIndex === nextProps.releases.length) { nextProps.dispatch(completeMatch()) }
   }
 
   render () {
@@ -63,7 +59,7 @@ class ReleasesList extends Component {
           </Fragment>
         }
       </div>
-    );
+    )
   }
 }
 

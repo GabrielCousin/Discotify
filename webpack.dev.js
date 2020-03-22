@@ -9,7 +9,7 @@ const {
   SPOTIFY_CLIENT_ID,
   SPOTIFY_CLIENT_SECRET,
   SEGMENT_ID
-} = config;
+} = config
 
 module.exports = merge(common, {
   mode: 'development',
@@ -21,11 +21,11 @@ module.exports = merge(common, {
     // overlay: true,
     port: 3000,
     watchOptions: {
-      ignored: /node_modules/,
+      ignored: /node_modules/
     }
   },
   performance: {
-    hints: false,
+    hints: false
   },
   plugins: [
     new webpack.HotModuleReplacementPlugin(),

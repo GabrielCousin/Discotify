@@ -21,7 +21,7 @@ import {
 import { APP_STATUS_ALBUMS_FETCHED } from '../dicts/app'
 
 import request from 'request'
-const queryString = require('query-string');
+const queryString = require('query-string')
 
 export function requestToken () {
   return dispatch => {
@@ -35,7 +35,7 @@ export function requestToken () {
         oauth_callback: `${document.location.origin}/discogs_callback`,
         oauth_timestamp: Date.now()
       }
-    }, function (error, res, body) {
+    }, function (_error, res, body) {
       if (body && body.match(/Invalid/)) {
         logger('Discogs >> request token failed', JSON.stringify(body))
 
@@ -49,7 +49,7 @@ export function requestToken () {
       localStorage.setItem('discogs_token', data.oauth_token)
       localStorage.setItem('discogs_token_secret', data.oauth_token_secret)
       window.location.assign(`${DISCOGS_AUTORIZE_TOKEN_URL}?oauth_token=${data.oauth_token}`)
-    });
+    })
   }
 }
 
@@ -70,9 +70,9 @@ export function confirmConnect () {
         oauth_signature: `${DISCOGS_CONSUMER_SECRET}%26${localStorage.getItem('discogs_token_secret')}`,
         oauth_nonce: Math.random().toString(),
         oauth_signature_method: 'PLAINTEXT',
-        oauth_timestamp: Date.now(),
+        oauth_timestamp: Date.now()
       })
-    }, function (error, res, body) {
+    }, function (_error, res, body) {
       if (body && body.match(/Invalid/)) {
         logger('Discogs >> oauth confirm failed', JSON.stringify(body))
 
@@ -90,21 +90,21 @@ export function confirmConnect () {
         type: DISCOGS_OAUTH_CONFIRM_SUCCESS,
         data
       })
-    });
-  };
+    })
+  }
 }
 
 export function fetchDiscogsAlbums (username, url) {
   const token = localStorage.getItem('discogs_token')
-  const token_secret = localStorage.getItem('discogs_token_secret')
+  const tokenSecret = localStorage.getItem('discogs_token_secret')
 
   return dispatch => {
     dispatch({
-      type: DISCOGS_FETCH_ALBUMS,
+      type: DISCOGS_FETCH_ALBUMS
     })
 
     request.get({
-      url: url ? url : DISCOGS_COLLECTION_ENDPOINT(username),
+      url: url || DISCOGS_COLLECTION_ENDPOINT(username),
       qs: {
         per_page: 100
       },
@@ -112,11 +112,11 @@ export function fetchDiscogsAlbums (username, url) {
         consumer_key: DISCOGS_CONSUMER_KEY,
         consumer_secret: DISCOGS_CONSUMER_SECRET,
         token,
-        token_secret,
-        signature_method : 'PLAINTEXT'
+        token_secret: tokenSecret,
+        signature_method: 'PLAINTEXT'
       }
-    }, function (error, res, body) {
-      const data = JSON.parse(body);
+    }, function (_error, res, body) {
+      const data = JSON.parse(body)
       if (data && data.message) {
         logger('Discogs album fetch failed', data.message)
 
@@ -126,7 +126,7 @@ export function fetchDiscogsAlbums (username, url) {
         })
       }
 
-      const nextUrl = data.pagination.urls.next;
+      const nextUrl = data.pagination.urls.next
 
       dispatch({
         type: DISCOGS_FETCH_ALBUMS_SUCCESS,
@@ -135,17 +135,16 @@ export function fetchDiscogsAlbums (username, url) {
 
       return dispatch(nextUrl ? fetchDiscogsAlbums(null, nextUrl) : { type: APP_STATUS_ALBUMS_FETCHED })
     })
-
   }
 }
 
 export function fetchUserInfo () {
   const token = localStorage.getItem('discogs_token')
-  const token_secret = localStorage.getItem('discogs_token_secret')
+  const tokenSecret = localStorage.getItem('discogs_token_secret')
 
   return dispatch => {
     dispatch({
-      type: DISCOGS_FETCH_USER_INFO,
+      type: DISCOGS_FETCH_USER_INFO
     })
 
     request.get({
@@ -154,8 +153,8 @@ export function fetchUserInfo () {
         consumer_key: DISCOGS_CONSUMER_KEY,
         consumer_secret: DISCOGS_CONSUMER_SECRET,
         token,
-        token_secret,
-        signature_method : 'PLAINTEXT'
+        token_secret: tokenSecret,
+        signature_method: 'PLAINTEXT'
       }
     }, function (e, res, body) {
       if (body && body.error) {

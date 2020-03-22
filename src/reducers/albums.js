@@ -5,15 +5,14 @@ import {
   SPOTIFY_SEARCH_ALBUM_FAIL
 } from '../dicts/spotify'
 
-const albums = (state = [], {type, data}) => {
+const albums = (state = [], { type, data }) => {
   switch (type) {
     case DISCOGS_FETCH_ALBUMS_SUCCESS: {
       const albums = data.map(album => {
         let artists = album.basic_information.artists.map(artist => (artist.name)).join(' ')
         const dirtyArtistName = artists.match(/\s\([0-9]+\)$/)
 
-        if (dirtyArtistName)
-          artists = artists.slice(0, dirtyArtistName.index)
+        if (dirtyArtistName) { artists = artists.slice(0, dirtyArtistName.index) }
 
         return {
           artists,
@@ -45,7 +44,7 @@ const albums = (state = [], {type, data}) => {
           Object.assign({}, state[data.index], {
             status: 'success',
             spotify_id: data.results[0].id,
-            spotify_uri: data.results[0].uri,
+            spotify_uri: data.results[0].uri
           }),
           ...state.slice(data.index + 1)
         ]

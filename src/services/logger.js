@@ -1,9 +1,9 @@
 function logger (message, extra) {
   if (PRODUCTION_ENV && Sentry) {
-    Sentry.withScope(function(scope) {
-      scope.setExtra('extraData', extra);
-      Sentry.captureMessage(message);
-    });
+    Sentry.withScope(scope => {
+      scope.setExtra('extraData', extra)
+      Sentry.captureMessage(message)
+    })
   } else {
     console.log(arguments) // eslint-disable-line no-console
   }

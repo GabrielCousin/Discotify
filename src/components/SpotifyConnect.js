@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import PropTypes from 'prop-types';
+import PropTypes from 'prop-types'
 
 import {
   fetchUserInfo,
@@ -14,16 +14,16 @@ const mapStateToProps = (state) => {
 }
 
 class SpotifyConnect extends Component {
-  constructor(props) {
-    super(props);
-    this.handleSpotifyConnect = this.handleSpotifyConnect.bind(this);
+  constructor (props) {
+    super(props)
+    this.handleSpotifyConnect = this.handleSpotifyConnect.bind(this)
   }
 
   UNSAFE_componentWillMount () {
     this.props.dispatch(fetchUserInfo())
   }
 
-  handleSpotifyConnect() {
+  handleSpotifyConnect () {
     requestToken()
   }
 
@@ -35,18 +35,17 @@ class SpotifyConnect extends Component {
           <p className="Box-Description">Releases will be exported in your albums</p>
         </div>
         <div className="Box-AddOn">
-          {this.props.user.spotify_id ?
-            <button className="Button Button--outline" type="button" disabled>
+          {this.props.user.spotify_id
+            ? <button className="Button Button--outline" type="button" disabled>
               Connected
             </button>
-          :
-            <button className="Button" type="button" onClick={this.handleSpotifyConnect}>
+            : <button className="Button" type="button" onClick={this.handleSpotifyConnect}>
               Connect
             </button>
           }
         </div>
       </div>
-    );
+    )
   }
 }
 

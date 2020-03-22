@@ -181,7 +181,6 @@ a {
   & + .Button {
     margin-left: var(--defaultMargin);
   }
-
 }
 
 .Button--outline {
@@ -256,7 +255,6 @@ a {
 }
 
 .BoxesContainer {
-
   .Box:only-child {
     border-radius: var(--defaultRadius);
   }
@@ -265,7 +263,6 @@ a {
     border-radius: 0 0 var(--defaultRadius) var(--defaultRadius);
   }
 }
-
 
 .Box-Title {
   font-size: var(--heroParagraphFontSize);
@@ -281,8 +278,6 @@ a {
   font-size: var(--fontSizeL);
   opacity: .6;
 }
-
-
 
 .Box-Content {
   flex: 1;
@@ -437,7 +432,6 @@ a {
 }
 
 @media only screen  and (min-device-width: 320px)  and (max-device-width: 568px) and (orientation: portrait) {
-
   .App {
     padding-bottom: 0;
   }
@@ -528,7 +522,6 @@ a {
 }
 
 @media only screen  and (min-device-width: 320px)  and (max-device-width: 374px) and (orientation: portrait) {
-
   .Box-Title {
     font-size: var(--fontSizeL);
   }

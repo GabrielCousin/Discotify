@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { Redirect } from 'react-router-dom'
 import { connect } from 'react-redux'
-import PropTypes from 'prop-types';
+import PropTypes from 'prop-types'
 
 import { confirmConnect } from '../actions/discogs'
 
@@ -25,7 +25,7 @@ class DiscogsCallback extends Component {
 
     return (
       <p>Redirecting to your application…</p>
-    );
+    )
   }
 }
 

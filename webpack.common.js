@@ -32,7 +32,7 @@ module.exports = {
   entry: './src/index.js',
   output: {
     path: path.resolve('dist'),
-    filename: '[name].[hash].js',
+    filename: '[name].[hash].js'
   },
   module: {
     rules: [
@@ -78,7 +78,7 @@ module.exports = {
   node: {
     fs: 'empty',
     net: 'empty',
-    tls: 'empty',
+    tls: 'empty'
   },
   resolve: {
     alias: {

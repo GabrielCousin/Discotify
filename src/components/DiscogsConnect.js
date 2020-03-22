@@ -1,6 +1,6 @@
 import React, { Fragment, Component } from 'react'
 import { connect } from 'react-redux'
-import PropTypes from 'prop-types';
+import PropTypes from 'prop-types'
 
 import { fetchUserInfo, requestToken } from '../actions/discogs'
 
@@ -11,16 +11,16 @@ const mapStateToProps = (state) => {
 }
 
 class DiscogsConnect extends Component {
-  constructor(props) {
-    super(props);
-    this.handleDiscogsConnect = this.handleDiscogsConnect.bind(this);
+  constructor (props) {
+    super(props)
+    this.handleDiscogsConnect = this.handleDiscogsConnect.bind(this)
   }
 
   UNSAFE_componentWillMount () {
     this.props.dispatch(fetchUserInfo())
   }
 
-  handleDiscogsConnect() {
+  handleDiscogsConnect () {
     this.props.dispatch(requestToken())
   }
 
@@ -33,19 +33,18 @@ class DiscogsConnect extends Component {
             <p className="Box-Description">Collection folders are not supported</p>
           </div>
           <div className="Box-AddOn">
-            {this.props.user.discogs_id ?
-              <button className="Button Button--outline" type="button" disabled>
+            {this.props.user.discogs_id
+              ? <button className="Button Button--outline" type="button" disabled>
                 Connected
               </button>
-            :
-              <button className="Button" type="button" onClick={this.handleDiscogsConnect}>
+              : <button className="Button" type="button" onClick={this.handleDiscogsConnect}>
                 Connect
               </button>
             }
           </div>
         </div>
       </Fragment>
-    );
+    )
   }
 }
 
