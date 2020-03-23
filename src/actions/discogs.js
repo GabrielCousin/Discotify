@@ -32,7 +32,7 @@ export function requestToken () {
         oauth_signature: `${DISCOGS_CONSUMER_SECRET}%26`,
         oauth_nonce: Math.random().toString(),
         oauth_signature_method: 'PLAINTEXT',
-        oauth_callback: DISCOGS_OAUTH_CALLBACK,
+        oauth_callback: `${document.location.origin}/discogs_callback`,
         oauth_timestamp: Date.now()
       }
     }, function (error, res, body) {

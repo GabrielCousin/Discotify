@@ -12,10 +12,8 @@
     "PRODUCTION_ENV": true,
     "DISCOGS_CONSUMER_KEY": true,
     "DISCOGS_CONSUMER_SECRET": true,
-    "DISCOGS_OAUTH_CALLBACK": true,
     "SPOTIFY_CLIENT_ID": true,
     "SPOTIFY_CLIENT_SECRET": true,
-    "SPOTIFY_OAUTH_CALLBACK": true,
     "SEGMENT_ID": true,
     "Sentry": true
   },

@@ -28,7 +28,7 @@ export function requestToken() {
   const params = {
     client_id: SPOTIFY_CLIENT_ID,
     response_type: 'token',
-    redirect_uri: SPOTIFY_OAUTH_CALLBACK,
+    redirect_uri: `${document.location.origin}/spotify_callback`,
     state: Math.random().toString(),
     scope: 'user-library-modify',
     show_dialog: true

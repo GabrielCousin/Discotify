@@ -10,10 +10,8 @@ module.exports = merge(common, {
       PRODUCTION_ENV: true,
       DISCOGS_CONSUMER_KEY: `"${process.env.DISCOGS_CONSUMER_KEY}"`,
       DISCOGS_CONSUMER_SECRET: `"${process.env.DISCOGS_CONSUMER_SECRET}"`,
-      DISCOGS_OAUTH_CALLBACK: `"${process.env.DISCOGS_OAUTH_CALLBACK}"`,
       SPOTIFY_CLIENT_ID: `"${process.env.SPOTIFY_CLIENT_ID}"`,
       SPOTIFY_CLIENT_SECRET: `"${process.env.SPOTIFY_CLIENT_SECRET}"`,
-      SPOTIFY_OAUTH_CALLBACK: `"${process.env.SPOTIFY_OAUTH_CALLBACK}"`,
       SEGMENT_ID: `"${process.env.SEGMENT_ID}"`
     }),
   ],
