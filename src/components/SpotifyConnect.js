@@ -1,59 +1,40 @@
-import React, { Component } from 'react'
-import { connect } from 'react-redux'
-import PropTypes from 'prop-types'
+import React, { useContext, useEffect } from 'react'
+import { context } from '../store'
+import { useObserver } from 'mobx-react'
 
 import {
-  fetchUserInfo,
   requestToken
-} from '../actions/spotify'
+} from '../api-actions/spotify'
 
-const mapStateToProps = (state) => {
-  return {
-    user: state.user
-  }
-}
+const SpotifyConnect = () => {
+  const store = useContext(context)
 
-class SpotifyConnect extends Component {
-  constructor (props) {
-    super(props)
-    this.handleSpotifyConnect = this.handleSpotifyConnect.bind(this)
-  }
+  return useObserver(() => {
+    useEffect(() => {
+      store.fetchSpotifyUser()
+    }, [])
 
-  UNSAFE_componentWillMount () {
-    this.props.dispatch(fetchUserInfo())
-  }
+    const user = store.user
 
-  handleSpotifyConnect () {
-    requestToken()
-  }
-
-  render () {
     return (
-      <div className={this.props.user.spotify_id ? 'Box Box--connected' : 'Box Box--disconnected' }>
+      <div className={user.spotifyUserId ? 'Box Box--connected' : 'Box Box--disconnected'}>
         <div className="Box-Content">
-          <h3 className={this.props.user.spotify_id ? 'Box-Title Box-Title--connected' : 'Box-Title' }>Now, connect to Spotify</h3>
+          <h3 className={user.spotifyUserId ? 'Box-Title Box-Title--connected' : 'Box-Title'}>Now, connect to Spotify</h3>
           <p className="Box-Description">Releases will be exported in your albums</p>
         </div>
         <div className="Box-AddOn">
-          {this.props.user.spotify_id
+          {user.spotifyUserId
             ? <button className="Button Button--outline" type="button" disabled>
               Connected
             </button>
-            : <button className="Button" type="button" onClick={this.handleSpotifyConnect}>
+            : <button className="Button" type="button" onClick={requestToken}>
               Connect
             </button>
           }
         </div>
       </div>
     )
-  }
+  })
 }
 
-SpotifyConnect.propTypes = {
-  user: PropTypes.shape({
-    spotify_id: PropTypes.string
-  }),
-  dispatch: PropTypes.func
-}
-
-export default connect(mapStateToProps)(SpotifyConnect)
+export default SpotifyConnect

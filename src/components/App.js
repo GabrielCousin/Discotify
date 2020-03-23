@@ -20,29 +20,32 @@ import StatusBar from './StatusBar'
 import logoSvg from 'public/svg/logo.svg'
 
 import { hot } from 'react-hot-loader'
+import { Provider } from '../store'
 
 const App = () => {
   return (
-    <Router>
-      <div className="App">
-        <Link alt="Return to homepage" className="Logo Hero-Logo" to='/'>
-          <img alt="Discotify logo" src={logoSvg} />
-        </Link>
-        <>
-          <Route exact path="/" component={Splash} />
-          <Route exact path="/logout" component={Logout} />
-          <Route exact path="/discogs_callback" component={DiscogsCallback} />
-          <Route exact path="/spotify_callback" component={SpotifyCallback} />
-          <div className='BoxesContainer'>
-            <Route exact path="/match" component={DiscogsConnect} />
-            <Route exact path="/match" component={SpotifyConnect} />
-            <Route exact path="/match" component={ReleasesList} />
-          </div>
-          <Route exact path="/match" component={StatusBar} />
-        </>
-        <Footer />
-      </div>
-    </Router>
+    <Provider>
+      <Router>
+        <div className="App">
+          <Link alt="Return to homepage" className="Logo Hero-Logo" to="/">
+            <img alt="Discotify logo" src={logoSvg} />
+          </Link>
+          <>
+            <Route exact path="/" component={Splash} />
+            <Route exact path="/logout" component={Logout} />
+            <Route exact path="/discogs_callback" component={DiscogsCallback} />
+            <Route exact path="/spotify_callback" component={SpotifyCallback} />
+            <div className='BoxesContainer'>
+              <Route exact path="/match" component={DiscogsConnect} />
+              <Route exact path="/match" component={SpotifyConnect} />
+              <Route exact path="/match" component={ReleasesList} />
+            </div>
+            <Route exact path="/match" component={StatusBar} />
+          </>
+          <Footer />
+        </div>
+      </Router>
+    </Provider>
   )
 }
 

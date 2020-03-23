@@ -1,4 +1,5 @@
 module.exports = {
+  parser: 'babel-eslint',
   parserOptions: {
     ecmaVersion: 2018,
     sourceType: 'module'
@@ -27,11 +28,8 @@ module.exports = {
     }
   },
   rules: {
+    'react/prop-types': 0,
     'camelcase': [2, {
-      allow: [
-        'UNSAFE_componentWillMount',
-        'UNSAFE_componentWillReceiveProps'
-      ],
       properties: 'never',
       ignoreDestructuring: true
     }],

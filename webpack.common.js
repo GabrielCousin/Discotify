@@ -82,8 +82,8 @@ module.exports = {
   },
   resolve: {
     alias: {
+      'api-actions': path.resolve(__dirname, 'src/api-actions/'),
       components: path.resolve(__dirname, 'src/components/'),
-      services: path.resolve(__dirname, 'src/services/'),
       public: path.resolve(__dirname, 'public/')
     }
   },

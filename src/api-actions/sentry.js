@@ -1,4 +1,4 @@
-function logger (message, extra) {
+export default function logError (message, extra) {
   if (PRODUCTION_ENV && Sentry) {
     Sentry.withScope(scope => {
       scope.setExtra('extraData', extra)
@@ -8,5 +8,3 @@ function logger (message, extra) {
     console.log(arguments) // eslint-disable-line no-console
   }
 }
-
-export default logger
