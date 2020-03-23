@@ -96,11 +96,7 @@ export function searchAlbum (index, { query }) {
       const data = JSON.parse(body)
 
       if (res.statusCode !== 200) {
-        logger('Spotify >> search album failed', {
-          extra: {
-            message: data.error.message
-          }
-        })
+        logger('Spotify >> search album failed', data.error.message)
 
         analytics.track('spotify:match_error', {
           query: query
@@ -159,11 +155,7 @@ export function saveAlbums (ids) {
       },
     }, function (error, res, body) {
       if (res.statusCode !== 200) {
-        logger('Spotify >> save albums failed', {
-          extra: {
-            message: body.error.message
-          }
-        })
+        logger('Spotify >> save albums failed', body.error.message)
 
         analytics.track('spotify:export_error')
 

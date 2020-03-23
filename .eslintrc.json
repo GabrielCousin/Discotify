@@ -17,7 +17,7 @@
     "SPOTIFY_CLIENT_SECRET": true,
     "SPOTIFY_OAUTH_CALLBACK": true,
     "SEGMENT_ID": true,
-    "Raven": true
+    "Sentry": true
   },
   "extends": [
     "eslint:recommended",

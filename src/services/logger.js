@@ -1,5 +1,12 @@
-function logger (...args) {
-  PRODUCTION_ENV && Raven ? Raven.captureMessage(...args) : console.log(...args) // eslint-disable-line no-console
+function logger (message, extra) {
+  if (PRODUCTION_ENV && Sentry) {
+    Sentry.withScope(function(scope) {
+      scope.setExtra('extraData', extra);
+      Sentry.captureMessage(message);
+    });
+  } else {
+    console.log(arguments) // eslint-disable-line no-console
+  }
 }
 
 export default logger

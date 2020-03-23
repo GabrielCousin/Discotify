@@ -37,11 +37,7 @@ export function requestToken () {
       }
     }, function (error, res, body) {
       if (body && body.match(/Invalid/)) {
-        logger('Discogs >> request token failed', {
-          extra: {
-            message: body
-          }
-        })
+        logger('Discogs >> request token failed', JSON.stringify(body))
 
         return dispatch({
           type: DISCOGS_REQUEST_TOKEN_FAIL,
@@ -78,11 +74,7 @@ export function confirmConnect () {
       })
     }, function (error, res, body) {
       if (body && body.match(/Invalid/)) {
-        logger('Discogs >> oauth confirm failed', {
-          extra: {
-            message: body
-          }
-        })
+        logger('Discogs >> oauth confirm failed', JSON.stringify(body))
 
         return dispatch({
           type: DISCOGS_OAUTH_CONFIRM_FAIL,
@@ -126,11 +118,7 @@ export function fetchDiscogsAlbums (username, url) {
     }, function (error, res, body) {
       const data = JSON.parse(body);
       if (data && data.message) {
-        logger('Discogs album fetch failed', {
-          extra: {
-            message: data.message
-          }
-        })
+        logger('Discogs album fetch failed', data.message)
 
         return dispatch({
           type: DISCOGS_FETCH_ALBUMS_FAIL,
