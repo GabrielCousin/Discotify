@@ -181,7 +181,6 @@ a {
   & + .Button {
     margin-left: var(--defaultMargin);
   }
-
 }
 
 .Button--outline {
@@ -256,7 +255,6 @@ a {
 }
 
 .BoxesContainer {
-
   .Box:only-child {
     border-radius: var(--defaultRadius);
   }
@@ -265,7 +263,6 @@ a {
     border-radius: 0 0 var(--defaultRadius) var(--defaultRadius);
   }
 }
-
 
 .Box-Title {
   font-size: var(--heroParagraphFontSize);
@@ -281,8 +278,6 @@ a {
   font-size: var(--fontSizeL);
   opacity: .6;
 }
-
-
 
 .Box-Content {
   flex: 1;
@@ -372,25 +367,6 @@ a {
   border: none;
 }
 
-.Item-Status--loading:after {
-  border-top: 1px solid rgba(var(--spotifyRGB), 1);
-  border-right: 1px solid rgba(var(--spotifyRGB), 1);
-  border-bottom: 1px solid rgba(var(--spotifyRGB), 1);
-  border-left: 1px solid rgba(var(--spotifyRGB), 0);
-  transition: opacity .1s ease-out;
-  animation: loader 1.1s infinite linear;
-  opacity: 1;
-}
-
-@keyframes loader {
-  0% {
-    transform: rotate(0deg);
-  }
-  100% {
-    transform: rotate(360deg);
-  }
-}
-
 .Item-Status--success {
   background: var(--spotify);
   border: none;
@@ -437,7 +413,6 @@ a {
 }
 
 @media only screen  and (min-device-width: 320px)  and (max-device-width: 568px) and (orientation: portrait) {
-
   .App {
     padding-bottom: 0;
   }
@@ -528,7 +503,6 @@ a {
 }
 
 @media only screen  and (min-device-width: 320px)  and (max-device-width: 374px) and (orientation: portrait) {
-
   .Box-Title {
     font-size: var(--fontSizeL);
   }

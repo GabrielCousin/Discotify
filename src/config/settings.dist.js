@@ -9,4 +9,4 @@ module.exports = {
 
   // Create yours on https://app.segment.com/signup
   SEGMENT_ID: 'SEGMENT_ID'
-};
+}
