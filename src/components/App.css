@@ -367,25 +367,6 @@ a {
   border: none;
 }
 
-.Item-Status--loading:after {
-  border-top: 1px solid rgba(var(--spotifyRGB), 1);
-  border-right: 1px solid rgba(var(--spotifyRGB), 1);
-  border-bottom: 1px solid rgba(var(--spotifyRGB), 1);
-  border-left: 1px solid rgba(var(--spotifyRGB), 0);
-  transition: opacity .1s ease-out;
-  animation: loader 1.1s infinite linear;
-  opacity: 1;
-}
-
-@keyframes loader {
-  0% {
-    transform: rotate(0deg);
-  }
-  100% {
-    transform: rotate(360deg);
-  }
-}
-
 .Item-Status--success {
   background: var(--spotify);
   border: none;

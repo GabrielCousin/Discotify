@@ -1,15 +1,13 @@
 import logError from 'api-actions/sentry'
-import request from 'request'
-const queryString = require('query-string')
 
 const SPOTIFY_BASE_URL = 'https://api.spotify.com'
 const SPOTIFY_ACCOUNT_BASE_URL = 'https://accounts.spotify.com'
-const SPOTIFY_REQUEST_AUTHORIZATION_ENDPOINT = new URL('/authorize', SPOTIFY_ACCOUNT_BASE_URL)
-const SPOTIFY_CURRENT_PROFILE_ENDPOINT = new URL('/v1/me', SPOTIFY_BASE_URL)
-const SPOTIFY_SEARCH_ENDPOINT = new URL('/v1/search', SPOTIFY_BASE_URL)
-const SPOTIFY_SAVE_ALBUMS_ENDPOINT = new URL('/v1/me/albums', SPOTIFY_BASE_URL)
 
 export function requestToken () {
+  // https://developer.spotify.com/documentation/general/guides/authorization-guide/
+
+  const newUrl = new URL('/authorize', SPOTIFY_ACCOUNT_BASE_URL);
+
   const params = {
     client_id: SPOTIFY_CLIENT_ID,
     response_type: 'token',
@@ -19,83 +17,82 @@ export function requestToken () {
     show_dialog: true
   }
 
-  window.location.assign(`${SPOTIFY_REQUEST_AUTHORIZATION_ENDPOINT}?${queryString.stringify(params)}`)
+  for (const key in params) {
+    newUrl.searchParams.append(key, params[key]);
+  }
+
+  window.location.assign(newUrl.toString())
 }
 
-export function fetchUserInfo () {
+export async function fetchUserInfo () {
+  // https://developer.spotify.com/documentation/web-api/reference-beta/#endpoint-get-current-users-profile
+
   const token = localStorage.getItem('spotify_access_token')
 
-  return new Promise(function (resolve, reject) {
-    request.get({
-      url: SPOTIFY_CURRENT_PROFILE_ENDPOINT
-    }, function (e, r, body) {
-      const data = JSON.parse(body)
-
-      if (data && data.error) {
-        reject(Error(`Spotify >> ${data.error.message}`))
-        return
-      }
-
-      resolve({
-        spotifyDisplayName: data.display_name,
-        spotifyUserId: data.id
-      })
-    }).auth(null, null, true, token)
+  const req = await fetch(new URL('/v1/me', SPOTIFY_BASE_URL), {
+    headers: {
+      'Authorization': `Bearer ${token}`
+    }
   })
+  const res = await req.json()
+
+  if (req.status !== 200) {
+    throw new Error(`Spotify >> ${res.error.message}`)
+  }
+
+  return {
+    spotifyDisplayName: res.display_name,
+    spotifyUserId: res.id
+  }
 }
 
-export function searchAlbum (query) {
+export async function searchAlbum (query) {
+  // https://developer.spotify.com/documentation/web-api/reference-beta/#category-search
+
   const token = localStorage.getItem('spotify_access_token')
+  const url = new URL('/v1/search', SPOTIFY_BASE_URL)
+  url.searchParams.append('q', query)
+  url.searchParams.append('type', 'album')
+  url.searchParams.append('limit', 1)
 
-  return new Promise(function (resolve, reject) {
-    request.get({
-      url: SPOTIFY_SEARCH_ENDPOINT,
-      qs: {
-        q: encodeURIComponent(query),
-        type: 'album',
-        limit: 1
-      },
-      qsStringifyOptions: {
-        encode: false
-      }
-    }, function (_error, res, body) {
-      const data = JSON.parse(body)
-
-      if (res.statusCode !== 200) {
-        logError('Spotify >> search album failed', data.error.message)
-
-        analytics.track('spotify:match_error', {
-          query: query
-        })
-
-        resolve({})
-        return
-      }
-      const results = data.albums.items
-      resolve(
-        results.length ? results[0] : {}
-      )
-    }).auth(null, null, true, token)
+  const req = await fetch(url, {
+    headers: {
+      'Authorization': `Bearer ${token}`
+    }
   })
+
+  const res = await req.json()
+
+  if (req.status !== 200) {
+    logError('Spotify >> search album failed', res.error.message)
+
+    analytics.track('spotify:match_error', {
+      query
+    })
+
+    return {}
+  }
+
+  const results = res.albums.items
+  return results.length ? results[0] : {}
 }
 
-export function saveAlbums (ids) {
+export async function saveAlbums (ids) {
+  // https://developer.spotify.com/documentation/web-api/reference-beta/#endpoint-save-albums-user
+
   const token = localStorage.getItem('spotify_access_token')
 
-  return new Promise(function (resolve, reject) {
-    request.put({
-      url: SPOTIFY_SAVE_ALBUMS_ENDPOINT,
-      json: {
-        ids
-      }
-    }, function (_error, res, body) {
-      if (res.statusCode !== 200) {
-        logError('Spotify >> save albums failed', body.error.message)
-        analytics.track('spotify:export_error')
-        reject(new Error(body.error.message))
-      }
-
-      resolve()
-    }).auth(null, null, true, token)
+  const req = await fetch(new URL('/v1/me/albums', SPOTIFY_BASE_URL), {
+    method: 'PUT',
+    headers: {
+      'Authorization': `Bearer ${token}`
+    },
+    body: JSON.stringify(ids)
   })
+
+  if (req.status !== 200) {
+    logError('Spotify >> save albums failed')
+    analytics.track('spotify:export_error')
+    throw new Error('Export failed')
+  }
 }

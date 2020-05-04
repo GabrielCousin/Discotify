@@ -1,147 +1,183 @@
 import logError from 'api-actions/sentry'
-import request from 'request'
-const queryString = require('query-string')
 
 const DISCOGS_BASE_URL = 'https://api.discogs.com'
-const DISCOGS_REQUEST_TOKEN_ENDPOINT = new URL('/oauth/request_token', DISCOGS_BASE_URL)
-const DISCOGS_ACCESS_TOKEN_ENDPOINT = new URL('/oauth/access_token', DISCOGS_BASE_URL)
-const DISCOGS_IDENTITY_ENDPOINT = new URL('/oauth/identity', DISCOGS_BASE_URL)
 const DISCOGS_AUTORIZE_TOKEN_URL = new URL('https://www.discogs.com/oauth/authorize')
 
 function DISCOGS_COLLECTION_ENDPOINT (username) {
+  // https://www.discogs.com/developers#page:user-collection,header:user-collection-collection-items-by-folder
+
   if (!username) { throw new Error('Username needed!') }
 
   return new URL(`/users/${username}/collection/folders/0/releases`, DISCOGS_BASE_URL)
 }
 
-export function requestToken () {
-  return request.get({
-    url: DISCOGS_REQUEST_TOKEN_ENDPOINT,
-    qs: {
-      oauth_consumer_key: DISCOGS_CONSUMER_KEY,
-      oauth_signature: `${DISCOGS_CONSUMER_SECRET}%26`,
-      oauth_nonce: Math.random().toString(),
-      oauth_signature_method: 'PLAINTEXT',
-      oauth_callback: `${document.location.origin}/discogs_callback`,
-      oauth_timestamp: Date.now()
-    }
-  }, function (_error, res, body) {
-    if (body && body.match(/Invalid/)) {
-      // logError('Discogs >> request token failed', JSON.stringify(body))
-      throw new Error(body.error)
-    }
+export async function requestToken () {
+  // https://www.discogs.com/developers#page:authentication,header:authentication-oauth-flow
 
-    const data = queryString.parse(body)
-    localStorage.setItem('discogs_token', data.oauth_token)
-    localStorage.setItem('discogs_token_secret', data.oauth_token_secret)
-    window.location.assign(`${DISCOGS_AUTORIZE_TOKEN_URL}?oauth_token=${data.oauth_token}`)
-  })
+  const url = new URL('/oauth/request_token', DISCOGS_BASE_URL);
+  const params = {
+    oauth_consumer_key: DISCOGS_CONSUMER_KEY,
+    oauth_signature: `${DISCOGS_CONSUMER_SECRET}%26`,
+    oauth_nonce: Math.random().toString(),
+    oauth_signature_method: 'PLAINTEXT',
+    oauth_callback: `${document.location.origin}/discogs_callback`,
+    oauth_timestamp: Date.now()
+  };
+
+  for (const key in params) {
+    url.searchParams.append(key, params[key])
+  }
+
+  const req = await fetch(url)
+  const res = await req.text()
+
+  if (req.status !== 200) {
+    const error = JSON.parse(res);
+    throw new Error(error.message)
+  }
+
+  const data = new URLSearchParams(res);
+  const token = data.get('oauth_token')
+  const secret  = data.get('oauth_token_secret')
+
+  localStorage.setItem('discogs_token', token)
+  localStorage.setItem('discogs_token_secret', secret)
+  window.location.assign(`${DISCOGS_AUTORIZE_TOKEN_URL}?oauth_token=${token}`)
 }
 
-export function confirmConnect () {
-  const qs = queryString.parse(window.location.search)
-  return new Promise(function (resolve) {
-    request.post({
-      url: DISCOGS_ACCESS_TOKEN_ENDPOINT,
-      headers: {
-        'Content-Type': 'application/x-www-form-urlencoded'
-      },
-      qs: Object.assign(qs, {
-        oauth_consumer_key: DISCOGS_CONSUMER_KEY,
-        oauth_signature: `${DISCOGS_CONSUMER_SECRET}%26${localStorage.getItem('discogs_token_secret')}`,
-        oauth_nonce: Math.random().toString(),
-        oauth_signature_method: 'PLAINTEXT',
-        oauth_timestamp: Date.now()
-      })
-    }, function (_error, res, body) {
-      if (body && body.match(/Invalid/)) {
-        // logError('Discogs >> oauth confirm failed', JSON.stringify(body))
-        throw new Error(body.error)
-      }
+export async function confirmConnect () {
+  // https://www.discogs.com/developers#page:authentication,header:authentication-access-token-url
 
-      const data = queryString.parse(body)
-      localStorage.setItem('discogs_token', data.oauth_token)
-      localStorage.setItem('discogs_token_secret', data.oauth_token_secret)
+  const url = new URL('/oauth/access_token', DISCOGS_BASE_URL)
 
-      resolve(Object.assign(data, { discogsAuthDate: new Date().toJSON() }))
-    })
+  const params = {
+    oauth_consumer_key: DISCOGS_CONSUMER_KEY,
+    oauth_signature: `${DISCOGS_CONSUMER_SECRET}%26${localStorage.getItem('discogs_token_secret')}`,
+    oauth_nonce: Math.random().toString(),
+    oauth_signature_method: 'PLAINTEXT',
+    oauth_timestamp: Date.now()
+  }
+
+  for(const key in params) {
+    url.searchParams.append(key, params[key])
+  }
+
+  const searchParams = new URLSearchParams(window.location.search)
+
+  for(const pair of searchParams.entries()) {
+    const [key, value] = pair;
+    url.searchParams.append(key, value)
+  }
+
+  const req = await fetch(url, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/x-www-form-urlencoded'
+    }
   })
+  const res = await req.text()
+
+  if (req.status !== 200) {
+    const error = JSON.parse(res);
+    throw new Error(error.message)
+  }
+
+  const data = new URLSearchParams(res);
+  const token = data.get('oauth_token')
+  const secret  = data.get('oauth_token_secret')
+
+  localStorage.setItem('discogs_token', token)
+  localStorage.setItem('discogs_token_secret', secret)
+
+  return {
+    discogsAuthDate: new Date().toJSON()
+  }
 }
 
-export function fetchUserInfo () {
+export async function fetchUserInfo () {
+  // https://www.discogs.com/developers#page:user-identity,header:user-identity-identity
+
   const token = localStorage.getItem('discogs_token')
   const tokenSecret = localStorage.getItem('discogs_token_secret')
 
-  return new Promise(function (resolve, reject) {
-    if (!token || !tokenSecret) {
-      reject(new Error('Not connected'))
-      return
+  if (!token || !tokenSecret) {
+    throw new Error('Not connected')
+  }
+
+  const url = new URL('/oauth/identity', DISCOGS_BASE_URL)
+
+  const oauth = [
+    `OAuth oauth_consumer_key="${DISCOGS_CONSUMER_KEY}"`,
+    `oauth_nonce="${Math.random().toString()}"`,
+    `oauth_signature="${DISCOGS_CONSUMER_SECRET}%26${tokenSecret}"`,
+    `oauth_signature_method="PLAINTEXT"`,
+    `oauth_timestamp="${Date.now()}"`,
+    `oauth_token="${token}"`,
+    `oauth_version="1.0"`
+  ]
+
+  const req = await fetch(url.toString(), {
+    headers: {
+      'Authorization': oauth.join(',')
     }
-
-    request.get({
-      url: DISCOGS_IDENTITY_ENDPOINT,
-      oauth: {
-        consumer_key: DISCOGS_CONSUMER_KEY,
-        consumer_secret: DISCOGS_CONSUMER_SECRET,
-        token,
-        token_secret: tokenSecret,
-        signature_method: 'PLAINTEXT'
-      }
-    }, function (e, res, body) {
-      if (body && body.error) {
-        reject(new Error(body.error))
-        return
-      }
-      const { id, username } = JSON.parse(body)
-
-      analytics.identify(id, {
-        discogs_username: username
-      })
-
-      resolve({
-        discogsUsername: username,
-        discogsUserId: id
-      })
-    })
   })
+
+  const res = await req.json()
+
+  if (req.status !== 200) {
+    const error = JSON.parse(res);
+    throw new Error(error.message)
+  }
+
+  const { id, username } = res
+
+  analytics.identify(id, {
+    discogs_username: username
+  })
+
+  return {
+    discogsUsername: username,
+    discogsUserId: id
+  }
 }
 
 export async function fetchAlbums (username) {
+  // https://www.discogs.com/developers#page:user-collection,header:user-collection-collection-items-by-folder
+
   const token = localStorage.getItem('discogs_token')
   const tokenSecret = localStorage.getItem('discogs_token_secret')
   const albums = []
 
+  const oauth = [
+    `OAuth oauth_consumer_key="${DISCOGS_CONSUMER_KEY}"`,
+    `oauth_nonce="${Math.random().toString()}"`,
+    `oauth_signature="${DISCOGS_CONSUMER_SECRET}%26${tokenSecret}"`,
+    `oauth_signature_method="PLAINTEXT"`,
+    `oauth_timestamp="${Date.now()}"`,
+    `oauth_token="${token}"`,
+    `oauth_version="1.0"`
+  ]
+
   let url = DISCOGS_COLLECTION_ENDPOINT(username)
 
   while (url) {
-    const releases = await new Promise(function (resolve, reject) {
-      request.get({
-        url,
-        qs: {
-          per_page: 100
-        },
-        oauth: {
-          consumer_key: DISCOGS_CONSUMER_KEY,
-          consumer_secret: DISCOGS_CONSUMER_SECRET,
-          token,
-          token_secret: tokenSecret,
-          signature_method: 'PLAINTEXT'
-        }
-      }, function (_error, res, body) {
-        const data = JSON.parse(body)
-
-        if (data && data.message) {
-          url = null
-          logError('Discogs album fetch failed', data.message)
-          reject(data.message)
-          return
-        }
-
-        url = data.pagination.urls.next
-        resolve(data.releases)
-      })
+    url.searchParams.append('per_page', 100)
+    const req = await fetch(url.toString(), {
+      headers: {
+        'Authorization': oauth.join(',')
+      }
     })
-    albums.push(...releases)
+
+    const res = await req.json()
+
+    if (req.status !== 200) {
+      url = null
+      logError('Discogs album fetch failed', data.message)
+      throw new Error(data.message)
+    }
+
+    url = res.pagination.urls.next
+    albums.push(...res.releases)
   }
 
   return albums

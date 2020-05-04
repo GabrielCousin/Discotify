@@ -75,11 +75,6 @@ module.exports = {
       }
     ]
   },
-  node: {
-    fs: 'empty',
-    net: 'empty',
-    tls: 'empty'
-  },
   resolve: {
     alias: {
       'api-actions': path.resolve(__dirname, 'src/api-actions/'),
