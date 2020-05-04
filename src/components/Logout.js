@@ -1,15 +1,21 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import { Redirect } from 'react-router-dom'
+import { context } from '../store'
+import { useObserver } from 'mobx-react'
 
 function Logout () {
-  localStorage.clear()
+  const store = useContext(context)
 
-  return (
-    <>
-      <p>Logging out…</p>
-      <Redirect to='/' />
-    </>
-  )
+  return useObserver(() => {
+    store.logout()
+
+    return (
+      <>
+        <p>Logging out…</p>
+        <Redirect to='/' />
+      </>
+    )
+  })
 }
 
 export default Logout

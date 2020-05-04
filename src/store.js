@@ -24,6 +24,18 @@ export const Provider = ({ children }) => {
       matched: 0
     },
 
+    logout () {
+      localStorage.clear()
+      store.user = {}
+      store.releases = []
+      store.counts.total = 0;
+      store.counts.proceeded = 0
+      store.counts.ignored = 0
+      store.counts.matched = 0
+      store.isDone = false
+      store.isExporting = false
+    },
+
     get isConnected () {
       return store.user.discogsUserId && store.user.spotifyUserId
     },
