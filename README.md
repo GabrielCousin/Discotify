@@ -1,6 +1,6 @@
 # Discotify
 
-Export your Discogs library to Spotify
+💿 Export your Discogs library to Spotify.
 
 
 ## Install
@@ -35,3 +35,7 @@ $ # npm run build
 $ yarn test
 $ # npm run test
 ```
+
+
+---
+🛠 Put together with [React](https://reactjs.org/) and [MobX](https://mobx.js.org/getting-started.html).
