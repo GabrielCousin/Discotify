@@ -1,0 +1,5 @@
+{
+  "routes": [
+    { "src": "/(logout|discogs_callback|spotify_callback|match)", "dest": "/" }
+  ]
+}
