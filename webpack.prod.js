@@ -12,7 +12,9 @@ module.exports = merge(common, {
       DISCOGS_CONSUMER_SECRET: `"${process.env.DISCOGS_CONSUMER_SECRET}"`,
       SPOTIFY_CLIENT_ID: `"${process.env.SPOTIFY_CLIENT_ID}"`,
       SPOTIFY_CLIENT_SECRET: `"${process.env.SPOTIFY_CLIENT_SECRET}"`,
-      SEGMENT_ID: `"${process.env.SEGMENT_ID}"`
+      SEGMENT_ID: `"${process.env.SEGMENT_ID}"`,
+      SENTRY_DSN: `"${process.env.SENTRY_DSN}"`,
+      VERSION_HASH: `"discotify#${Date.now()}"`
     })
   ],
   optimization: {

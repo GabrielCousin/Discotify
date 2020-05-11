@@ -14,7 +14,7 @@ function DISCOGS_COLLECTION_ENDPOINT (username) {
 export async function requestToken () {
   // https://www.discogs.com/developers#page:authentication,header:authentication-oauth-flow
 
-  const url = new URL('/oauth/request_token', DISCOGS_BASE_URL);
+  const url = new URL('/oauth/request_token', DISCOGS_BASE_URL)
   const params = {
     oauth_consumer_key: DISCOGS_CONSUMER_KEY,
     oauth_signature: `${DISCOGS_CONSUMER_SECRET}%26`,
@@ -22,7 +22,7 @@ export async function requestToken () {
     oauth_signature_method: 'PLAINTEXT',
     oauth_callback: `${document.location.origin}/discogs_callback`,
     oauth_timestamp: Date.now()
-  };
+  }
 
   for (const key in params) {
     url.searchParams.append(key, params[key])
@@ -32,13 +32,13 @@ export async function requestToken () {
   const res = await req.text()
 
   if (req.status !== 200) {
-    const error = JSON.parse(res);
+    const error = JSON.parse(res)
     throw new Error(error.message)
   }
 
-  const data = new URLSearchParams(res);
+  const data = new URLSearchParams(res)
   const token = data.get('oauth_token')
-  const secret  = data.get('oauth_token_secret')
+  const secret = data.get('oauth_token_secret')
 
   localStorage.setItem('discogs_token', token)
   localStorage.setItem('discogs_token_secret', secret)
@@ -65,7 +65,7 @@ export async function confirmConnect () {
   const searchParams = new URLSearchParams(window.location.search)
 
   for(const pair of searchParams.entries()) {
-    const [key, value] = pair;
+    const [key, value] = pair
     url.searchParams.append(key, value)
   }
 
@@ -78,13 +78,13 @@ export async function confirmConnect () {
   const res = await req.text()
 
   if (req.status !== 200) {
-    const error = JSON.parse(res);
+    const error = JSON.parse(res)
     throw new Error(error.message)
   }
 
-  const data = new URLSearchParams(res);
+  const data = new URLSearchParams(res)
   const token = data.get('oauth_token')
-  const secret  = data.get('oauth_token_secret')
+  const secret = data.get('oauth_token_secret')
 
   localStorage.setItem('discogs_token', token)
   localStorage.setItem('discogs_token_secret', secret)
@@ -118,14 +118,14 @@ export async function fetchUserInfo () {
 
   const req = await fetch(url.toString(), {
     headers: {
-      'Authorization': oauth.join(',')
+      Authorization: oauth.join(',')
     }
   })
 
   const res = await req.json()
 
   if (req.status !== 200) {
-    const error = JSON.parse(res);
+    const error = JSON.parse(res)
     throw new Error(error.message)
   }
 
@@ -164,7 +164,7 @@ export async function fetchAlbums (username) {
     url.searchParams.append('per_page', 100)
     const req = await fetch(url.toString(), {
       headers: {
-        'Authorization': oauth.join(',')
+        Authorization: oauth.join(',')
       }
     })
 
@@ -172,8 +172,8 @@ export async function fetchAlbums (username) {
 
     if (req.status !== 200) {
       url = null
-      logError('Discogs album fetch failed', data.message)
-      throw new Error(data.message)
+      logError('Discogs album fetch failed', res.message)
+      throw new Error(res.message)
     }
 
     url = res.pagination.urls.next

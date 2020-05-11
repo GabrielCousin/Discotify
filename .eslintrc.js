@@ -16,7 +16,8 @@ module.exports = {
     'SPOTIFY_CLIENT_ID': true,
     'SPOTIFY_CLIENT_SECRET': true,
     'SEGMENT_ID': true,
-    'Sentry': true
+    'SENTRY_DSN': true,
+    'VERSION_HASH': true
   },
   extends: [
     'standard',

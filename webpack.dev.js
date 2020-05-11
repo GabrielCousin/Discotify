@@ -35,7 +35,8 @@ module.exports = merge(common, {
       DISCOGS_CONSUMER_SECRET: `"${DISCOGS_CONSUMER_SECRET}"`,
       SPOTIFY_CLIENT_ID: `"${SPOTIFY_CLIENT_ID}"`,
       SPOTIFY_CLIENT_SECRET: `"${SPOTIFY_CLIENT_SECRET}"`,
-      SEGMENT_ID: `"${SEGMENT_ID}"`
+      SEGMENT_ID: `"${SEGMENT_ID}"`,
+      SENTRY_DSN: 'null'
     })
   ],
   optimization: {

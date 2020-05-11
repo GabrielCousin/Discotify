@@ -1,8 +1,10 @@
+import { withScope, captureMessage } from '@sentry/browser'
+
 export default function logError (message, extra) {
-  if (PRODUCTION_ENV && Sentry) {
-    Sentry.withScope(scope => {
+  if (PRODUCTION_ENV) {
+    withScope(scope => {
       scope.setExtra('extraData', extra)
-      Sentry.captureMessage(message)
+      captureMessage(message)
     })
   } else {
     console.log(arguments) // eslint-disable-line no-console

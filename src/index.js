@@ -3,8 +3,21 @@ import 'core-js/stable'
 import React from 'react'
 import { render } from 'react-dom'
 import App from './components/App'
+import { init } from '@sentry/browser'
+import { Dedupe, ExtraErrorData } from '@sentry/integrations'
 
 import './index.css'
+
+if (SENTRY_DSN) {
+  init({
+    dsn: SENTRY_DSN,
+    integrations: [
+      new Dedupe(),
+      new ExtraErrorData()
+    ],
+    release: VERSION_HASH
+  })
+}
 
 render(
   <App />,

@@ -6,7 +6,7 @@ const SPOTIFY_ACCOUNT_BASE_URL = 'https://accounts.spotify.com'
 export function requestToken () {
   // https://developer.spotify.com/documentation/general/guides/authorization-guide/
 
-  const newUrl = new URL('/authorize', SPOTIFY_ACCOUNT_BASE_URL);
+  const newUrl = new URL('/authorize', SPOTIFY_ACCOUNT_BASE_URL)
 
   const params = {
     client_id: SPOTIFY_CLIENT_ID,
@@ -18,7 +18,7 @@ export function requestToken () {
   }
 
   for (const key in params) {
-    newUrl.searchParams.append(key, params[key]);
+    newUrl.searchParams.append(key, params[key])
   }
 
   window.location.assign(newUrl.toString())
@@ -31,7 +31,7 @@ export async function fetchUserInfo () {
 
   const req = await fetch(new URL('/v1/me', SPOTIFY_BASE_URL), {
     headers: {
-      'Authorization': `Bearer ${token}`
+      Authorization: `Bearer ${token}`
     }
   })
   const res = await req.json()
