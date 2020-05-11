@@ -86,7 +86,7 @@ export const Provider = ({ children }) => {
       const releases = await fetchAlbums(store.user.discogsUsername)
       store.counts.total = releases.length
 
-      releases.forEach(async album => {
+      for (const album of releases) {
         let status
         let artists = album.basic_information.artists.map(artist => (artist.name)).join(' ')
         const dirtyArtistName = artists.match(/\s\([0-9]+\)$/)
@@ -120,7 +120,7 @@ export const Provider = ({ children }) => {
         })
 
         store.counts.proceeded++
-      })
+      }
     },
 
     async exportToSpotify () {
