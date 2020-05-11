@@ -57,7 +57,7 @@ export async function searchAlbum (query) {
 
   const req = await fetch(url, {
     headers: {
-      'Authorization': `Bearer ${token}`
+      Authorization: `Bearer ${token}`
     }
   })
 
@@ -85,7 +85,7 @@ export async function saveAlbums (ids) {
   const req = await fetch(new URL('/v1/me/albums', SPOTIFY_BASE_URL), {
     method: 'PUT',
     headers: {
-      'Authorization': `Bearer ${token}`
+      Authorization: `Bearer ${token}`
     },
     body: JSON.stringify(ids)
   })

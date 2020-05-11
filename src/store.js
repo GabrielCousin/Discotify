@@ -28,7 +28,7 @@ export const Provider = ({ children }) => {
       localStorage.clear()
       store.user = {}
       store.releases = []
-      store.counts.total = 0;
+      store.counts.total = 0
       store.counts.proceeded = 0
       store.counts.ignored = 0
       store.counts.matched = 0

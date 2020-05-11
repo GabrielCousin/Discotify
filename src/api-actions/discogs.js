@@ -58,13 +58,13 @@ export async function confirmConnect () {
     oauth_timestamp: Date.now()
   }
 
-  for(const key in params) {
+  for (const key in params) {
     url.searchParams.append(key, params[key])
   }
 
   const searchParams = new URLSearchParams(window.location.search)
 
-  for(const pair of searchParams.entries()) {
+  for (const pair of searchParams.entries()) {
     const [key, value] = pair
     url.searchParams.append(key, value)
   }
@@ -176,7 +176,7 @@ export async function fetchAlbums (username) {
       throw new Error(res.message)
     }
 
-    url = res.pagination.urls.next
+    url = res.pagination.urls.next ? new URL(res.pagination.urls.next) : null
     albums.push(...res.releases)
   }
 
