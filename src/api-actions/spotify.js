@@ -73,6 +73,8 @@ export async function searchAlbum (query) {
     return {}
   }
 
+  console.log('Result for query', query, res.albums.items) // eslint-disable-line no-console
+
   const results = res.albums.items
   return results.length ? results[0] : {}
 }
