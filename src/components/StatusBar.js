@@ -21,26 +21,30 @@ const StatusBar = () => {
           <div>{store.counts.proceeded}/{store.counts.total} releases processed.</div>
           <div><span className="ItemCount-NOK">{store.counts.ignored} items</span> ignored. <span className="ItemCount-OK">{store.counts.matched} items</span> OK.</div>
         </div>
-        {isMatching ? (
+        {isMatching
+          ? (
           <progress className='ProgressBar' value={store.counts.proceeded} max={store.counts.total} />
-        ) : (
+            )
+          : (
           <div className="Box-AddOn">
-            {isDone ? (
+            {isDone
+              ? (
               <a
                 className="Button"
                 href="spotify://open.spotify.com/collection/albums"
                 rel="noopener noreferrer"
               >All done! Go to Spotify</a>
-            ) : (
+                )
+              : (
               <button
                 className="Button"
                 type="button"
                 onClick={store.exportToSpotify}
                 disabled={isExporting}
               >Export to Spotify</button>
-            )}
+                )}
           </div>
-        )}
+            )}
       </div>
     )
   })

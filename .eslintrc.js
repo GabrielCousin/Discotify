@@ -1,5 +1,5 @@
 module.exports = {
-  parser: 'babel-eslint',
+  parser: '@babel/eslint-parser',
   parserOptions: {
     ecmaVersion: 2018,
     sourceType: 'module'
@@ -9,15 +9,15 @@ module.exports = {
     browser: true
   },
   globals: {
-    'analytics': true,
-    'PRODUCTION_ENV': true,
-    'DISCOGS_CONSUMER_KEY': true,
-    'DISCOGS_CONSUMER_SECRET': true,
-    'SPOTIFY_CLIENT_ID': true,
-    'SPOTIFY_CLIENT_SECRET': true,
-    'SEGMENT_ID': true,
-    'SENTRY_DSN': true,
-    'VERSION_HASH': true
+    analytics: true,
+    PRODUCTION_ENV: true,
+    DISCOGS_CONSUMER_KEY: true,
+    DISCOGS_CONSUMER_SECRET: true,
+    SPOTIFY_CLIENT_ID: true,
+    SPOTIFY_CLIENT_SECRET: true,
+    SEGMENT_ID: true,
+    SENTRY_DSN: true,
+    VERSION_HASH: true
   },
   extends: [
     'standard',
@@ -30,10 +30,10 @@ module.exports = {
   },
   rules: {
     'react/prop-types': 0,
-    'camelcase': [2, {
+    camelcase: [2, {
       properties: 'never',
       ignoreDestructuring: true
     }],
     'no-mixed-operators': 0
   }
-};
+}

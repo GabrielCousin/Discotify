@@ -110,10 +110,10 @@ export async function fetchUserInfo () {
     `OAuth oauth_consumer_key="${DISCOGS_CONSUMER_KEY}"`,
     `oauth_nonce="${Math.random().toString()}"`,
     `oauth_signature="${DISCOGS_CONSUMER_SECRET}%26${tokenSecret}"`,
-    `oauth_signature_method="PLAINTEXT"`,
+    'oauth_signature_method="PLAINTEXT"',
     `oauth_timestamp="${Date.now()}"`,
     `oauth_token="${token}"`,
-    `oauth_version="1.0"`
+    'oauth_version="1.0"'
   ]
 
   const req = await fetch(url.toString(), {
@@ -152,10 +152,10 @@ export async function fetchAlbums (username) {
     `OAuth oauth_consumer_key="${DISCOGS_CONSUMER_KEY}"`,
     `oauth_nonce="${Math.random().toString()}"`,
     `oauth_signature="${DISCOGS_CONSUMER_SECRET}%26${tokenSecret}"`,
-    `oauth_signature_method="PLAINTEXT"`,
+    'oauth_signature_method="PLAINTEXT"',
     `oauth_timestamp="${Date.now()}"`,
     `oauth_token="${token}"`,
-    `oauth_version="1.0"`
+    'oauth_version="1.0"'
   ]
 
   let url = DISCOGS_COLLECTION_ENDPOINT(username)
