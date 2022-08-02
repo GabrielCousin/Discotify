@@ -1287,65 +1287,56 @@
   resolved "https://registry.yarnpkg.com/@nicolo-ribaudo/chokidar-2/-/chokidar-2-2.1.8-no-fsevents.3.tgz#323d72dd25103d0c4fbdce89dadf574a787b1f9b"
   integrity sha512-s88O1aVtXftvp5bCPB7WnmXc5IwOZZ7YPuwNPt+GtOOXpPvad1LfbmjYv+qII7zP6RU2QGnqve27dnLycEnyEQ==
 
-"@sentry/browser@^5.15.5":
-  version "5.15.5"
-  resolved "https://registry.yarnpkg.com/@sentry/browser/-/browser-5.15.5.tgz#d9a51f1388581067b50d30ed9b1aed2cbb333a36"
-  integrity sha512-rqDvjk/EvogfdbZ4TiEpxM/lwpPKmq23z9YKEO4q81+1SwJNua53H60dOk9HpRU8nOJ1g84TMKT2Ov8H7sqDWA==
+"@sentry/browser@^7.8.1":
+  version "7.8.1"
+  resolved "https://registry.yarnpkg.com/@sentry/browser/-/browser-7.8.1.tgz#ca91c80a5da745e1b5379bc215100ba4660bac29"
+  integrity sha512-9JuagYqHyaZu/4RqyxrAgEHo71oV592XBuUKC33gajCVKWbyG3mNqudSMoHtdM1DrV9REZ4Elha7zFaE2cJX6g==
   dependencies:
-    "@sentry/core" "5.15.5"
-    "@sentry/types" "5.15.5"
-    "@sentry/utils" "5.15.5"
+    "@sentry/core" "7.8.1"
+    "@sentry/types" "7.8.1"
+    "@sentry/utils" "7.8.1"
     tslib "^1.9.3"
 
-"@sentry/core@5.15.5":
-  version "5.15.5"
-  resolved "https://registry.yarnpkg.com/@sentry/core/-/core-5.15.5.tgz#40ea79bff5272d3fbbeeb4a98cdc59e1adbd2c92"
-  integrity sha512-enxBLv5eibBMqcWyr+vApqeix8uqkfn0iGsD3piKvoMXCgKsrfMwlb/qo9Ox0lKr71qIlZVt+9/A2vZohdgnlg==
+"@sentry/core@7.8.1":
+  version "7.8.1"
+  resolved "https://registry.yarnpkg.com/@sentry/core/-/core-7.8.1.tgz#d11ba7c97766d1e47edf697dbfd47fe4041477d9"
+  integrity sha512-PRivbdIzApi/gSixAxozhOBTylSVdw/9VxaStYHd7JJGhs36KXkV8ylpbCmYO4ap7/Ue9/slzwpvPOJJzmzAgA==
   dependencies:
-    "@sentry/hub" "5.15.5"
-    "@sentry/minimal" "5.15.5"
-    "@sentry/types" "5.15.5"
-    "@sentry/utils" "5.15.5"
+    "@sentry/hub" "7.8.1"
+    "@sentry/types" "7.8.1"
+    "@sentry/utils" "7.8.1"
     tslib "^1.9.3"
 
-"@sentry/hub@5.15.5":
-  version "5.15.5"
-  resolved "https://registry.yarnpkg.com/@sentry/hub/-/hub-5.15.5.tgz#f5abbcdbe656a70e2ff02c02a5a4cffa0f125935"
-  integrity sha512-zX9o49PcNIVMA4BZHe//GkbQ4Jx+nVofqU/Il32/IbwKhcpPlhGX3c1sOVQo4uag3cqd/JuQsk+DML9TKkN0Lw==
+"@sentry/hub@7.8.1":
+  version "7.8.1"
+  resolved "https://registry.yarnpkg.com/@sentry/hub/-/hub-7.8.1.tgz#bc255c6b8e99a3333e737f189c984c715df504aa"
+  integrity sha512-AxwyGyS9Lp4XsURu4t8opa5vZ+NAB6I/n+B/Uix3YZea9z8jdWYAu9vsXSizOrtxekc/i7ZN4bnlNgXVHix0iA==
   dependencies:
-    "@sentry/types" "5.15.5"
-    "@sentry/utils" "5.15.5"
+    "@sentry/types" "7.8.1"
+    "@sentry/utils" "7.8.1"
     tslib "^1.9.3"
 
-"@sentry/integrations@^5.15.5":
-  version "5.15.5"
-  resolved "https://registry.yarnpkg.com/@sentry/integrations/-/integrations-5.15.5.tgz#7f7bc488d838cd50e9ca50d5f933680632827826"
-  integrity sha512-s9N9altnGkDH+vNNUZu1dKuMVLAgJNYtgs6DMJTrZRswFl8gzZytYTZCdpzjBgTsqkLaGbRDIjQeE/yP3gnrqw==
+"@sentry/integrations@^7.8.1":
+  version "7.8.1"
+  resolved "https://registry.yarnpkg.com/@sentry/integrations/-/integrations-7.8.1.tgz#4a068c1bc44aaa7c8890b1d66641abecd9b84876"
+  integrity sha512-aKMLe+LNA6bOLF3r1t1YjeCsOkUk3f69ldoHbIp9zrYfuCIZBH5AJAsJBCmPnTA4jJotzYEjQfpfb1b/nYBs6A==
   dependencies:
-    "@sentry/types" "5.15.5"
-    "@sentry/utils" "5.15.5"
+    "@sentry/types" "7.8.1"
+    "@sentry/utils" "7.8.1"
+    localforage "^1.8.1"
     tslib "^1.9.3"
 
-"@sentry/minimal@5.15.5":
-  version "5.15.5"
-  resolved "https://registry.yarnpkg.com/@sentry/minimal/-/minimal-5.15.5.tgz#a0e4e071f01d9c4d808094ae7203f6c4cca9348a"
-  integrity sha512-zQkkJ1l9AjmU/Us5IrOTzu7bic4sTPKCatptXvLSTfyKW7N6K9MPIIFeSpZf9o1yM2sRYdK7GV08wS2eCT3JYw==
-  dependencies:
-    "@sentry/hub" "5.15.5"
-    "@sentry/types" "5.15.5"
-    tslib "^1.9.3"
+"@sentry/types@7.8.1":
+  version "7.8.1"
+  resolved "https://registry.yarnpkg.com/@sentry/types/-/types-7.8.1.tgz#c00a1ed02ad8f69d3b94fcda91e2d24e0bb3492a"
+  integrity sha512-LOoaeBXVI23Kh5SpIbxSRiJ6+eYZXVOFyPFH1T1mGBj95LPwRMqOdg0lUTmFJGBKbDGDB/YNjNnu1kQ7GrXBXw==
 
-"@sentry/types@5.15.5":
-  version "5.15.5"
-  resolved "https://registry.yarnpkg.com/@sentry/types/-/types-5.15.5.tgz#16c97e464cf09bbd1d2e8ce90d130e781709076e"
-  integrity sha512-F9A5W7ucgQLJUG4LXw1ZIy4iLevrYZzbeZ7GJ09aMlmXH9PqGThm1t5LSZlVpZvUfQ2rYA8NU6BdKJSt7B5LPw==
-
-"@sentry/utils@5.15.5":
-  version "5.15.5"
-  resolved "https://registry.yarnpkg.com/@sentry/utils/-/utils-5.15.5.tgz#dec1d4c79037c4da08b386f5d34409234dcbfb15"
-  integrity sha512-Nl9gl/MGnzSkuKeo3QaefoD/OJrFLB8HmwQ7HUbTXb6E7yyEzNKAQMHXGkwNAjbdYyYbd42iABP6Y5F/h39NtA==
+"@sentry/utils@7.8.1":
+  version "7.8.1"
+  resolved "https://registry.yarnpkg.com/@sentry/utils/-/utils-7.8.1.tgz#5d8a7e1c8d834de608ad834cf648d5291c62ba39"
+  integrity sha512-isUZjft4HWTOk1Z58KFJ/zzXeFtIJgP82CkYQlW464ZR2WCqPHYlXXXRWZpOHOfMnrf+gWeX9WAGS9rTAdhiSg==
   dependencies:
-    "@sentry/types" "5.15.5"
+    "@sentry/types" "7.8.1"
     tslib "^1.9.3"
 
 "@types/anymatch@*":
@@ -3941,6 +3932,11 @@ ignore@^5.1.1:
   resolved "https://registry.yarnpkg.com/ignore/-/ignore-5.1.4.tgz#84b7b3dbe64552b6ef0eca99f6743dbec6d97adf"
   integrity sha512-MzbUSahkTW1u7JpKKjY7LCARd1fU5W2rLdxlM4kdkayuCwZImjkpluF9CM1aLewYJguPDqewLam18Y6AU69A8A==
 
+immediate@~3.0.5:
+  version "3.0.6"
+  resolved "https://registry.yarnpkg.com/immediate/-/immediate-3.0.6.tgz#9db1dbd0faf8de6fbe0f5dd5e56bb606280de69b"
+  integrity sha512-XXOFtyqDjNDAQxVfYxuF7g9Il/IbWmmlQg2MYKOH8ExIT1qg6xc4zyS3HaEEATgs1btfzxq15ciUiY7gjSXRGQ==
+
 import-cwd@^2.0.0:
   version "2.1.0"
   resolved "https://registry.yarnpkg.com/import-cwd/-/import-cwd-2.1.0.tgz#aa6cf36e722761285cb371ec6519f53e2435b0a9"
@@ -4435,6 +4431,13 @@ levn@^0.3.0, levn@~0.3.0:
     prelude-ls "~1.1.2"
     type-check "~0.3.2"
 
+lie@3.1.1:
+  version "3.1.1"
+  resolved "https://registry.yarnpkg.com/lie/-/lie-3.1.1.tgz#9a436b2cc7746ca59de7a41fa469b3efb76bd87e"
+  integrity sha512-RiNhHysUjhrDQntfYSfY4MU24coXXdEOgw9WGcKHNeEwffDYbF//u87M1EWaMGzuFoSbqW0C9C6lEEhDOAswfw==
+  dependencies:
+    immediate "~3.0.5"
+
 load-bmfont@^1.3.1, load-bmfont@^1.4.0:
   version "1.4.0"
   resolved "https://registry.yarnpkg.com/load-bmfont/-/load-bmfont-1.4.0.tgz#75f17070b14a8c785fe7f5bee2e6fd4f98093b6b"
@@ -4490,6 +4493,13 @@ loader-utils@^2.0.0:
     big.js "^5.2.2"
     emojis-list "^3.0.0"
     json5 "^2.1.2"
+
+localforage@^1.8.1:
+  version "1.10.0"
+  resolved "https://registry.yarnpkg.com/localforage/-/localforage-1.10.0.tgz#5c465dc5f62b2807c3a84c0c6a1b1b3212781dd4"
+  integrity sha512-14/H1aX7hzBBmmh7sGPd+AOMkkIrHM3Z1PAyGgZigA1H1p5O5ANnMyWzvpAETtG68/dC4pC0ncy3+PPGzXZHPg==
+  dependencies:
+    lie "3.1.1"
 
 locate-path@^2.0.0:
   version "2.0.0"

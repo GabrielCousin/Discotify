@@ -15,7 +15,8 @@ if (SENTRY_DSN) {
       new Dedupe(),
       new ExtraErrorData()
     ],
-    release: VERSION_HASH
+    release: VERSION_HASH,
+    autoSessionTracking: false
   })
 }
 
