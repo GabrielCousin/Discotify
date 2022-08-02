@@ -1,7 +1,8 @@
-const merge = require('webpack-merge')
+const { merge } = require('webpack-merge')
 const common = require('./webpack.common')
 const webpack = require('webpack')
 const config = require('./src/config/settings')
+const ESLintPlugin = require('eslint-webpack-plugin');
 
 const {
   DISCOGS_CONSUMER_KEY,
@@ -16,13 +17,7 @@ module.exports = merge(common, {
   devtool: 'cheap-module-source-map',
   devServer: {
     historyApiFallback: true,
-    hot: true,
-    quiet: true,
-    // overlay: true,
     port: 3000,
-    watchOptions: {
-      ignored: /node_modules/
-    }
   },
   performance: {
     hints: false
@@ -37,9 +32,12 @@ module.exports = merge(common, {
       SPOTIFY_CLIENT_SECRET: `"${SPOTIFY_CLIENT_SECRET}"`,
       SEGMENT_ID: `"${SEGMENT_ID}"`,
       SENTRY_DSN: 'null'
+    }),
+    new ESLintPlugin({
+      failOnError: false,
     })
   ],
   optimization: {
-    namedModules: true
+    moduleIds: 'named'
   }
 })

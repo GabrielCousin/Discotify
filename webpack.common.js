@@ -39,15 +39,7 @@ module.exports = {
       {
         test: /\.js$/,
         exclude: /node_modules/,
-        use: [
-          'babel-loader',
-          {
-            loader: 'eslint-loader',
-            options: {
-              emitWarning: true
-            }
-          }
-        ]
+        loader: 'babel-loader'
       }, {
         test: /\.css$/,
         use: [
@@ -61,11 +53,12 @@ module.exports = {
           {
             loader: 'postcss-loader',
             options: {
-              ident: 'postcss',
-              plugins: () => [
-                require('postcss-nested')(),
-                require('autoprefixer')()
-              ]
+              postcssOptions: {
+                plugins: [
+                  'postcss-nested',
+                  'autoprefixer'
+                ]
+              }
             }
           }
         ]
