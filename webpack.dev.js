@@ -3,6 +3,7 @@ const common = require('./webpack.common')
 const webpack = require('webpack')
 const config = require('./src/config/settings')
 const ESLintPlugin = require('eslint-webpack-plugin');
+const ReactRefreshWebpackPlugin = require('@pmmmwh/react-refresh-webpack-plugin');
 
 const {
   DISCOGS_CONSUMER_KEY,
@@ -23,7 +24,6 @@ module.exports = merge(common, {
     hints: false
   },
   plugins: [
-    new webpack.HotModuleReplacementPlugin(),
     new webpack.DefinePlugin({
       PRODUCTION_ENV: false,
       DISCOGS_CONSUMER_KEY: `"${DISCOGS_CONSUMER_KEY}"`,
@@ -35,7 +35,8 @@ module.exports = merge(common, {
     }),
     new ESLintPlugin({
       failOnError: false,
-    })
+    }),
+    new ReactRefreshWebpackPlugin()
   ],
   optimization: {
     moduleIds: 'named'

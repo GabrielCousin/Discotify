@@ -1,5 +1,5 @@
 import React, { createContext } from 'react'
-import { useLocalStore } from 'mobx-react'
+import { useLocalObservable } from 'mobx-react'
 import {
   confirmConnect as _confirmDiscogsConnect,
   fetchUserInfo as _fetchDiscogsUser,
@@ -14,7 +14,7 @@ import {
 export const context = createContext()
 
 export const Provider = ({ children }) => {
-  const store = useLocalStore(() => ({
+  const store = useLocalObservable(() => ({
     user: {},
     releases: [],
     counts: {

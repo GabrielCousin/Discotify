@@ -18,8 +18,6 @@ import SpotifyCallback from './SpotifyCallback'
 import SpotifyConnect from './SpotifyConnect'
 import StatusBar from './StatusBar'
 import logoSvg from 'public/svg/logo.svg'
-
-import { hot } from 'react-hot-loader'
 import { Provider } from '../store'
 
 const App = () => {
@@ -49,4 +47,4 @@ const App = () => {
   )
 }
 
-export default hot(module)(App)
+export default App
