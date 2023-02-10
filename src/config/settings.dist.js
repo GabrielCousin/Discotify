@@ -5,8 +5,5 @@ module.exports = {
 
   // Create yours on https://developer.spotify.com/my-applications
   SPOTIFY_CLIENT_ID: 'SPOTIFY_CLIENT_ID',
-  SPOTIFY_CLIENT_SECRET: 'SPOTIFY_CLIENT_SECRET',
-
-  // Create yours on https://app.segment.com/signup
-  SEGMENT_ID: 'SEGMENT_ID'
+  SPOTIFY_CLIENT_SECRET: 'SPOTIFY_CLIENT_SECRET'
 }

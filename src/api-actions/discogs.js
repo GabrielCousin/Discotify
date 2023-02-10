@@ -131,10 +131,6 @@ export async function fetchUserInfo () {
 
   const { id, username } = res
 
-  analytics.identify(id, {
-    discogs_username: username
-  })
-
   return {
     discogsUsername: username,
     discogsUserId: id

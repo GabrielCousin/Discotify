@@ -9,13 +9,11 @@ module.exports = {
     browser: true
   },
   globals: {
-    analytics: true,
     PRODUCTION_ENV: true,
     DISCOGS_CONSUMER_KEY: true,
     DISCOGS_CONSUMER_SECRET: true,
     SPOTIFY_CLIENT_ID: true,
     SPOTIFY_CLIENT_SECRET: true,
-    SEGMENT_ID: true,
     SENTRY_DSN: true,
     VERSION_HASH: true
   },

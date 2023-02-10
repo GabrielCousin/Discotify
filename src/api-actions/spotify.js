@@ -66,10 +66,6 @@ export async function searchAlbum (query) {
   if (req.status !== 200) {
     logError('Spotify >> search album failed', res.error.message)
 
-    analytics.track('spotify:match_error', {
-      query
-    })
-
     return {}
   }
 
@@ -94,7 +90,6 @@ export async function saveAlbums (ids) {
 
   if (req.status !== 200) {
     logError('Spotify >> save albums failed')
-    analytics.track('spotify:export_error')
     throw new Error('Export failed')
   }
 }

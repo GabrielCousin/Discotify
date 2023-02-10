@@ -2,15 +2,14 @@ const { merge } = require('webpack-merge')
 const common = require('./webpack.common')
 const webpack = require('webpack')
 const config = require('./src/config/settings')
-const ESLintPlugin = require('eslint-webpack-plugin');
-const ReactRefreshWebpackPlugin = require('@pmmmwh/react-refresh-webpack-plugin');
+const ESLintPlugin = require('eslint-webpack-plugin')
+const ReactRefreshWebpackPlugin = require('@pmmmwh/react-refresh-webpack-plugin')
 
 const {
   DISCOGS_CONSUMER_KEY,
   DISCOGS_CONSUMER_SECRET,
   SPOTIFY_CLIENT_ID,
-  SPOTIFY_CLIENT_SECRET,
-  SEGMENT_ID
+  SPOTIFY_CLIENT_SECRET
 } = config
 
 module.exports = merge(common, {
@@ -18,7 +17,7 @@ module.exports = merge(common, {
   devtool: 'cheap-module-source-map',
   devServer: {
     historyApiFallback: true,
-    port: 3000,
+    port: 3000
   },
   performance: {
     hints: false
@@ -30,11 +29,10 @@ module.exports = merge(common, {
       DISCOGS_CONSUMER_SECRET: `"${DISCOGS_CONSUMER_SECRET}"`,
       SPOTIFY_CLIENT_ID: `"${SPOTIFY_CLIENT_ID}"`,
       SPOTIFY_CLIENT_SECRET: `"${SPOTIFY_CLIENT_SECRET}"`,
-      SEGMENT_ID: `"${SEGMENT_ID}"`,
       SENTRY_DSN: 'null'
     }),
     new ESLintPlugin({
-      failOnError: false,
+      failOnError: false
     }),
     new ReactRefreshWebpackPlugin()
   ],
