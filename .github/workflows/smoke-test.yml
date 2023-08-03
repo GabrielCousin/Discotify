@@ -1,0 +1,12 @@
+on:
+  pull_request:
+
+jobs:
+  spa_smoke_test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: spa-smoke-test-action
+        uses: GabrielCousin/spa-smoke-test-action@0.1.0
+        with:
+          target-url: "https://discotify-export.vercel.app"
+          target-selector: ".App"
