@@ -1,0 +1,13 @@
+on:
+  deployment_status:
+
+jobs:
+  spa_smoke_test:
+    runs-on: ubuntu-latest
+    if: github.event.deployment_status.state == 'success'
+    steps:
+      - name: spa-smoke-test-action
+        uses: GabrielCousin/spa-smoke-test-action@0.2.0
+        with:
+          target-url: "https://discotify-export.vercel.app"
+          target-selector: ".App"
