@@ -36,7 +36,7 @@
     "mobx": "^6.6.1",
     "mobx-react": "^7.5.2",
     "normalize.css": "^8.0.1",
-    "postcss": "^8.4.14",
+    "postcss": "^8.4.31",
     "postcss-loader": "^7.0.1",
     "postcss-nested": "^5.0.6",
     "react-refresh": "^0.14.0",
