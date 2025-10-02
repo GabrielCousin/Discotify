@@ -53,5 +53,6 @@
     "build": "NODE_ENV=production webpack --config webpack.prod.js",
     "lint:js": "eslint ."
   },
-  "license": "MIT"
+  "license": "MIT",
+  "packageManager": "yarn@1.22.22"
 }
